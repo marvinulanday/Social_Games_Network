@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Social Games Network</string>
+    <string name="title_activity_login">Iniciar sesión</string>
+    <string name="prompt_email">Correo electrónico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="welcome">"Bienvenido!"</string>
+    <string name="invalid_email">Correo electrónico inválido</string>
+    <string name="invalid_password">La contraseña debe contener como mínimo 5 carácteres</string>
+    <string name="login_failed">Inicio de sesión fallida</string>
+</resources>
