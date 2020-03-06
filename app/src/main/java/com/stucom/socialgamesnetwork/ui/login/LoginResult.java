@@ -2,12 +2,14 @@ package com.stucom.socialgamesnetwork.ui.login;
 
 import androidx.annotation.Nullable;
 
+import com.stucom.socialgamesnetwork.data.model.User;
+
 /**
  * Authentication result : success (user details) or error message.
  */
 class LoginResult {
     @Nullable
-    private LoggedInUserView success;
+    private User user;
     @Nullable
     private Integer error;
 
@@ -15,13 +17,13 @@ class LoginResult {
         this.error = error;
     }
 
-    LoginResult(@Nullable LoggedInUserView success) {
-        this.success = success;
+    LoginResult(@Nullable User user) {
+        this.user = user;
     }
 
     @Nullable
-    LoggedInUserView getSuccess() {
-        return success;
+    User getUser() {
+        return user;
     }
 
     @Nullable
