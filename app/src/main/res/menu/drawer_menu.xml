@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+<group android:checkableBehavior="single">
+    <item android:id="@+id/nav_message"
+        android:icon="@drawable/ic_message"
+        android:title="Message"/>
+    <item android:id="@+id/nav_second"
+        android:icon="@drawable/ic_message"
+        android:title="Second"/>
+    <item android:id="@+id/nav_third"
+        android:icon="@drawable/ic_message"
+        android:title="Third"/>
+</group>
+    <item android:title="Titulo">
+        <menu>
+            <item android:id="@+id/nav_title"
+                android:icon="@drawable/ic_message"
+                android:title="Titulo"/>
+            <item android:id="@+id/nav_title2"
+                android:icon="@drawable/ic_message"
+                android:title="Titulo2"/>
+
+        </menu>
+    </item>
+</menu>
