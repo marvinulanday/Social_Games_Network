@@ -9,18 +9,18 @@
         android:roundIcon="@mipmap/logosgnapp"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <activity android:name=".HomeActivity"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
-
             android:color="#46FFFE"
             android:background="#46FFFE">
         </activity>
 
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
