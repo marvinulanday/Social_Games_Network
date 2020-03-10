@@ -1,7 +1,10 @@
 package com.stucom.socialgamesnetwork.data;
 
+import android.content.Context;
+
 import com.stucom.socialgamesnetwork.DAO.DAO;
 import com.stucom.socialgamesnetwork.data.model.User;
+import com.stucom.socialgamesnetwork.exceptions.SGNException;
 
 import java.io.IOException;
 
@@ -10,7 +13,7 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
-    public Result<User> login(String username, String password) {
+    public Result<User> login(Context context, String username, String password) {
 
         try {
             // TODO: handle loggedInUser authentication
@@ -21,6 +24,12 @@ public class LoginDataSource {
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
         }
+    }
+
+    public Result<User> loginResult(User user) {
+        if (user == null)
+            return new Result.Error(new SGNException(SGNException.USER_NOT_FOUND));
+        return new Result.Success<>(user);
     }
 
     public void logout() {

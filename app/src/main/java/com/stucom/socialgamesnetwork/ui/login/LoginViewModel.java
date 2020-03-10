@@ -1,5 +1,6 @@
 package com.stucom.socialgamesnetwork.ui.login;
 
+import android.content.Context;
 import android.util.Patterns;
 
 import androidx.lifecycle.LiveData;
@@ -29,10 +30,15 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
+    public void login(Context context, String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<User> result = loginRepository.login(username, password);
+        loginRepository.login(context, username, password);
 
+
+    }
+
+    public void loginResult(User user) {
+        Result<User> result = loginRepository.loginResult(user);
         if (result instanceof Result.Success) {
             User data = ((Result.Success<User>) result).getData();
             loginResult.setValue(new LoginResult(new User(data.getUsername(), data.getEmail())));

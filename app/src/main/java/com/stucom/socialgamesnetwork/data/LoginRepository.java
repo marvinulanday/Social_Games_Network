@@ -1,5 +1,7 @@
 package com.stucom.socialgamesnetwork.data;
 
+import android.content.Context;
+
 import com.stucom.socialgamesnetwork.data.model.User;
 
 /**
@@ -43,9 +45,15 @@ public class LoginRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public Result<User> login(String username, String password) {
+    public void login(Context context, String username, String password) {
         // handle login
-        Result<User> result = dataSource.login(username, password);
+        dataSource.login(context, username, password);
+
+
+    }
+
+    public Result<User> loginResult(User user) {
+        Result<User> result = dataSource.loginResult(user);
         if (result instanceof Result.Success) {
             setLoggedInUser(((Result.Success<User>) result).getData());
         }
