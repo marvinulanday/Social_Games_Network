@@ -2,7 +2,7 @@ package com.stucom.socialgamesnetwork.ui.login;
 
 import androidx.annotation.Nullable;
 
-import com.stucom.socialgamesnetwork.data.model.User;
+import com.stucom.socialgamesnetwork.model.User;
 
 /**
  * Authentication result : success (user details) or error message.

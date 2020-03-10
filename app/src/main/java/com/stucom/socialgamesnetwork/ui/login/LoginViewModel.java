@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.stucom.socialgamesnetwork.R;
 import com.stucom.socialgamesnetwork.data.LoginRepository;
 import com.stucom.socialgamesnetwork.data.Result;
-import com.stucom.socialgamesnetwork.data.model.User;
+import com.stucom.socialgamesnetwork.model.User;
 
 public class LoginViewModel extends ViewModel {
 
@@ -30,9 +30,9 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(Context context, String username, String password) {
+    public void login(Context context, MyCallback myCallback, String username, String password) {
         // can be launched in a separate asynchronous job
-        loginRepository.login(context, username, password);
+        loginRepository.login(context, myCallback, username, password);
 
 
     }
@@ -65,12 +65,12 @@ public class LoginViewModel extends ViewModel {
         if (username.contains("@")) {
             return Patterns.EMAIL_ADDRESS.matcher(username).matches();
         } else {
-            return false;
+            return username != null && username.trim().length() > 0;
         }
     }
 
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 5;
+        return password != null && password.trim().length() >= 5;
     }
 }

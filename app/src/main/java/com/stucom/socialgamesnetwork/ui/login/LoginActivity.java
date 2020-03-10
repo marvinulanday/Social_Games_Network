@@ -22,7 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.stucom.socialgamesnetwork.HomeActivity;
 import com.stucom.socialgamesnetwork.R;
-import com.stucom.socialgamesnetwork.data.model.User;
+import com.stucom.socialgamesnetwork.model.User;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(LoginActivity.this, usernameEditText.getText().toString(),
+                    loginViewModel.login(LoginActivity.this, myCallback, usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(LoginActivity.this, usernameEditText.getText().toString(),
+                loginViewModel.login(LoginActivity.this, myCallback, usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
