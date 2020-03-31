@@ -1,4 +1,4 @@
-package com.stucom.socialgamesnetwork.data.model;
+package com.stucom.socialgamesnetwork.model;
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

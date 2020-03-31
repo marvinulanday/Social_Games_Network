@@ -2,7 +2,8 @@ package com.stucom.socialgamesnetwork.data;
 
 import android.content.Context;
 
-import com.stucom.socialgamesnetwork.data.model.User;
+import com.stucom.socialgamesnetwork.model.User;
+import com.stucom.socialgamesnetwork.ui.login.MyCallback;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -45,9 +46,9 @@ public class LoginRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public void login(Context context, String username, String password) {
+    public void login(Context context, MyCallback callback, String username, String password) {
         // handle login
-        dataSource.login(context, username, password);
+        dataSource.login(context, callback, username, password);
 
 
     }
