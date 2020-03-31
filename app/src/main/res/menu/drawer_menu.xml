@@ -3,24 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 <group android:checkableBehavior="single">
-    <item android:id="@+id/nav_message"
+    <item
+        android:id="@+id/nav_profile"
         android:icon="@drawable/ic_message"
-        android:title="Message"/>
-    <item android:id="@+id/nav_second"
-        android:icon="@drawable/ic_message"
-        android:title="Second"/>
-    <item android:id="@+id/nav_third"
-        android:icon="@drawable/ic_message"
-        android:title="Third"/>
+        android:title="Profile" />
 </group>
-    <item android:title="Titulo">
+    <item android:title="Features">
         <menu>
-            <item android:id="@+id/nav_title"
+            <item
+                android:id="@+id/nav_explore"
                 android:icon="@drawable/ic_message"
-                android:title="Titulo"/>
-            <item android:id="@+id/nav_title2"
+                android:title="Explore" />
+            <item
+                android:id="@+id/nav_ranking"
                 android:icon="@drawable/ic_message"
-                android:title="Titulo2"/>
+                android:title="Ranking" />
 
         </menu>
     </item>
