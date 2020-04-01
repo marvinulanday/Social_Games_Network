@@ -18,4 +18,11 @@
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDxn6SMtUBE8R9USky0CSD7ke1ifdMoVJU</string>
     <string name="google_storage_bucket" translatable="false">socialgamesnetwork-f11b2.appspot.com</string>
     <string name="project_id" translatable="false">socialgamesnetwork-f11b2</string>
+    <string name="register">Register</string>
+    <string name="insertcode1">Insert confirmation code</string>
+    <string name="insertcode2">Insert the code you received by email</string>
+    <string name="networkerror">Network error</string>
+    <string name="cancel">Cancel</string>
+    <string name="userregistrered1">User registrered</string>
+    <string name="userregistrered2">All ok, your user was registrered</string>
 </resources>

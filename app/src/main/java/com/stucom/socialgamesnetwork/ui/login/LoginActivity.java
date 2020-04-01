@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.stucom.socialgamesnetwork.HomeActivity;
 import com.stucom.socialgamesnetwork.MainActivity;
 import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.activity_register;
 import com.stucom.socialgamesnetwork.model.User;
 
 
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.btnLogin);
+        final Button registerButton = findViewById(R.id.btnMissAccount);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         myCallback = new MyCallback() {
@@ -147,6 +149,14 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(LoginActivity.this, myCallback, usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, activity_register.class);
+                startActivity(intent);
             }
         });
     }

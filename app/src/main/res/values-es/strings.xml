@@ -9,4 +9,11 @@
     <string name="invalid_email">Correo electrónico inválido</string>
     <string name="invalid_password">La contraseña debe contener como mínimo 5 carácteres</string>
     <string name="login_failed">Inicio de sesión fallida</string>
+    <string name="networkerror">Error de red</string>
+    <string name="insertcode1">Introduce el código de confirmación</string>
+    <string name="insertcode2">Introduce el código que has recibido por email</string>
+    <string name="cancel">Cancelar</string>
+    <string name="register">Registrar</string>
+    <string name="userregistrered1">Usuario registrado</string>
+    <string name="userregistrered2">Todo perfecto, el usuario ha sido registrado</string>
 </resources>
