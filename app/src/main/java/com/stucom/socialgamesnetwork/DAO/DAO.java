@@ -63,7 +63,7 @@ public class DAO {
 
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        String URL = "https://www.arturviader.com/socialgamesnetwork/login";
+        String URL = "http://www.arturviader.com/socialgamesnetwork/login";
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override public void onResponse(String response) {

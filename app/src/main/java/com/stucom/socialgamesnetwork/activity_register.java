@@ -48,7 +48,7 @@ public class activity_register extends AppCompatActivity {
         tSurname = findViewById(R.id.tSurname);
         tPassword = findViewById(R.id.tPassword);
         tConfirm = findViewById(R.id.tConfirm);
-
+        bRegister = findViewById(R.id.bRegister);
         bRegister.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -68,9 +68,6 @@ public class activity_register extends AppCompatActivity {
                 {
                     //Campos vacios
                 }
-
-                registra();
-
             }
         });
     }
