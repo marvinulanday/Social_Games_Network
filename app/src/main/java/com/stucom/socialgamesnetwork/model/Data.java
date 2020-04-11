@@ -9,7 +9,7 @@ public class Data {
     @SerializedName("errorCode")
     private int errorCode;
 
-    @SerializedName("errorMsg")
+    @SerializedName("errorMessage")
     private String errorMsg;
 
     public Data(Object data, int errorCode, String errorMsg) {
