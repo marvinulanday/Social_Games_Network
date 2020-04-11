@@ -54,8 +54,8 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
         mAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        SignInButton buttongoogle = findViewById(R.id.sign_in_button);
-        buttongoogle.setOnClickListener(new View.OnClickListener() {
+        SignInButton buttonGoogle = findViewById(R.id.sign_in_button);
+        buttonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
@@ -156,11 +156,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void UpdateUI(FirebaseUser user)
-    {
-        if(user != null)
-        {
-            Log.d("BIEN", "Ha hecho login");
+    private void UpdateUI(FirebaseUser user) {
+        if (user != null) {
+            Log.d("SGN", "GoogleLogin");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }

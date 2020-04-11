@@ -13,8 +13,7 @@ import com.stucom.socialgamesnetwork.ui.login.MyCallback;
 public class LoginDataSource {
 
     public void login(Context context, MyCallback callback, String username, String password) {
-
-            DAO dao = new DAO();
+        DAO dao = new DAO();
         dao.getUser(context, callback, username, password);
     }
 
