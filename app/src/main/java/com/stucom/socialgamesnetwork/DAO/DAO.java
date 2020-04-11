@@ -17,8 +17,6 @@ import com.stucom.socialgamesnetwork.model.User;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DAO {
     private User user;
@@ -28,31 +26,29 @@ public class DAO {
      *
      * @param context  Activity donde se realiza la petición
      * @param callback Se utilizará para llamar a la Activity procediente y hacer cambios en el modelo MVVM
-     * @param email Nombre de usuario
+     * @param email    Nombre de usuario
      * @param password Password escrita por el usuario
      */
     public void getUser(final Context context, final MyCallback callback, final String email, final String password) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        String URL = "http://www.arturviader.com/socialgamesnetwork/login";
+        String URL = "http://www.arturviader.com/socialgamesnetwork/login?email=" + email + "&password=" + password + "";
+        Log.d("SGN", URL);
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
-                    @Override public void onResponse(String response) {
+                    @Override
+                    public void onResponse(String response) {
                         Log.d("SGN", response);
                         Gson gson = new Gson();
-                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Type typeToken = new TypeToken<Data>() {
+                        }.getType();
                         Data apiResponse = gson.fromJson(response.toString(), typeToken);
-
-                        if(apiResponse.getErrorCode()==0)
-                        {
+                        if (apiResponse.getErrorCode() == 0) {
                             String token = apiResponse.getData().toString();
-
                             SharedPrefsManagement.saveData(context, "token", token);
                             SharedPrefsManagement.saveData(context, "email", email);
                             user = new User(email, password);
                             callback.login(user);
-                        }
-                        else
-                        {
+                        } else {
                             AlertDialog show = new AlertDialog.Builder(null)
                                     .setTitle("Error")
                                     .setMessage("Error: " + apiResponse.getErrorMsg())
@@ -61,21 +57,15 @@ public class DAO {
                         }
                     }
                 }, new Response.ErrorListener() {
-            @Override public void onErrorResponse(VolleyError error) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
                 AlertDialog show = new AlertDialog.Builder(null)
                         .setTitle("Error")
                         .setMessage("Network error")
                         .setNeutralButton("OK", null)
                         .show();
             }
-        }) {
-            @Override protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("password", password);
-                return params;
-            }
-        };
+        });
         queue.add(request);
     }
 }
