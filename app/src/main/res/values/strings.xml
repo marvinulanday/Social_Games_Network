@@ -25,4 +25,7 @@
     <string name="cancel">Cancel</string>
     <string name="userregistrered1">User registrered</string>
     <string name="userregistrered2">All ok, your user was registrered</string>
+    <string name="errorInsertGame">Error inserting game</string>
+    <string name="incorrectConfirmation">Incorrect confirmation code</string>
+    <string name="emptyFields">There are empty fields</string>
 </resources>

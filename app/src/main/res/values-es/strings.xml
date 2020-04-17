@@ -16,4 +16,7 @@
     <string name="register">Registrar</string>
     <string name="userregistrered1">Usuario registrado</string>
     <string name="userregistrered2">Todo perfecto, el usuario ha sido registrado</string>
+    <string name="errorInsertGame">Error al insertar juego</string>
+    <string name="incorrectConfirmation">Código de confirmación incorrecto</string>
+    <string name="emptyFields">Hay campos vacíos</string>
 </resources>

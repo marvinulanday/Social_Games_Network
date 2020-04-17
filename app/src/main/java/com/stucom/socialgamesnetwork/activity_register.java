@@ -23,6 +23,10 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stucom.socialgamesnetwork.model.Data;
+import com.stucom.socialgamesnetwork.model.Game;
+import com.stucom.socialgamesnetwork.model.Opinion;
+import com.stucom.socialgamesnetwork.model.Recommendation;
+import com.stucom.socialgamesnetwork.model.Score;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -36,7 +40,7 @@ public class activity_register extends AppCompatActivity {
     TextView tPassword;
     TextView tConfirm;
     Button bRegister;
-
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +62,25 @@ public class activity_register extends AppCompatActivity {
                     if (tPassword.getText().toString().equals(tConfirm.getText().toString()))
                     {
                         registra();
+                        //Game game = new Game("10","Sonic");
+                        //insertGame(game);
                     }
                     else
                     {
-                        //Confirmacion incorrecta
+                        AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                .setTitle("Error")
+                                .setMessage(R.string.incorrectConfirmation)
+                                .setNeutralButton("OK", null)
+                                .show();
                     }
                 }
                 else
                 {
-                    //Campos vacios
+                    AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            .setTitle("Error")
+                            .setMessage(R.string.emptyFields)
+                            .setNeutralButton("OK", null)
+                            .show();
                 }
             }
         });
@@ -193,6 +207,180 @@ public class activity_register extends AppCompatActivity {
             }
         };
         queue.add(request);
+    }
+
+    private void insertGame(final Game game)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/insertGame";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorInsertGame)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("idGame", game.getIdGame());
+                params.put("name", game.getName());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    private void insertOpinion(final Opinion opinion)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/insertOpinion";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorInsertGame)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", opinion.getEmail());
+                params.put("idGame", opinion.getIdGame());
+                params.put("text", opinion.getText());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    private void insertRecommendation(final Recommendation recommendation)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/insertRecommendation";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorInsertGame)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", recommendation.getEmail());
+                params.put("idGameBase", recommendation.getIdGameBase());
+                params.put("idGameRecommended", recommendation.getIdGameRecommended());
+                params.put("text", recommendation.getText());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    private void insertScore(final Score score)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/insertScore";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorInsertGame)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", score.getEmail());
+                params.put("idGame", score.getIdGame());
+                params.put("positive", score.getPositive().toString());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    private void llegeixtoken()
+    {
+        SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
+        token = prefs.getString("usertoken","");
     }
 
     private void guardatoken(String token, String correu) {
