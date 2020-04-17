@@ -18,7 +18,7 @@ import com.stucom.socialgamesnetwork.ui.login.MyCallback;
 
 import java.lang.reflect.Type;
 
-public class DAO {
+public class SgnDAO {
     private User user;
 
     /**
@@ -67,6 +67,10 @@ public class DAO {
             }
         });
         queue.add(request);
+    }
+
+    public void getGamesByGenre(final Context context, final MyCallback callback, final int genre) {
+
     }
 }
 
