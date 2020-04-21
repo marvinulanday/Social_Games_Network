@@ -19,4 +19,10 @@
     <string name="errorInsertGame">Error al insertar juego</string>
     <string name="incorrectConfirmation">Código de confirmación incorrecto</string>
     <string name="emptyFields">Hay campos vacíos</string>
+    <string name="errorInsertFavourite">Error insertando favorito</string>
+    <string name="errorDeleteFavourite">Error borrando favorito</string>
+    <string name="errorDeleteRecommendation">Error borrando recomendación</string>
+    <string name="errorDeleteOpinion">Error borrando opinión</string>
+    <string name="errorDeleteHistory">Error borrando historial</string>
+    <string name="errorDeleteScore">Error borrando puntuación</string>
 </resources>

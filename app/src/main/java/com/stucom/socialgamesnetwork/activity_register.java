@@ -23,7 +23,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stucom.socialgamesnetwork.model.Data;
+import com.stucom.socialgamesnetwork.model.Favourite;
 import com.stucom.socialgamesnetwork.model.Game;
+import com.stucom.socialgamesnetwork.model.History;
 import com.stucom.socialgamesnetwork.model.Opinion;
 import com.stucom.socialgamesnetwork.model.Recommendation;
 import com.stucom.socialgamesnetwork.model.Score;
@@ -209,6 +211,9 @@ public class activity_register extends AppCompatActivity {
         queue.add(request);
     }
 
+
+
+
     private void insertGame(final Game game)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -376,6 +381,255 @@ public class activity_register extends AppCompatActivity {
         };
         queue.add(request);
     }
+
+    private void insertFavourite(final Favourite favourite)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/insertFavourite";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorInsertFavourite)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", favourite.getEmail());
+                params.put("idGame", favourite.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+
+    private void deleteFavourite(final Favourite favourite)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/deleteFavourite";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorDeleteFavourite)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", favourite.getEmail());
+                params.put("idGame", favourite.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+/*
+    private void deleteRecommendation(final Recommendation recommendation)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/deleteRecommendation";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorDeleteRecommendation)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", recommendation.getEmail());
+                params.put("idGame", recommendation.getIdGameRecommended());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }*/
+
+    private void deleteOpinion(final Opinion opinion)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/deleteOpinion";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorDeleteOpinion)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", opinion.getEmail());
+                params.put("idGame", opinion.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    private void deleteHistory(final History history)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/deleteHistory";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorDeleteHistory)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", history.getEmail());
+                params.put("idGame", history.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    private void deleteScore(final Score score)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/deleteScore";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorDeleteScore)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", score.getEmail());
+                params.put("idGame", score.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+
 
     private void llegeixtoken()
     {
