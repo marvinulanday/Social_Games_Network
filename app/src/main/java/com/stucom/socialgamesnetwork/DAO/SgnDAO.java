@@ -41,7 +41,7 @@ public class SgnDAO {
                         Gson gson = new Gson();
                         Type typeToken = new TypeToken<Data>() {
                         }.getType();
-                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+                        Data apiResponse = gson.fromJson(response, typeToken);
                         if (apiResponse.getErrorCode() == 0) {
                             String token = apiResponse.getData().toString();
                             SharedPrefsManagement.saveData(context, "token", token);
@@ -69,8 +69,5 @@ public class SgnDAO {
         queue.add(request);
     }
 
-    public void getGamesByGenre(final Context context, final MyCallback callback, final int genre) {
-
-    }
 }
 
