@@ -25,4 +25,13 @@
     <string name="cancel">Cancel</string>
     <string name="userregistrered1">User registrered</string>
     <string name="userregistrered2">All ok, your user was registrered</string>
+    <string name="errorInsertGame">Error inserting game</string>
+    <string name="incorrectConfirmation">Incorrect confirmation code</string>
+    <string name="emptyFields">There are empty fields</string>
+    <string name="errorInsertFavourite">Error inserting favourite</string>
+    <string name="errorDeleteFavourite">Error deleting favourite</string>
+    <string name="errorDeleteRecommendation">Error deleting recommendation</string>
+    <string name="errorDeleteOpinion">Error deleting opinion</string>
+    <string name="errorDeleteHistory">Error deleting history</string>
+    <string name="errorDeleteScore">Error deleting score</string>
 </resources>
