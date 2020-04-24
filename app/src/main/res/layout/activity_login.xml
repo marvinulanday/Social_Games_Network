@@ -104,7 +104,7 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="562dp"
+        android:layout_width="0dp"
         android:layout_height="177dp"
         android:background="#655454"
         android:gravity="bottom|center"
