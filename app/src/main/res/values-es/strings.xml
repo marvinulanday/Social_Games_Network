@@ -25,4 +25,9 @@
     <string name="errorDeleteOpinion">Error borrando opinión</string>
     <string name="errorDeleteHistory">Error borrando historial</string>
     <string name="errorDeleteScore">Error borrando puntuación</string>
+    <string name="errorInsertOpinion">Error insertando opinión</string>
+    <string name="errorInsertRecommendation">Error insertando recomendación</string>
+    <string name="errorInsertScore">Error insertando puntuación</string>
+    <string name="errorInsertHistory">Error insertando historial</string>
+    <string name="errorUpdateHistory">Error actualizando historial</string>
 </resources>

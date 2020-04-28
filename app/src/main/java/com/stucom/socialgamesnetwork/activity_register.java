@@ -29,8 +29,10 @@ import com.stucom.socialgamesnetwork.model.History;
 import com.stucom.socialgamesnetwork.model.Opinion;
 import com.stucom.socialgamesnetwork.model.Recommendation;
 import com.stucom.socialgamesnetwork.model.Score;
+import com.stucom.socialgamesnetwork.model.User;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,13 +61,38 @@ public class activity_register extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                //Este es el token de mi usuario registrado, esto debería leerse del shared preferences que ya está el método
+                token = "bc1d3253a4e4b6683041c3bdd4621b0d106c22235a3bdef2e90250be68e39952df16fcbfeddcd43395edd8cf7b7986a9fe17e73fa90548e88e68052909152cd3";
+                //Game game = new Game("35", "Sonico");
+                //insertGame(game);
+                //Opinion opinion = new Opinion("djvatio@hotmail.com", "10","Hola");
+                //insertOpinion(opinion);
+                //deleteOpinion(opinion);
+                //Recommendation recommendation = new Recommendation("djvatio@hotmail.com", "1", "2", "Hola");
+                //insertRecommendation(recommendation);
+                //deleteRecommendation(recommendation);
+                //Score score = new Score("djvatio@hotmail.com", "1",true);
+                //insertScore(score);
+                //deleteScore(score);
+                //Favourite favourite = new Favourite("djvatio@hotmail.com", "1");
+                //deleteFavourite(favourite);
+                //insertFavourite(favourite);
+                //History history = new History("djvatio@hotmail.com","1", new Date());
+                //insertHistory(history);
+                //updateHistory(history);
+                //deleteHistory(history);
+                //User user = new User("","","djvatio@hotmail.com");
+                //deleteAllHistory(user);
+
                 if(!tEmail.getText().toString().isEmpty() && !tUsername.getText().toString().isEmpty() && !tName.getText().toString().isEmpty() && !tSurname.getText().toString().isEmpty() && !tPassword.getText().toString().isEmpty() && !tConfirm.getText().toString().isEmpty())
                 {
                     if (tPassword.getText().toString().equals(tConfirm.getText().toString()))
                     {
-                        registra();
-                        //Game game = new Game("10","Sonic");
-                        //insertGame(game);
+                        register();
+
+
+
+
                     }
                     else
                     {
@@ -88,7 +115,7 @@ public class activity_register extends AppCompatActivity {
         });
     }
 
-    private void registra()
+    private void register()
     {
         RequestQueue queue = Volley.newRequestQueue(this);
         String URL = "http://www.arturviader.com/socialgamesnetwork/insertUser";
@@ -101,9 +128,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()==0)
                         {
-
                             final EditText tcodi = new EditText(activity_register.this);
-
                             new AlertDialog.Builder(activity_register.this)
                                     .setTitle(R.string.insertcode1)
                                     .setMessage(R.string.insertcode2)
@@ -111,7 +136,7 @@ public class activity_register extends AppCompatActivity {
                                     .setPositiveButton(R.string.register, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             int codi = Integer.parseInt(tcodi.getText().toString());
-                                            confirmacodi(codi);
+                                            confirmCode(codi);
 
                                         }
                                     })
@@ -154,7 +179,7 @@ public class activity_register extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void confirmacodi(final int codi)
+    private void confirmCode(final int codi)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
         String URL = "http://www.arturviader.com/socialgamesnetwork/loginConfirmation";
@@ -212,8 +237,11 @@ public class activity_register extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * Insert a game
+     * Verified
+     * @param game
+     */
     private void insertGame(final Game game)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -255,6 +283,12 @@ public class activity_register extends AppCompatActivity {
         queue.add(request);
     }
 
+    /**
+     * Insert opinion
+     * Verified
+     * @param opinion
+     */
+
     private void insertOpinion(final Opinion opinion)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -271,7 +305,7 @@ public class activity_register extends AppCompatActivity {
                         {
                             AlertDialog show = new AlertDialog.Builder(activity_register.this)
                                     .setTitle("Error")
-                                    .setMessage(R.string.errorInsertGame)
+                                    .setMessage(R.string.errorInsertOpinion)
                                     .setNeutralButton("OK", null)
                                     .show();
                         }
@@ -297,6 +331,11 @@ public class activity_register extends AppCompatActivity {
         queue.add(request);
     }
 
+    /**
+     * Insert recommendation
+     * Verified
+     * @param recommendation
+     */
     private void insertRecommendation(final Recommendation recommendation)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -313,7 +352,7 @@ public class activity_register extends AppCompatActivity {
                         {
                             AlertDialog show = new AlertDialog.Builder(activity_register.this)
                                     .setTitle("Error")
-                                    .setMessage(R.string.errorInsertGame)
+                                    .setMessage(R.string.errorInsertRecommendation)
                                     .setNeutralButton("OK", null)
                                     .show();
                         }
@@ -340,6 +379,11 @@ public class activity_register extends AppCompatActivity {
         queue.add(request);
     }
 
+    /**
+     * Insert score
+     * Verified
+     * @param score
+     */
     private void insertScore(final Score score)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -356,7 +400,7 @@ public class activity_register extends AppCompatActivity {
                         {
                             AlertDialog show = new AlertDialog.Builder(activity_register.this)
                                     .setTitle("Error")
-                                    .setMessage(R.string.errorInsertGame)
+                                    .setMessage(R.string.errorInsertScore)
                                     .setNeutralButton("OK", null)
                                     .show();
                         }
@@ -382,6 +426,11 @@ public class activity_register extends AppCompatActivity {
         queue.add(request);
     }
 
+    /**
+     * Insert favourite
+     * Verified
+     * @param favourite
+     */
     private void insertFavourite(final Favourite favourite)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -424,6 +473,103 @@ public class activity_register extends AppCompatActivity {
     }
 
 
+    /**
+     * Insert history
+     * @param history
+     * verified
+     */
+    private void insertHistory(final History history)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/insertHistory";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorInsertHistory)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", history.getEmail());
+                params.put("idGame", history.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    /**
+     * Update history date
+     * verified
+     * @param history
+     */
+    private void updateHistory(final History history)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/updateHistory";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorUpdateHistory)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", history.getEmail());
+                params.put("idGame", history.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    /**
+     * Delete favourite
+     * @param favourite
+     * verified
+     */
     private void deleteFavourite(final Favourite favourite)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -464,7 +610,8 @@ public class activity_register extends AppCompatActivity {
         };
         queue.add(request);
     }
-/*
+
+   /* Revisar
     private void deleteRecommendation(final Recommendation recommendation)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -498,14 +645,20 @@ public class activity_register extends AppCompatActivity {
             @Override protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", recommendation.getEmail());
-                params.put("idGame", recommendation.getIdGameRecommended());
+                params.put("idGameRecommended", recommendation.getIdGameRecommended());
+                params.put("idGameBase", recommendation.getIdGameBase());
                 params.put("token", token);
                 return params;
             }
         };
         queue.add(request);
-    }*/
+    }
 
+    /**
+     * Delete opinion
+     * @param opinion
+     * verified
+     */
     private void deleteOpinion(final Opinion opinion)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -547,6 +700,11 @@ public class activity_register extends AppCompatActivity {
         queue.add(request);
     }
 
+    /**
+     * Delete one line of history
+     * @param history
+     * verified
+     */
     private void deleteHistory(final History history)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -588,6 +746,55 @@ public class activity_register extends AppCompatActivity {
         queue.add(request);
     }
 
+    /**
+     * Delete one line of history
+     * @param history
+     * verified
+     */
+    private void deleteAllHistory(final User history)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/deleteAllHistory";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                                    .setTitle("Error")
+                                    .setMessage(R.string.errorDeleteHistory)
+                                    .setNeutralButton("OK", null)
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", history.getEmail());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    /**
+     * Delete Score
+     * @param score
+     */
     private void deleteScore(final Score score)
     {
         RequestQueue queue = Volley.newRequestQueue(this);

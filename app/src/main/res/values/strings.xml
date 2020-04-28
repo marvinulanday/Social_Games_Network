@@ -34,4 +34,9 @@
     <string name="errorDeleteOpinion">Error deleting opinion</string>
     <string name="errorDeleteHistory">Error deleting history</string>
     <string name="errorDeleteScore">Error deleting score</string>
+    <string name="errorInsertOpinion">Error inserting opinion</string>
+    <string name="errorInsertRecommendation">Error inserting recommendation</string>
+    <string name="errorInsertScore">Error inserting score</string>
+    <string name="errorInsertHistory">Error inserting history</string>
+    <string name="errorUpdateHistory">Error updating history</string>
 </resources>
