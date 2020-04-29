@@ -30,4 +30,8 @@
     <string name="errorInsertScore">Error insertando puntuación</string>
     <string name="errorInsertHistory">Error insertando historial</string>
     <string name="errorUpdateHistory">Error actualizando historial</string>
+    <string name="errorUpdateRecommendation">Error actualizando recomendación</string>
+    <string name="errorUpdateScore">Error actualizando puntuación</string>
+    <string name="errorUpdateUser">Error actualizando usuario</string>
+    <string name="errorUpdateOpinion">Error updating opinion</string>
 </resources>

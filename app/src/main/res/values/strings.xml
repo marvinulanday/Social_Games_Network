@@ -39,4 +39,8 @@
     <string name="errorInsertScore">Error inserting score</string>
     <string name="errorInsertHistory">Error inserting history</string>
     <string name="errorUpdateHistory">Error updating history</string>
+    <string name="errorUpdateRecommendation">Error updating recommendation</string>
+    <string name="errorUpdateScore">Error updating score</string>
+    <string name="errorUpdateOpinion">Error updating opinion</string>
+    <string name="errorUpdateUser">Error updating user</string>
 </resources>
