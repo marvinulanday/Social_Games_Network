@@ -30,7 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.stucom.socialgamesnetwork.HomeActivity;
 import com.stucom.socialgamesnetwork.MainActivity;
 import com.stucom.socialgamesnetwork.R;
-import com.stucom.socialgamesnetwork.activity_register;
+import com.stucom.socialgamesnetwork.RegisterActivity;
 import com.stucom.socialgamesnetwork.model.User;
 
 
@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, activity_register.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
