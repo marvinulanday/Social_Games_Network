@@ -1,8 +1,5 @@
 package com.stucom.socialgamesnetwork;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,12 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -32,11 +30,10 @@ import com.stucom.socialgamesnetwork.model.Score;
 import com.stucom.socialgamesnetwork.model.User;
 
 import java.lang.reflect.Type;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class activity_register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     TextView tEmail;
     TextView tUsername;
     TextView tName;
@@ -101,7 +98,7 @@ public class activity_register extends AppCompatActivity {
                     }
                     else
                     {
-                        AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                        AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                 .setTitle("Error")
                                 .setMessage(R.string.incorrectConfirmation)
                                 .setNeutralButton("OK", null)
@@ -110,7 +107,7 @@ public class activity_register extends AppCompatActivity {
                 }
                 else
                 {
-                    AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                    AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                             .setTitle("Error")
                             .setMessage(R.string.emptyFields)
                             .setNeutralButton("OK", null)
@@ -133,8 +130,8 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()==0)
                         {
-                            final EditText tcodi = new EditText(activity_register.this);
-                            new AlertDialog.Builder(activity_register.this)
+                            final EditText tcodi = new EditText(RegisterActivity.this);
+                            new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle(R.string.insertcode1)
                                     .setMessage(R.string.insertcode2)
                                     .setView(tcodi)
@@ -154,7 +151,7 @@ public class activity_register extends AppCompatActivity {
                         }
                         else
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage("Error: " + apiResponse.getErrorMsg())
                                     .setNeutralButton("OK", null)
@@ -163,7 +160,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -203,7 +200,7 @@ public class activity_register extends AppCompatActivity {
                             guardatoken(token,tEmail.getText().toString());
                             //visibilitzaunregister();
 
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle(R.string.userregistrered1)
                                     .setMessage(R.string.userregistrered2)
                                     .setPositiveButton("OK",new DialogInterface.OnClickListener() {
@@ -214,7 +211,7 @@ public class activity_register extends AppCompatActivity {
                         }
                         else
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage("Error: " + apiResponse.getErrorMsg())
                                     .setNeutralButton("OK", null)
@@ -223,7 +220,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -261,7 +258,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorInsertGame)
                                     .setNeutralButton("OK", null)
@@ -270,7 +267,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -308,7 +305,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorInsertOpinion)
                                     .setNeutralButton("OK", null)
@@ -317,7 +314,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -355,7 +352,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorInsertRecommendation)
                                     .setNeutralButton("OK", null)
@@ -364,7 +361,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -403,7 +400,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorInsertScore)
                                     .setNeutralButton("OK", null)
@@ -412,7 +409,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -450,7 +447,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorInsertFavourite)
                                     .setNeutralButton("OK", null)
@@ -459,7 +456,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -497,7 +494,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorInsertHistory)
                                     .setNeutralButton("OK", null)
@@ -506,7 +503,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -543,7 +540,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorUpdateHistory)
                                     .setNeutralButton("OK", null)
@@ -552,7 +549,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -589,7 +586,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorUpdateRecommendation)
                                     .setNeutralButton("OK", null)
@@ -598,7 +595,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -637,7 +634,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorUpdateOpinion)
                                     .setNeutralButton("OK", null)
@@ -646,7 +643,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -684,7 +681,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorUpdateScore)
                                     .setNeutralButton("OK", null)
@@ -693,7 +690,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -726,7 +723,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorUpdateScore)
                                     .setNeutralButton("OK", null)
@@ -735,7 +732,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.errorUpdateUser)
                         .setNeutralButton("OK", null)
@@ -773,7 +770,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorDeleteFavourite)
                                     .setNeutralButton("OK", null)
@@ -782,7 +779,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -862,7 +859,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorDeleteOpinion)
                                     .setNeutralButton("OK", null)
@@ -871,7 +868,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -908,7 +905,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorDeleteHistory)
                                     .setNeutralButton("OK", null)
@@ -917,7 +914,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -954,7 +951,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorDeleteHistory)
                                     .setNeutralButton("OK", null)
@@ -963,7 +960,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
@@ -998,7 +995,7 @@ public class activity_register extends AppCompatActivity {
 
                         if(apiResponse.getErrorCode()!=0)
                         {
-                            AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                            AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
                                     .setMessage(R.string.errorDeleteScore)
                                     .setNeutralButton("OK", null)
@@ -1007,7 +1004,7 @@ public class activity_register extends AppCompatActivity {
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(activity_register.this)
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Error")
                         .setMessage(R.string.networkerror)
                         .setNeutralButton("OK", null)
