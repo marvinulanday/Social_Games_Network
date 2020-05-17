@@ -42,7 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
     TextView tConfirm;
     Button bRegister;
     String token;
-
+    int countScore;
+    Score scoresGame[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
                 //deleteHistory(history);
                 //User user = new User("","","djvatio@hotmail.com");
                 //deleteAllHistory(user);
-
+                Game game = new Game("1","Sonic");
+                //selectCountScore(game);
+                selectScore(game);
                 if(!tEmail.getText().toString().isEmpty() && !tUsername.getText().toString().isEmpty() && !tName.getText().toString().isEmpty() && !tSurname.getText().toString().isEmpty() && !tPassword.getText().toString().isEmpty() && !tConfirm.getText().toString().isEmpty())
                 {
                     if (tPassword.getText().toString().equals(tConfirm.getText().toString()))
@@ -284,6 +287,76 @@ public class RegisterActivity extends AppCompatActivity {
         };
         queue.add(request);
     }
+
+    private void selectScore(final Game game)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/selectScore";
+        int score;
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+                        scoresGame = (Score[]) apiResponse.getData();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("idGame", game.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    private void selectCountScore(final Game game)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/selectCountScore";
+        int score;
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+                        countScore = (int) apiResponse.getData();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("idGame", game.getIdGame());
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+
 
     /**
      * Insert opinion
