@@ -6,18 +6,6 @@ import android.content.SharedPreferences;
 public class SharedPrefsManagement {
 
     /**
-     * Gets the token from the SharedPreferences
-     *
-     * @param context
-     * @return
-     */
-    public static String getToken(Context context) {
-        SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
-        String tokenValue = sharedPref.getString("token", "");
-        return tokenValue;
-    }
-
-    /**
      * Saves the data given to the SharedPreferences
      *
      * @param context
@@ -29,6 +17,18 @@ public class SharedPrefsManagement {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(key, value);
         editor.apply();
+    }
+
+    /**
+     * Gets the data from to the SharedPreferences
+     *
+     * @param context
+     * @param key
+     */
+    public static String getData(Context context, String key) {
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+        String value = sharedPref.getString(key, "");
+        return value;
     }
 
     /**

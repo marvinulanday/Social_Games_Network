@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.stucom.socialgamesnetwork.DAO.SharedPrefsManagement;
 import com.stucom.socialgamesnetwork.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,7 +14,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        String token = SharedPrefsManagement.getData(MainActivity.this, "token");
+        Intent intent;
+        if (token.isEmpty()) {
+            intent = new Intent(getApplicationContext(), LoginActivity.class);
+        } else {
+            intent = new Intent(getApplicationContext(), HomeActivity.class);
+        }
         startActivity(intent);
     }
 

@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stucom.socialgamesnetwork.HomeActivity;
 import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.RegisterActivity;
 import com.stucom.socialgamesnetwork.model.User;
 
 
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
         mAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        SignInButton buttonGoogle = findViewById(R.id.sign_in_button);
+        SignInButton buttonGoogle = findViewById(R.id.btnGoogle);
         buttonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });

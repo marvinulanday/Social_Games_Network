@@ -1,6 +1,7 @@
 package com.stucom.socialgamesnetwork;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.stucom.socialgamesnetwork.CustomExpandableListView.ExpandableListAdapter;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
+import com.stucom.socialgamesnetwork.DAO.SharedPrefsManagement;
 import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
@@ -132,6 +134,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_ranking:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
                 break;
+            case R.id.nav_logout:
+                logOut();
+                break;
 
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -168,5 +173,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         Log.d("SGN", filterGames.toString());
         dao.getGamesByGenre(this, null, filterGames.get("Genre"));
+    }
+
+    private void logOut() {
+        SharedPrefsManagement.deleteData(this);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
