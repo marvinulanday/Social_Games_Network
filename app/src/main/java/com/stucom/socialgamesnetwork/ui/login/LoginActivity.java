@@ -28,9 +28,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stucom.socialgamesnetwork.HomeActivity;
-import com.stucom.socialgamesnetwork.MainActivity;
 import com.stucom.socialgamesnetwork.R;
-import com.stucom.socialgamesnetwork.RegisterActivity;
 import com.stucom.socialgamesnetwork.model.User;
 
 
@@ -155,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -169,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
     private void UpdateUI(FirebaseUser user) {
         if (user != null) {
             Log.d("SGN", "GoogleLogin");
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
         }
     }

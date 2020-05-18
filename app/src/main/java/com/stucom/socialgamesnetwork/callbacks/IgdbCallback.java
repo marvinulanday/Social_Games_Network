@@ -1,9 +1,13 @@
 package com.stucom.socialgamesnetwork.callbacks;
 
+import android.content.Context;
+
 import com.stucom.socialgamesnetwork.model.Genre;
 
 import java.util.List;
 
 public interface IgdbCallback {
-    void findGenres(List<Genre> genres);
+    void findGenres(Context context, List<Genre> genresAPI);
+
+
 }

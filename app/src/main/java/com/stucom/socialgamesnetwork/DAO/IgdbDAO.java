@@ -1,6 +1,5 @@
 package com.stucom.socialgamesnetwork.DAO;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 
@@ -15,12 +14,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
-import com.stucom.socialgamesnetwork.ui.login.MyCallback;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class IgdbDAO {
 
@@ -32,21 +31,19 @@ public class IgdbDAO {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("SGN", response);
                         Gson gson = new Gson();
                         Type listGenre = new TypeToken<List<Genre>>() {
                         }.getType();
-                        List<Genre> genres = gson.fromJson(response, listGenre);
-                        callback.findGenres(genres);
+                        List<Genre> genresAPI = gson.fromJson(response, listGenre);
+
+                        Log.d("SGN", genresAPI.toString());
+
+                        callback.findGenres(context, genresAPI);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(null)
-                        .setTitle("Error")
-                        .setMessage("Network error")
-                        .setNeutralButton("OK", null)
-                        .show();
+                Log.d("SGN", String.valueOf(error));
             }
         }) {
             @Override
@@ -59,16 +56,18 @@ public class IgdbDAO {
         queue.add(request);
     }
 
-    public void getGamesByGenre(final Context context, final MyCallback callback, final List<Genre> genres) {
+    public void getGamesByGenre(final Context context, IgdbCallback callback, final Set<Genre> genres) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "https://api-v3.igdb.com/games";
         Log.d("SGN", URL);
         StringBuilder stringBuilder = new StringBuilder("fields id,name,genres; where genres = [");
-        for (int i = 0; i < genres.size(); i++) {
-            stringBuilder.append(genres.get(i).getId());
+        int i = 0;
+        for (Genre genre : genres) {
+            stringBuilder.append(genre.getId());
             if (i < genres.size() - 1) {
                 stringBuilder.append(", ");
             }
+            i++;
         }
         stringBuilder.append("];");
 
@@ -101,4 +100,6 @@ public class IgdbDAO {
         };
         queue.add(request);
     }
+
+
 }
