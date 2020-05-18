@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.stucom.socialgamesnetwork.CustomExpandableListView.ExpandableListAdapter;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
+import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
 
@@ -74,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
+
         drawer = findViewById(R.id.drawer_layout);
         searchBtn = findViewById(R.id.buttonId);
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +105,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // Abre directamente el profile fragment
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_profile);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
+            //navigationView.setCheckedItem(R.id.nav_ranking);
         }
     }
 
@@ -112,7 +114,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                CustomCallback customCallback = new CustomCallback() {
+                    @Override
+                    public void customMethod() {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
+                    }
+                };
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("callback", customCallback);
+                ProfileFragment profileFragment = new ProfileFragment();
+                profileFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
                 break;
             case R.id.nav_explore:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ExploreFragment()).commit();
