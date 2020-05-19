@@ -9,16 +9,19 @@
 
     <TextView
         android:id="@+id/tvScore"
-        android:layout_width="378dp"
+        android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:gravity="center|right"
+        android:background="@drawable/btn_rounded"
+        android:gravity="center|end"
+        android:paddingRight="10dp"
         android:text="TextView"
+        android:textColor="#FFFFFF"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/ivGameImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/ivGameImage" />
 
     <ImageView

@@ -3,6 +3,8 @@ package com.stucom.socialgamesnetwork.DAO;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -10,12 +12,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import com.stucom.socialgamesnetwork.MainActivity;
+import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.RegisterActivity;
+import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.model.User;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SgnDAO {
     private User user;
@@ -29,6 +38,7 @@ public class SgnDAO {
      * @param password Password escrita por el usuario
      */
     public void getUser(final Context context, final MyCallback callback, final String email, final String password) {
+
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "http://www.arturviader.com/socialgamesnetwork/login?email=" + email + "&password=" + password + "";
         Log.d("SGN", URL);
@@ -57,6 +67,39 @@ public class SgnDAO {
                 Log.d("SGN", String.valueOf(error));
             }
         });
+        queue.add(request);
+    }
+
+    public void selectUserByEmail(final Context context, final MyCallback callback)
+    {
+        final String token = SharedPrefsManagement.getData(context, "token");
+        final String email = SharedPrefsManagement.getData(context, "email");
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        String URL = "http://www.arturviader.com/socialgamesnetwork/selectUserByEmail?email=" + email + "&token=" + token;
+        int score;
+        StringRequest request = new StringRequest(Request.Method.GET, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        user = (User) apiResponse.getData();
+                        callback.login(user);
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                Log.d("SGN", String.valueOf(error));
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
         queue.add(request);
     }
 

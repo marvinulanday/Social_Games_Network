@@ -1,15 +1,22 @@
 package com.stucom.socialgamesnetwork.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
 public class User {
-
+    @SerializedName("username")
     private String username;
+    @SerializedName("password")
     private String password;
+    @SerializedName("email")
     private String email;
+    @SerializedName("name")
     private String name;
+    @SerializedName("surname")
     private String surname;
+    @SerializedName("token")
     private String token;
 
     public User(String username) {
