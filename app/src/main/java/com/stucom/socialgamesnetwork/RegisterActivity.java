@@ -819,7 +819,7 @@ public class RegisterActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void updateUser(final User user)
+    private void updateUser(final User user, final String newPassword, final String passwordConfirm)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
         String URL = "http://www.arturviader.com/socialgamesnetwork/updateUser";
@@ -835,7 +835,7 @@ public class RegisterActivity extends AppCompatActivity {
                         {
                             AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
                                     .setTitle("Error")
-                                    .setMessage(R.string.errorUpdateScore)
+                                    .setMessage(R.string.errorUpdateUser)
                                     .setNeutralButton("OK", null)
                                     .show();
                         }
@@ -852,13 +852,18 @@ public class RegisterActivity extends AppCompatActivity {
             @Override protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", user.getEmail());
-                params.put("password", user.getPassword());
+                params.put("name", user.getName());
+                params.put("surname", user.getSurname());
+                params.put("oldPassword", user.getPassword());
+                params.put("newPassword", newPassword);
+                params.put("confirmPassword", passwordConfirm);
                 params.put("token", token);
                 return params;
             }
         };
         queue.add(request);
     }
+
 
 
     /**
