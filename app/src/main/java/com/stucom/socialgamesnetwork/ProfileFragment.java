@@ -24,7 +24,7 @@ public class ProfileFragment extends Fragment {
     MyCallback myCallback;
     User readUser;
     SgnDAO dao;
-    TextView tname;
+    TextView tvName;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class ProfileFragment extends Fragment {
         ivAvatar = view.findViewById(R.id.ivAvatarProfile);
         ivAvatar.setImageResource(R.drawable.user);
         btnEdit = view.findViewById(R.id.btnEdit);
+        tvName = view.findViewById(R.id.tvNameData);
         Bundle bundle = getArguments();
         callback = (CustomCallback) bundle.getSerializable("callback");
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +47,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void login(User user) {
                 readUser = user;
-                tname.setText(user.getName());
+                tvName.setText(user.getName());
             }
         };
         dao.selectUserByEmail(getContext(), myCallback);

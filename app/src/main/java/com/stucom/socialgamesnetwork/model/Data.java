@@ -3,6 +3,7 @@ package com.stucom.socialgamesnetwork.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Data {
+
     @SerializedName("data")
     private Object data;
 

@@ -3,8 +3,6 @@ package com.stucom.socialgamesnetwork.DAO;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,10 +12,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
-import com.stucom.socialgamesnetwork.MainActivity;
-import com.stucom.socialgamesnetwork.R;
-import com.stucom.socialgamesnetwork.RegisterActivity;
-import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.model.User;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
@@ -27,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SgnDAO {
-    private User user;
 
     /**
      * Comprueba si el siguiente usuario con email y password existe en la base de datos.
@@ -55,7 +48,7 @@ public class SgnDAO {
                             String token = apiResponse.getData().toString();
                             SharedPrefsManagement.saveData(context, "token", token);
                             SharedPrefsManagement.saveData(context, "email", email);
-                            user = new User(email, password);
+                            User user = new User(email, password);
                             callback.login(user);
                         } else {
                             callback.login(null);
@@ -84,9 +77,10 @@ public class SgnDAO {
 
                         Gson gson = new Gson();
                         Type typeToken = new TypeToken<Data>() {}.getType();
-                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+                        Data apiResponse = gson.fromJson(response, typeToken);
+                        JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
 
-                        user = (User) apiResponse.getData();
+                        User user = gson.fromJson(jsonElement, User.class);
                         callback.login(user);
                     }
                 }, new Response.ErrorListener() {
