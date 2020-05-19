@@ -15,15 +15,20 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;
 
 import java.util.List;
 
 public class ExploreFragment extends Fragment {
+
+    IgdbDAO dao;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // dao.getGamesByGenre();
         return inflater.inflate(R.layout.fragment_explore, container, false);
     }
 
@@ -64,7 +69,6 @@ public class ExploreFragment extends Fragment {
             super();
             this.videogames = videogames;
         }
-
 
         @NonNull
         @Override

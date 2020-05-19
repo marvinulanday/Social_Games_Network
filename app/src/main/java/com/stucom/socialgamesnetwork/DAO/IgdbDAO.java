@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
+import com.stucom.socialgamesnetwork.model.Videogame;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class IgdbDAO {
         queue.add(request);
     }
 
-    public void getGamesByGenre(final Context context, IgdbCallback callback, final Set<Genre> genres) {
+    public void getGames(final Context context, final Set<Genre> genres) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "https://api-v3.igdb.com/games";
         Log.d("SGN", URL);
@@ -83,6 +84,61 @@ public class IgdbDAO {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user-key", "d191590b7da257537341f8ca039f5d2f");
+                return params;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody.getBytes();
+            }
+
+        };
+        queue.add(request);
+    }
+
+    public void getGamesByGenre(final Context context, final IgdbCallback callback, final Set<Genre> genres) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "https://api-v3.igdb.com/games";
+        Log.d("SGN", URL);
+        StringBuilder stringBuilder = new StringBuilder();
+        if (genres.isEmpty()) {
+            stringBuilder.append("fields *, genres.*, cover.*; limit 5; sort popularity desc;");
+        } else {
+            stringBuilder.append("fields *, genres.*, cover.*;  limit 5; sort popularity desc; where genres = [");
+            int i = 0;
+            for (Genre genre : genres) {
+                stringBuilder.append(genre.getId());
+                if (i < genres.size() - 1) {
+                    stringBuilder.append(", ");
+                }
+                i++;
+            }
+            stringBuilder.append("];");
+        }
+        final String requestBody = stringBuilder.toString();
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        Type listVideogame = new TypeToken<List<Videogame>>() {
+                        }.getType();
+                        List<Videogame> videogamesAPI = gson.fromJson(response, listVideogame);
+
+                        Log.d("SGN", videogamesAPI.toString());
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("SGN", String.valueOf(error));
             }
         }) {
             @Override

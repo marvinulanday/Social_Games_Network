@@ -1,13 +1,24 @@
 package com.stucom.socialgamesnetwork.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Videogame {
 
+    @SerializedName("id")
     private String idGame;
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("genres")
     private List<Genre> genres;
-    private int rating;
+
+    @SerializedName("total_rating")
+    private double rating;
+
+    @SerializedName("cover")
     private String image;
 
     public Videogame(String idGame, String name) {
@@ -19,12 +30,12 @@ public class Videogame {
         return idGame;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setIdGame(String idGame) {
         this.idGame = idGame;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -39,11 +50,11 @@ public class Videogame {
         this.genres = genres;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
