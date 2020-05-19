@@ -28,6 +28,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.stucom.socialgamesnetwork.HomeActivity;
+import com.stucom.socialgamesnetwork.MainActivity;
 import com.stucom.socialgamesnetwork.R;
 import com.stucom.socialgamesnetwork.RegisterActivity;
 import com.stucom.socialgamesnetwork.model.User;
@@ -102,24 +103,24 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getUser() != null) {
                     updateUiWithUser(loginResult.getUser());
-                }
-                setResult(Activity.RESULT_OK);
+                    setResult(Activity.RESULT_OK);
 
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                intent.putExtra("username", usernameEditText.getText().toString());
-                startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("username", usernameEditText.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
+
             }
 
             @Override

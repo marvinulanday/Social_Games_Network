@@ -2,6 +2,7 @@ package com.stucom.socialgamesnetwork;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         String token = SharedPrefsManagement.getData(MainActivity.this, "token");
         Intent intent;
+        Log.d("SGN", "Token --> " + token);
         if (token.isEmpty()) {
             intent = new Intent(getApplicationContext(), LoginActivity.class);
         } else {
