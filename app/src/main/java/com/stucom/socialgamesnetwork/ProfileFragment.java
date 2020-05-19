@@ -30,7 +30,7 @@ public class ProfileFragment extends Fragment {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.customMethod();
+                callback.accessFragment(R.id.fragment_container, new ProfileEditFragment());
             }
         });
         return view;

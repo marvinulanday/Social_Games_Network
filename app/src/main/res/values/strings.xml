@@ -43,4 +43,7 @@
     <string name="errorUpdateScore">Error updating score</string>
     <string name="errorUpdateOpinion">Error updating opinion</string>
     <string name="errorUpdateUser">Error updating user</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

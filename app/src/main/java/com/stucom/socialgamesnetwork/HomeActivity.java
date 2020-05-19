@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 import com.stucom.socialgamesnetwork.CustomExpandableListView.ExpandableListAdapter;
@@ -118,8 +119,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 CustomCallback customCallback = new CustomCallback() {
                     @Override
-                    public void customMethod() {
-                        Log.d("SGN", "Hola");
+                    public void accessFragment(int containerViewId, Fragment fragment) {
+                        getSupportFragmentManager().beginTransaction().replace(containerViewId, fragment).commit();
                     }
                 };
                 Bundle bundle = new Bundle();
