@@ -119,7 +119,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 CustomCallback customCallback = new CustomCallback() {
                     @Override
                     public void customMethod() {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
+                    }
+
+                    @Override
+                    public void editProfile() {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileEditFragment()).commit();
                     }
                 };
                 Bundle bundle = new Bundle();
