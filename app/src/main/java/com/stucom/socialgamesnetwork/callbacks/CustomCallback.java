@@ -4,5 +4,4 @@ import java.io.Serializable;
 
 public interface CustomCallback extends Serializable {
     void customMethod();
-    void editProfile();
 }
