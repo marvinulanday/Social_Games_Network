@@ -36,7 +36,7 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvScore" />
 
     <EditText
         android:id="@+id/password"
@@ -94,7 +94,7 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvScore"
         android:layout_width="0dp"
         android:layout_height="177dp"
         android:background="#655454"
