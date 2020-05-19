@@ -1,6 +1,5 @@
 package com.stucom.socialgamesnetwork.DAO;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 
@@ -49,21 +48,13 @@ public class SgnDAO {
                             user = new User(email, password);
                             callback.login(user);
                         } else {
-                            AlertDialog show = new AlertDialog.Builder(null)
-                                    .setTitle("Error")
-                                    .setMessage("Error: " + apiResponse.getErrorMsg())
-                                    .setNeutralButton("OK", null)
-                                    .show();
+                            callback.login(null);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(null)
-                        .setTitle("Error")
-                        .setMessage("Network error")
-                        .setNeutralButton("OK", null)
-                        .show();
+                Log.d("SGN", String.valueOf(error));
             }
         });
         queue.add(request);

@@ -1,32 +1,27 @@
 package com.stucom.socialgamesnetwork.model;
 
-public class Game {
+public class Videogame {
     private String idGame;
     private String name;
 
-    public Game(String idGame, String name)
-    {
+    public Videogame(String idGame, String name) {
         this.idGame = idGame;
         this.name = name;
     }
 
-    public String getIdGame()
-    {
+    public String getIdGame() {
         return idGame;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setIdGame(String idGame)
-    {
+    public void setIdGame(String idGame) {
         this.idGame = idGame;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 }

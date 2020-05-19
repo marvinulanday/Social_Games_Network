@@ -22,12 +22,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.model.Favourite;
-import com.stucom.socialgamesnetwork.model.Game;
 import com.stucom.socialgamesnetwork.model.History;
 import com.stucom.socialgamesnetwork.model.Opinion;
 import com.stucom.socialgamesnetwork.model.Recommendation;
 import com.stucom.socialgamesnetwork.model.Score;
 import com.stucom.socialgamesnetwork.model.User;
+import com.stucom.socialgamesnetwork.model.Videogame;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //deleteHistory(history);
                 //User user = new User("","","djvatio@hotmail.com");
                 //deleteAllHistory(user);
-                Game game = new Game("1","Sonic");
+                Videogame game = new Videogame("1", "Sonic");
                 //selectCountScore(game);
                 selectScore(game);
                 if(!tEmail.getText().toString().isEmpty() && !tUsername.getText().toString().isEmpty() && !tName.getText().toString().isEmpty() && !tSurname.getText().toString().isEmpty() && !tPassword.getText().toString().isEmpty() && !tConfirm.getText().toString().isEmpty())
@@ -247,7 +247,7 @@ public class RegisterActivity extends AppCompatActivity {
      * Verified
      * @param game
      */
-    private void insertGame(final Game game)
+    private void insertGame(final Videogame game)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
         String URL = "http://www.arturviader.com/socialgamesnetwork/insertGame";
@@ -288,7 +288,7 @@ public class RegisterActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void selectScore(final Game game)
+    private void selectScore(final Videogame game)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
         String URL = "http://www.arturviader.com/socialgamesnetwork/selectScore";
@@ -322,7 +322,7 @@ public class RegisterActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void selectCountScore(final Game game)
+    private void selectCountScore(final Videogame game)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
         String URL = "http://www.arturviader.com/socialgamesnetwork/selectCountScore";
