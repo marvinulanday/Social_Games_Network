@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     String token;
     int countScore;
     Score scoresGame[];
+    User readedUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +89,10 @@ public class RegisterActivity extends AppCompatActivity {
                 //deleteAllHistory(user);
                 Game game = new Game("1","Sonic");
                 //selectCountScore(game);
-                selectScore(game);
+                //selectScore(game);
+                selectUserByEmail("djvatio@hotmail.com");
+
+
                 if(!tEmail.getText().toString().isEmpty() && !tUsername.getText().toString().isEmpty() && !tName.getText().toString().isEmpty() && !tSurname.getText().toString().isEmpty() && !tPassword.getText().toString().isEmpty() && !tConfirm.getText().toString().isEmpty())
                 {
                     if (tPassword.getText().toString().equals(tConfirm.getText().toString()))
@@ -287,6 +291,42 @@ public class RegisterActivity extends AppCompatActivity {
         };
         queue.add(request);
     }
+
+    private void selectUserByEmail(String email)
+    {
+        final String theemail = email;
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/selectUserByEmail";
+        int score;
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+                        readedUser = (User) apiResponse.getData();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                AlertDialog show = new AlertDialog.Builder(RegisterActivity.this)
+                        .setTitle("Error")
+                        .setMessage(R.string.networkerror)
+                        .setNeutralButton("OK", null)
+                        .show();
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", theemail);
+                params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
 
     private void selectScore(final Game game)
     {
