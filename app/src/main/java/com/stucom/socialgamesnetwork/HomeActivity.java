@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.stucom.socialgamesnetwork.CustomExpandableListView.ExpandableListAdapter;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
@@ -35,26 +37,28 @@ import java.util.Set;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    IgdbDAO dao;
+    private IgdbDAO dao;
 
     private DrawerLayout drawer;
     private ExpandableListView expListView;
-    ExpandableListAdapter listAdapterExpandable;
-    LinearLayout lnrLytFilterGames;
-    List<String> groups;
-    HashMap<String, List<String>> data;
-    List<Genre> genres;
-    Button searchBtn;
+    private FrameLayout frameLayout;
+    private ExpandableListAdapter listAdapterExpandable;
+    private LinearLayout lnrLytFilterGames;
 
-    IgdbCallback callback;
+    private FloatingActionButton btnFilter;
+    private Button searchBtn;
 
+    private HashMap<String, List<String>> data;
+    private List<Genre> genres;
+    private List<String> groups;
+
+    private IgdbCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         dao = new IgdbDAO();
-
         callback = new IgdbCallback() {
             @Override
             public void findGenres(Context context, List<Genre> genresAPI) {
@@ -106,6 +110,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        frameLayout = findViewById(R.id.fragment_container);
+        btnFilter = findViewById(R.id.btnFilter);
+        frameLayout.removeView(btnFilter);
         // Abre directamente el profile fragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
@@ -117,6 +124,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
+                frameLayout.removeView(btnFilter);
                 CustomCallback customCallback = new CustomCallback() {
                     @Override
                     public void accessFragment(int containerViewId, Fragment fragment) {
@@ -130,9 +138,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
                 break;
             case R.id.nav_explore:
+                frameLayout.addView(btnFilter);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ExploreFragment()).commit();
+
                 break;
             case R.id.nav_ranking:
+                frameLayout.removeView(btnFilter);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
                 break;
             case R.id.nav_logout:
