@@ -138,15 +138,18 @@ public class ExploreFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             ImageView ivVideogameImage;
-            ImageView ivVideogameRating;
+            ProgressBar pbVideogameRating;
             TextView tvVideogameTitle;
             TextView tvVideogameGenre;
+            TextView tvVideogameRating;
 
             ViewHolder(View view) {
                 super(view);
                 ivVideogameImage = view.findViewById(R.id.ivVideogameImage);
+                pbVideogameRating = view.findViewById(R.id.pbVideogameRating);
                 tvVideogameTitle = view.findViewById(R.id.tvVideogameTitle);
                 tvVideogameGenre = view.findViewById(R.id.tvVideogameGenre);
+                tvVideogameRating = view.findViewById(R.id.tvVideogameRating);
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -199,6 +202,16 @@ public class ExploreFragment extends Fragment {
             holder.tvVideogameGenre.setText(stringBuilder.toString());
             String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
             Picasso.get().load(img).into(holder.ivVideogameImage);
+            int rating = Integer.valueOf((int) videogame.getRating());
+            Log.d("SGN", videogame.getName() + " " + rating);
+            holder.pbVideogameRating.setProgress(rating);
+            if (rating == 0) {
+                holder.tvVideogameRating.setText("N/A");
+            } else {
+                holder.tvVideogameRating.setText(String.valueOf(rating));
+            }
+
+
         }
 
         @Override

@@ -78,10 +78,11 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
-                android:indeterminate="false"
+                android:indeterminateOnly="true"
                 android:max="100"
-                android:progress="50"
-                android:progressDrawable="@drawable/progressbar_circle_rating" />
+                android:progress="0"
+                android:progressDrawable="@drawable/progressbar_circle_rating"
+                android:background="@drawable/progressbar_circle_rating" />
 
             <TextView
                 android:id="@+id/tvVideogameRating"

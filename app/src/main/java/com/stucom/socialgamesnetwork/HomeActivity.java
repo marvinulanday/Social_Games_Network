@@ -3,6 +3,7 @@ package com.stucom.socialgamesnetwork;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
@@ -37,6 +38,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private FrameLayout frameLayout;
     private ExpandableListAdapter listAdapterExpandable;
     private LinearLayout lnrLytFilterGames;
+    private NavigationView navigationView;
 
     private FloatingActionButton btnFilter;
     private Button searchBtn;
@@ -71,14 +73,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         frameLayout = findViewById(R.id.fragment_container);
         btnFilter = findViewById(R.id.btnFilter);
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(lnrLytFilterGames);
+            }
+        });
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.setDrawerIndicatorEnabled(false);
+        toolbar.setNavigationIcon(R.drawable.ic_nav_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(navigationView);
+            }
+        });
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ExploreFragment()).commit();
