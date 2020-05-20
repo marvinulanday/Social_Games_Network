@@ -27,6 +27,7 @@ import com.stucom.socialgamesnetwork.DAO.SharedPrefsManagement;
 import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
+import com.stucom.socialgamesnetwork.model.Videogame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +81,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 expListView.setAdapter(listAdapterExpandable);
             }
+
+            @Override
+            public void findGames(Context context, List<Videogame> videogamesAPI) {
+
+            }
         };
 
 
@@ -112,11 +118,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         frameLayout = findViewById(R.id.fragment_container);
         btnFilter = findViewById(R.id.btnFilter);
-        frameLayout.removeView(btnFilter);
-        // Abre directamente el profile fragment
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
-            //navigationView.setCheckedItem(R.id.nav_ranking);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ExploreFragment()).commit();
         }
     }
 
@@ -138,12 +147,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
                 break;
             case R.id.nav_explore:
-                frameLayout.addView(btnFilter);
+                if (frameLayout.indexOfChild(btnFilter) == -1)
+                    frameLayout.addView(btnFilter);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ExploreFragment()).commit();
 
                 break;
             case R.id.nav_ranking:
-                frameLayout.removeView(btnFilter);
+                if (frameLayout.indexOfChild(btnFilter) == -1)
+                    frameLayout.addView(btnFilter);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
                 break;
             case R.id.nav_logout:
@@ -182,7 +193,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
-
         Log.d("SGN", filterGames.toString());
         dao.getGamesByGenre(this, null, filterGames.get("Genre"));
     }

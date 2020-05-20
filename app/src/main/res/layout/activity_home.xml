@@ -57,9 +57,9 @@
         android:id="@+id/lnrLytFilterGames"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_gravity="end"
-        android:background="#ffff">
+        android:background="#ffff"
+        android:orientation="vertical">
 
         <ExpandableListView
             android:id="@+id/expandable_list"

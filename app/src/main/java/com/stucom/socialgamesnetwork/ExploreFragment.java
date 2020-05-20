@@ -1,5 +1,6 @@
 package com.stucom.socialgamesnetwork;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,24 +13,52 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
+import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ExploreFragment extends Fragment {
 
     IgdbDAO dao;
+    RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // dao.getGamesByGenre();
-        return inflater.inflate(R.layout.fragment_explore, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        IgdbCallback igdbCallback = new IgdbCallback() {
+            @Override
+            public void findGenres(Context context, List<Genre> genresAPI) {
+
+            }
+
+            @Override
+            public void findGames(Context context, List<Videogame> videogamesAPI) {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+                recyclerView.setLayoutManager(layoutManager);
+
+                VideogameAdapter adapter = new VideogameAdapter(videogamesAPI);
+                recyclerView.setAdapter(adapter);
+            }
+        };
+
+        dao = new IgdbDAO();
+        Set<Genre> x = new HashSet<>();
+        dao.getGamesByGenre(getContext(), igdbCallback, x);
+
+        return view;
     }
 
     class VideogameAdapter extends RecyclerView.Adapter<VideogameAdapter.ViewHolder> {
@@ -74,8 +103,7 @@ public class ExploreFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             Log.d("SGN", "onCreateViewHolder()");
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_videogame_card, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_videogame_card, parent, false);
             return new ViewHolder(view);
         }
 
@@ -90,12 +118,13 @@ public class ExploreFragment extends Fragment {
             for (Genre genre : videogame.getGenres()) {
                 stringBuilder.append(genre.getName());
                 if (i < videogame.getGenres().size() - 1) {
-                    stringBuilder.append(" ,");
+                    stringBuilder.append(", ");
                 }
                 i++;
             }
             holder.tvVideogameGenre.setText(stringBuilder.toString());
-            Picasso.get().load(videogame.getImage()).into(holder.ivVideogameImage);
+            String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
+            Picasso.get().load(img).into(holder.ivVideogameImage);
         }
 
         @Override

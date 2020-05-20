@@ -133,6 +133,8 @@ public class IgdbDAO {
 
                         Log.d("SGN", videogamesAPI.toString());
 
+                        callback.findGames(context, videogamesAPI);
+
                     }
 
                 }, new Response.ErrorListener() {

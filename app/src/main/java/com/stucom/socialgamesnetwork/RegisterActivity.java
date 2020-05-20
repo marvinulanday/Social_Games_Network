@@ -87,9 +87,9 @@ public class RegisterActivity extends AppCompatActivity {
                 //deleteHistory(history);
                 //User user = new User("","","djvatio@hotmail.com");
                 //deleteAllHistory(user);
-                Videogame game = new Videogame("1", "Sonic");
+                //Videogame game = new Videogame("1", "Sonic");
                 //selectCountScore(game);
-                selectScore(game);
+                //selectScore(game);
                 if(!tEmail.getText().toString().isEmpty() && !tUsername.getText().toString().isEmpty() && !tName.getText().toString().isEmpty() && !tSurname.getText().toString().isEmpty() && !tPassword.getText().toString().isEmpty() && !tConfirm.getText().toString().isEmpty())
                 {
                     if (tPassword.getText().toString().equals(tConfirm.getText().toString()))

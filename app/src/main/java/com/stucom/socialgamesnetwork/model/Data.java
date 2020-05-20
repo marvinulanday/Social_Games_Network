@@ -45,6 +45,5 @@ public class Data {
 
     public String toString() {
         return "Data: " + data + " - ErrorCode: " + errorCode + " - ErrorMsg: " + errorMsg;
-
     }
 }
