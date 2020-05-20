@@ -28,7 +28,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp" />
+                android:layout_marginRight="16dp"
+                android:background="@drawable/imageview_border"
+                android:padding="3dp" />
 
             <TextView
                 android:id="@+id/tvVideogameTitle"
@@ -38,8 +40,8 @@
                 android:layout_alignParentRight="false"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_toStartOf="@+id/ivVideogameRating"
-                android:layout_toLeftOf="@+id/ivVideogameRating"
+                android:layout_toStartOf="@+id/pbVideogameRating"
+                android:layout_toLeftOf="@+id/pbVideogameRating"
                 android:layout_toEndOf="@+id/ivVideogameImage"
                 android:layout_toRightOf="@+id/ivVideogameImage"
                 android:gravity="right"
@@ -56,8 +58,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_toStartOf="@+id/ivVideogameRating"
-                android:layout_toLeftOf="@+id/ivVideogameRating"
+                android:layout_toStartOf="@+id/pbVideogameRating"
+                android:layout_toLeftOf="@+id/pbVideogameRating"
                 android:layout_toEndOf="@+id/ivVideogameImage"
                 android:layout_toRightOf="@+id/ivVideogameImage"
                 android:gravity="right"
@@ -65,16 +67,43 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/ivVideogameRating"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <ProgressBar
+                android:id="@+id/pbVideogameRating"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="50"
+                android:progressDrawable="@drawable/progressbar_circle_rating" />
+
+            <TextView
+                android:id="@+id/tvVideogameRating"
+                android:layout_width="58dp"
+                android:layout_height="56dp"
+                android:layout_alignStart="@+id/pbVideogameRating"
+                android:layout_alignLeft="@+id/pbVideogameRating"
+                android:layout_alignTop="@+id/pbVideogameRating"
+                android:layout_alignEnd="@+id/pbVideogameRating"
+                android:layout_alignRight="@+id/pbVideogameRating"
+                android:layout_alignBottom="@+id/pbVideogameRating"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp" />
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="100"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

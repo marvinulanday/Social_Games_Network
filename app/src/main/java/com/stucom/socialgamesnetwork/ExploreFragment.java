@@ -11,6 +11,7 @@ import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -146,7 +147,7 @@ public class ExploreFragment extends Fragment {
                 ivVideogameImage = view.findViewById(R.id.ivVideogameImage);
                 tvVideogameTitle = view.findViewById(R.id.tvVideogameTitle);
                 tvVideogameGenre = view.findViewById(R.id.tvVideogameGenre);
-                ivVideogameRating = view.findViewById(R.id.ivVideogameRating);
+
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -176,6 +177,7 @@ public class ExploreFragment extends Fragment {
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             Log.d("SGN", "onCreateViewHolder()");
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_videogame_card, parent, false);
+
             return new ViewHolder(view);
         }
 
