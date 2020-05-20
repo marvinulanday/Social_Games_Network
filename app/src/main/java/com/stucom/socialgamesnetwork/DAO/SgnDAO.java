@@ -3,6 +3,8 @@ package com.stucom.socialgamesnetwork.DAO;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,6 +14,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.RegisterActivity;
+import com.stucom.socialgamesnetwork.callbacks.CallbackUpdateUser;
 import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.model.User;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
@@ -91,6 +96,44 @@ public class SgnDAO {
             @Override protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    private void updateUser(final Context context, final CallbackUpdateUser callbackUpdateUser, final User user, final String newPassword, final String passwordConfirm)
+    {
+        final String token = SharedPrefsManagement.getData(context, "token");
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/updateUser";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+
+                        if(apiResponse.getErrorCode()!=0)
+                        {
+                            Log.d("SGN", "error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override public void onErrorResponse(VolleyError error) {
+                Log.d("SGN", "error");
+            }
+        }) {
+            @Override protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", user.getEmail());
+                params.put("name", user.getName());
+                params.put("surname", user.getSurname());
+                params.put("oldPassword", user.getPassword());
+                params.put("newPassword", newPassword);
+                params.put("confirmPassword", passwordConfirm);
+                params.put("token", token);
                 return params;
             }
         };
