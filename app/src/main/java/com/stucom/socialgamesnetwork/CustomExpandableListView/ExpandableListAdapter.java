@@ -53,7 +53,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_filter_item, null);
         }
-        CheckBox checkBoxItem = (CheckBox) convertView.findViewById(R.id.lblListItem);
+        CheckBox checkBoxItem = (CheckBox) convertView.findViewById(R.id.cbListItem);
         checkBoxItem.setText(childText);
         checkBoxItem.setOnClickListener(new View.OnClickListener() {
             @Override

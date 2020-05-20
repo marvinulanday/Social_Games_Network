@@ -5,13 +5,16 @@
     android:orientation="vertical">
 
     <CheckBox
-        android:id="@+id/lblListItem"
+        android:id="@+id/cbListItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#F9D094"
+        android:textColorLink="#FFFFFF"
+        android:textSize="15sp" />
 
 </LinearLayout>

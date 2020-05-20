@@ -34,6 +34,7 @@
                 android:layout_gravity="bottom|right"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
+                android:background="@drawable/btn_rounded"
                 android:clickable="true"
                 android:paddingBottom="10dp"
                 app:backgroundTint="@color/colorPrimary"
@@ -60,6 +61,12 @@
         android:layout_gravity="end"
         android:background="#ffff"
         android:orientation="vertical">
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_filter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:headerLayout="@layout/filter_header" />
 
         <ExpandableListView
             android:id="@+id/expandable_list"
