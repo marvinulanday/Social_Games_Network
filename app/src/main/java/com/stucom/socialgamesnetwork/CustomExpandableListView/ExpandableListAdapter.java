@@ -99,7 +99,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.list_filter_group, null);
         }
 
-        TextView txtViewGroup = (TextView) convertView.findViewById(R.id.lblListHeader);
+        TextView txtViewGroup = (TextView) convertView.findViewById(R.id.tvListGroup);
         txtViewGroup.setTypeface(null, Typeface.BOLD);
         txtViewGroup.setText(headerTitle);
 

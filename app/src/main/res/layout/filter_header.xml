@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/tvFilter"
-        tools:background="#655454"
+        android:background="#655454"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:fontFamily="casual"
