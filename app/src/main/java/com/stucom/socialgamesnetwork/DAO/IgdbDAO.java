@@ -159,5 +159,47 @@ public class IgdbDAO {
         queue.add(request);
     }
 
+    public void getGameById(final Context context, final IgdbCallback callback, final Videogame videogame) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "https://api-v3.igdb.com/games";
+        Log.d("SGN", URL);
+        final String requestBody = "fields *, genres.*, cover.*; where id =" + videogame.getIdGame() + "; sort popularity desc;";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        Type listVideogame = new TypeToken<List<Videogame>>() {
+                        }.getType();
+                        List<Videogame> videogamesAPI = gson.fromJson(response, listVideogame);
+
+                        Log.d("SGN", String.valueOf(videogamesAPI.get(0)));
+
+                        callback.getGame(context, videogamesAPI.get(0));
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("SGN", String.valueOf(error));
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user-key", "d191590b7da257537341f8ca039f5d2f");
+                return params;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody.getBytes();
+            }
+
+        };
+        queue.add(request);
+    }
+
 
 }
