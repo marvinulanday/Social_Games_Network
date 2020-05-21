@@ -18,13 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.stucom.socialgamesnetwork.CustomExpandableListView.ExpandableListAdapter;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
+import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;
@@ -41,6 +41,7 @@ public class ExploreFragment extends Fragment {
     IgdbDAO dao;
     RecyclerView recyclerView;
     IgdbCallback igdbCallback;
+    CustomCallback customCallback;
 
     private DrawerLayout drawer;
     private ExpandableListView expListView;
@@ -60,6 +61,10 @@ public class ExploreFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+
+        Bundle bundle = getArguments();
+        customCallback = (CustomCallback) bundle.getSerializable("callback");
+
         igdbCallback = new IgdbCallback() {
             @Override
             public void findGenres(Context context, List<Genre> genresAPI) {
@@ -87,6 +92,11 @@ public class ExploreFragment extends Fragment {
                 recyclerView.setLayoutManager(layoutManager);
                 VideogameAdapter adapter = new VideogameAdapter(videogamesAPI);
                 recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void getGame(Context context, Videogame videogame) {
+
             }
         };
 
@@ -156,13 +166,12 @@ public class ExploreFragment extends Fragment {
                     public void onClick(View v) {
                         int position = getAdapterPosition();
                         Videogame videogame = videogames.get(position);
-                        Fragment newFragment = new RankingFragment();
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("videogame", videogame);
+                        VideogameDetailsFragment detail = new VideogameDetailsFragment();
+                        detail.setArguments(bundle);
+                        customCallback.accessFragment(R.id.fragment_container, detail);
 
-                        transaction.replace(R.id.fragment_explore, newFragment);
-                        transaction.addToBackStack(null);
-
-                        transaction.commit();
                     }
                 });
             }

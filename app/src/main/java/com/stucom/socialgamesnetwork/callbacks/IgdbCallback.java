@@ -12,5 +12,8 @@ public interface IgdbCallback {
 
     void findGames(Context context, List<Videogame> videogamesAPI);
 
+    void getGame(Context context, Videogame videogame);
+
+
 
 }

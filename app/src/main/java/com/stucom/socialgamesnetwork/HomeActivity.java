@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,15 +20,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.stucom.socialgamesnetwork.CustomExpandableListView.ExpandableListAdapter;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
 import com.stucom.socialgamesnetwork.DAO.SharedPrefsManagement;
 import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
-import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
-import com.stucom.socialgamesnetwork.model.Genre;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,18 +31,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private ExpandableListView expListView;
     private FrameLayout frameLayout;
-    private ExpandableListAdapter listAdapterExpandable;
     private LinearLayout lnrLytFilterGames;
     private NavigationView navigationView;
+    private TextView drawerUsername;
+
 
     private FloatingActionButton btnFilter;
     private Button searchBtn;
 
-    private HashMap<String, List<String>> data;
-    private List<Genre> genres;
-    private List<String> groups;
-
-    private IgdbCallback callback;
     private CustomCallback customCallback;
 
     @Override
@@ -59,6 +50,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         customCallback = new CustomCallback() {
             @Override
             public void accessFragment(int containerViewId, Fragment fragment) {
+                if (fragment instanceof VideogameDetailsFragment) {
+                    frameLayout.removeView(btnFilter);
+                    drawer.removeView(lnrLytFilterGames);
+                }
                 getSupportFragmentManager().beginTransaction().replace(containerViewId, fragment).commit();
             }
         };
@@ -83,6 +78,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View v = navigationView.getHeaderView(0);
+        String username = SharedPrefsManagement.getData(this, "email");
+        drawerUsername = v.findViewById(R.id.drawerUsername);
+        drawerUsername.setText(username);
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(false);
@@ -98,25 +99,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ExploreFragment()).commit();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("callback", customCallback);
+            ExploreFragment exploreFragment = new ExploreFragment();
+            exploreFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, exploreFragment).commit();
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Bundle bundle = new Bundle();
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
                 frameLayout.removeView(btnFilter);
-                Bundle bundle = new Bundle();
+                drawer.removeView(lnrLytFilterGames);
                 bundle.putSerializable("callback", customCallback);
                 ProfileFragment profileFragment = new ProfileFragment();
                 profileFragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).addToBackStack(null).commit();
                 break;
             case R.id.nav_explore:
                 if (frameLayout.indexOfChild(btnFilter) == -1)
                     frameLayout.addView(btnFilter);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ExploreFragment()).commit();
+                if (drawer.indexOfChild(lnrLytFilterGames) == -1)
+                    drawer.addView(lnrLytFilterGames);
+                bundle.putSerializable("callback", customCallback);
+                ExploreFragment exploreFragment = new ExploreFragment();
+                exploreFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, exploreFragment).commit();
 
                 break;
             case R.id.nav_ranking:
@@ -138,7 +149,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            this.getFragmentManager().popBackStackImmediate();
         }
     }
 
@@ -148,4 +159,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
 }

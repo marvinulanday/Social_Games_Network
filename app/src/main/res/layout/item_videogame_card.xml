@@ -44,7 +44,7 @@
                 android:layout_toLeftOf="@+id/pbVideogameRating"
                 android:layout_toEndOf="@+id/ivVideogameImage"
                 android:layout_toRightOf="@+id/ivVideogameImage"
-                android:gravity="right"
+                android:gravity="left"
                 android:text="Title"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
@@ -62,7 +62,7 @@
                 android:layout_toLeftOf="@+id/pbVideogameRating"
                 android:layout_toEndOf="@+id/ivVideogameImage"
                 android:layout_toRightOf="@+id/ivVideogameImage"
-                android:gravity="right"
+                android:gravity="left"
                 android:text="Title"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />

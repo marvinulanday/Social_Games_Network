@@ -2,9 +2,10 @@ package com.stucom.socialgamesnetwork.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Videogame {
+public class Videogame implements Serializable {
 
     @SerializedName("id")
     private String idGame;
