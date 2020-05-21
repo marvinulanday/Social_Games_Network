@@ -2,10 +2,12 @@ package com.stucom.socialgamesnetwork.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
-public class User {
+public class User implements Serializable {
     @SerializedName("username")
     private String username;
     @SerializedName("password")
@@ -38,6 +40,13 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.token = token;
+    }
+
+    public User(String email, String password, String name, String surname) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
     }
 
     public String getUsername() {

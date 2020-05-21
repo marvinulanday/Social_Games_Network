@@ -13,7 +13,7 @@
     <string name="insertcode1">Introduce el código de confirmación</string>
     <string name="insertcode2">Introduce el código que has recibido por email</string>
     <string name="cancel">Cancelar</string>
-    <string name="register">Registrar</string>
+    <string name="register">Registro</string>
     <string name="userregistrered1">Usuario registrado</string>
     <string name="userregistrered2">Todo perfecto, el usuario ha sido registrado</string>
     <string name="errorInsertGame">Error al insertar juego</string>
@@ -37,4 +37,13 @@
     <string name="errorPasswordShort">El password debe tener 5 caracteres</string>
     <string name="errorConfirmPassword">Error de confirmación de password</string>
     <string name="errorPasswordIncorrect">Password antiguo incorrecto</string>
+    <string name="current_password">Contraseña actual</string>
+    <string name="new_password">Contraseña nueva</string>
+    <string name="verified_password">Contraseña verificada</string>
+    <string name="navigation_drawer_open">Abrir navegador</string>
+    <string name="navigation_drawer_close">Cerrar navegador</string>
+    <string name="surname">Apellido</string>
+    <string name="name">Nombre</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
 </resources>

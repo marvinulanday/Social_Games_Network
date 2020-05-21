@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.stucom.socialgamesnetwork.ProfileFragment;
+import com.stucom.socialgamesnetwork.ProfileInformationFragment;
 import com.stucom.socialgamesnetwork.ProfileVideogameListFragment;
 
 public class ProfilePageAdapter extends FragmentPagerAdapter {
@@ -21,7 +21,8 @@ public class ProfilePageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new ProfileFragment();
+                ProfileInformationFragment profile = new ProfileInformationFragment();
+                return profile;
             case 1:
                 return new ProfileVideogameListFragment();
             default:

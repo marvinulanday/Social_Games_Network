@@ -99,11 +99,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (savedInstanceState == null) {
+
             Bundle bundle = new Bundle();
             bundle.putSerializable("callback", customCallback);
             ExploreFragment exploreFragment = new ExploreFragment();
             exploreFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, exploreFragment).commit();
+
         }
     }
 

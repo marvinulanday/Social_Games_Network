@@ -1,11 +1,8 @@
 package com.stucom.socialgamesnetwork.DAO;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,12 +13,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
-import com.stucom.socialgamesnetwork.ProfileEditFragment;
-import com.stucom.socialgamesnetwork.ProfileFragment;
 import com.stucom.socialgamesnetwork.R;
-import com.stucom.socialgamesnetwork.RegisterActivity;
-import com.stucom.socialgamesnetwork.callbacks.CallbackUpdateUser;
-import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.model.User;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
@@ -73,8 +65,7 @@ public class SgnDAO {
         queue.add(request);
     }
 
-    public void selectUserByEmail(final Context context, final MyCallback callback)
-    {
+    public void selectUserByEmail(final Context context, final MyCallback callback) {
         final String token = SharedPrefsManagement.getData(context, "token");
         final String email = SharedPrefsManagement.getData(context, "email");
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -83,10 +74,12 @@ public class SgnDAO {
         int score;
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
-                    @Override public void onResponse(String response) {
+                    @Override
+                    public void onResponse(String response) {
 
                         Gson gson = new Gson();
-                        Type typeToken = new TypeToken<Data>() {}.getType();
+                        Type typeToken = new TypeToken<Data>() {
+                        }.getType();
                         Data apiResponse = gson.fromJson(response, typeToken);
                         JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
 
@@ -94,11 +87,13 @@ public class SgnDAO {
                         callback.login(user);
                     }
                 }, new Response.ErrorListener() {
-            @Override public void onErrorResponse(VolleyError error) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
                 Log.d("SGN", String.valueOf(error));
             }
         }) {
-            @Override protected Map<String, String> getParams() {
+            @Override
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 return params;
@@ -107,53 +102,45 @@ public class SgnDAO {
         queue.add(request);
     }
 
-    public void updateUser(final CustomCallback callback, final Bundle bundle, final Context context, final User user, final String newPassword, final String passwordConfirm)
-    {
+    public void updateUser(final Context context, final MyCallback callback, final User user, final String newPassword, final String passwordConfirm) {
         final String token = SharedPrefsManagement.getData(context, "token");
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "http://www.arturviader.com/socialgamesnetwork/updateUser";
-        final int duration = Toast.LENGTH_SHORT;
+
 
         StringRequest request = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
-                    @Override public void onResponse(String response) {
-
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("SGN", response);
                         Gson gson = new Gson();
-                        Type typeToken = new TypeToken<Data>() {}.getType();
-                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
+                        Type typeToken = new TypeToken<Data>() {
+                        }.getType();
+                        Data apiResponse = gson.fromJson(response, typeToken);
 
-                        if(apiResponse.getErrorCode()==0)
-                        {
-
-                            bundle.putSerializable("callback", callback);
-                            ProfileFragment profileFragment = new ProfileFragment();
-                            profileFragment.setArguments(bundle);
-                            callback.accessFragment(R.id.fragment_container, profileFragment);
-
-                        }
-                        else if(apiResponse.getErrorCode()==4)
-                        {
-                            Toast toast = Toast.makeText(context, R.string.errorConfirmPassword, duration);
-                            toast.show();
-                        }
-                        else if(apiResponse.getErrorCode()==5)
-                        {
-                            Toast toast = Toast.makeText(context, R.string.errorPasswordIncorrect, duration);
-                            toast.show();
-                        }
-                        else
-                        {
-                            Toast toast = Toast.makeText(context, R.string.errorUpdateUser, duration);
-                            toast.show();
+                        switch (apiResponse.getErrorCode()) {
+                            case 0:
+                                user.setPassword("");
+                                callback.login(user);
+                                break;
+                            case 4:
+                                Toast.makeText(context, R.string.errorConfirmPassword, Toast.LENGTH_SHORT).show();
+                                break;
+                            case 5:
+                                Toast.makeText(context, R.string.errorPasswordIncorrect, Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Toast.makeText(context, R.string.errorUpdateUser, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
-            @Override public void onErrorResponse(VolleyError error) {
-                Toast toast = Toast.makeText(context, R.string.errorUpdateUser, duration);
-                toast.show();
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, R.string.errorUpdateUser, Toast.LENGTH_SHORT).show();
             }
         }) {
-            @Override protected Map<String, String> getParams() {
+            @Override
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", user.getEmail());
                 params.put("name", user.getName());

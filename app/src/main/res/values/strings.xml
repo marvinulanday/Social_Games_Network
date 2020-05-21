@@ -6,10 +6,10 @@
     <string name="action_sign_in">Sign in</string>
     <string name="welcome">"Welcome "</string>
     <string name="invalid_email">Not a valid email</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">Password must have at least 5 characters</string>
     <string name="login_failed">Incorrect email or password</string>
-    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="default_web_client_id" translatable="false">769366359589-uqagcppk9fvscaktm1h0nlr275f7orm2.apps.googleusercontent.com</string>
     <string name="firebase_database_url" translatable="false">https://socialgamesnetwork-f11b2.firebaseio.com</string>
     <string name="gcm_defaultSenderId" translatable="false">769366359589</string>
@@ -18,7 +18,7 @@
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDxn6SMtUBE8R9USky0CSD7ke1ifdMoVJU</string>
     <string name="google_storage_bucket" translatable="false">socialgamesnetwork-f11b2.appspot.com</string>
     <string name="project_id" translatable="false">socialgamesnetwork-f11b2</string>
-    <string name="register">Register</string>
+    <string name="register">Sign in</string>
     <string name="insertcode1">Insert confirmation code</string>
     <string name="insertcode2">Insert the code you received by email</string>
     <string name="networkerror">Network error</string>
@@ -43,10 +43,14 @@
     <string name="errorUpdateScore">Error updating score</string>
     <string name="errorUpdateOpinion">Error updating opinion</string>
     <string name="errorUpdateUser">Error updating user</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="errorPasswordShort">Password must have 5 characters</string>
     <string name="errorConfirmPassword">Error confirm password</string>
     <string name="errorPasswordIncorrect">Error old password incorrect</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="verified_password">Verified password</string>
+    <string name="surname">Surname</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>
