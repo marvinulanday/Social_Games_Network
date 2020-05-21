@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@android:color/black">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Information" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabOpinion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opinion" />
+    </TableLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
