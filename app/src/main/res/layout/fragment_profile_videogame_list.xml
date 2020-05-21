@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VideogameDetailsOpinionFragment">
+    tools:context=".ProfileVideogameListFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Opinion fragment ay lmao" />
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

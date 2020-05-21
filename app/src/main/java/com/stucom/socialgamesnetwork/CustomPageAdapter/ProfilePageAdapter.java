@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.stucom.socialgamesnetwork.VideogameDetailsInfoFragment;
-import com.stucom.socialgamesnetwork.VideogameDetailsOpinionFragment;
+import com.stucom.socialgamesnetwork.ProfileFragment;
+import com.stucom.socialgamesnetwork.ProfileVideogameListFragment;
 
-public class PageAdapter extends FragmentPagerAdapter {
+public class ProfilePageAdapter extends FragmentPagerAdapter {
     private int numTabs;
 
-    public PageAdapter(@NonNull FragmentManager fm, int numTabs) {
+    public ProfilePageAdapter(@NonNull FragmentManager fm, int numTabs) {
         super(fm);
         this.numTabs = numTabs;
     }
@@ -20,10 +20,10 @@ public class PageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
+            case 0:
+                return new ProfileFragment();
             case 1:
-                return new VideogameDetailsInfoFragment();
-            case 2:
-                return new VideogameDetailsOpinionFragment();
+                return new ProfileVideogameListFragment();
             default:
                 return null;
         }

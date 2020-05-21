@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,8 +20,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.stucom.socialgamesnetwork.CustomPageAdapter.ProfilePageAdapter;
+import com.stucom.socialgamesnetwork.CustomPageAdapter.VideogameDetailPageAdapter;
 import com.stucom.socialgamesnetwork.DAO.SgnDAO;
 import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.model.Data;
@@ -42,6 +47,14 @@ public class ProfileFragment extends Fragment {
     TextView tvSurname;
     TextView tvEmail;
     TextView tvUsername;
+
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    ProfilePageAdapter pageAdapter;
+    TabItem tabProfileInformation;
+    TabItem tabVideogameList;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,6 +67,28 @@ public class ProfileFragment extends Fragment {
         tvSurname = view.findViewById(R.id.tvSurnameData);
         tvEmail = view.findViewById(R.id.tvEmailData);
         tvUsername = view.findViewById(R.id.tvUserData);
+
+        tabLayout = view.findViewById(R.id.tabLayout);
+        tabProfileInformation = view.findViewById(R.id.tabProfileInformation);
+        tabVideogameList = view.findViewById(R.id.tabVideogameList);
+        viewPager = view.findViewById(R.id.viewPager);
+        pageAdapter = new ProfilePageAdapter(getFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapter);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         Bundle bundle = getArguments();
         callback = (CustomCallback) bundle.getSerializable("callback");
         btnEdit.setOnClickListener(new View.OnClickListener() {

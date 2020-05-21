@@ -33,115 +33,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:stretchColumns="1"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivAvatarProfile">
 
-        <TableRow
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextColor="@android:color/black">
 
-            <TextView
-                android:id="@+id/tvUserTitle"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabProfileInformation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autoText="false"
-                android:text="Username"
-                android:textSize="18sp"
-                android:padding="3dip"
-                />
+                android:text="Information" />
 
-            <TextView
-                android:id="@+id/tvUserData"
-                android:layout_width="0dp"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabVideogameList"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autoText="false"
-                android:padding="10dip"
-                android:text="nombre usuario aqui"
-                android:textSize="18sp" />
+                android:text="Videogame List" />
+        </com.google.android.material.tabs.TabLayout>
 
-        </TableRow>
-
-        <TableRow
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvEmailTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoText="false"
-                android:text="Email"
-                android:textSize="18sp"
-                android:padding="3dip"/>
-
-            <TextView
-                android:id="@+id/tvEmailData"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:autoText="false"
-                android:padding="10dip"
-                android:text="email aqui"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tvNameTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoText="false"
-                android:text="Name"
-                android:textSize="18sp"
-                android:padding="3dip"/>
-
-            <TextView
-                android:id="@+id/tvNameData"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:autoText="false"
-                android:padding="10dip"
-                android:text="nombre aqui"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tvSurnameTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoText="false"
-                android:text="Surname"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvSurnameData"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:autoText="false"
-                android:padding="10dip"
-                android:text="apellido aqui"
-                android:textSize="18sp" />
-
-        </TableRow>
-    </TableLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
