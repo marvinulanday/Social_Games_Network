@@ -46,4 +46,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="errorPasswordShort">Password must have 5 characters</string>
+    <string name="errorConfirmPassword">Error confirm password</string>
+    <string name="errorPasswordIncorrect">Error old password incorrect</string>
 </resources>
