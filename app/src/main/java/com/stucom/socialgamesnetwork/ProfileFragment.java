@@ -35,13 +35,13 @@ public class ProfileFragment extends Fragment {
     private ImageView ivAvatar;
     private FloatingActionButton btnEdit;
     private CustomCallback callback;
-    MyCallback myCallback;
-    User readUser;
-    SgnDAO dao;
-    TextView tvName;
-    TextView tvSurname;
-    TextView tvEmail;
-    TextView tvUsername;
+    private MyCallback myCallback;
+    private User readUser;
+    private SgnDAO dao;
+    private TextView tvName;
+    private TextView tvSurname;
+    private TextView tvEmail;
+    private TextView tvUsername;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,12 +54,17 @@ public class ProfileFragment extends Fragment {
         tvSurname = view.findViewById(R.id.tvSurnameData);
         tvEmail = view.findViewById(R.id.tvEmailData);
         tvUsername = view.findViewById(R.id.tvUserData);
-        Bundle bundle = getArguments();
+        final Bundle bundle = getArguments();
         callback = (CustomCallback) bundle.getSerializable("callback");
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.accessFragment(R.id.fragment_container, new ProfileEditFragment());
+
+                bundle.putSerializable("callback", callback);
+                ProfileEditFragment profileEditFragment = new ProfileEditFragment();
+                profileEditFragment.setArguments(bundle);
+
+                callback.accessFragment(R.id.fragment_container, profileEditFragment);
             }
         });
 
