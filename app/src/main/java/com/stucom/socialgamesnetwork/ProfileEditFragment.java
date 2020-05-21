@@ -38,17 +38,18 @@ import java.util.Map;
 
 public class ProfileEditFragment extends Fragment {
     private ImageView ivAvatar;
-    MyCallback myCallback;
-    CallbackUpdateUser callbackUpdateUser;
-    User readUser;
-    SgnDAO dao;
-    EditText etName;
-    EditText etSurname;
-    TextView tvEmail;
-    TextView tvUsername;
-    EditText etOldPassword;
-    EditText etNewPassword;
-    EditText etPasswordConfirm;
+    private MyCallback myCallback;
+    private CallbackUpdateUser callbackUpdateUser;
+    private User readUser;
+    private SgnDAO dao;
+    private EditText etName;
+    private EditText etSurname;
+    private TextView tvEmail;
+    private TextView tvUsername;
+    private CustomCallback callbackScreen;
+    private EditText etOldPassword;
+    private EditText etNewPassword;
+    private EditText etPasswordConfirm;
     private CustomCallback callback;
     private FloatingActionButton btnEdit;
     @Nullable
@@ -65,12 +66,27 @@ public class ProfileEditFragment extends Fragment {
         etOldPassword = view.findViewById(R.id.etOldPassword);
         etNewPassword = view.findViewById(R.id.etNewPassword);
         etPasswordConfirm = view.findViewById(R.id.etPasswordConfirm);
+        final Bundle bundle = getArguments();
+        callback = (CustomCallback) bundle.getSerializable("callback");
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 readUser.setPassword(etOldPassword.getText().toString());
-                updateUser(getContext(),readUser,etNewPassword.getText().toString(),etPasswordConfirm.getText().toString());
+                if (etNewPassword.getText().length()<5)
+                {
+                    AlertDialog show = new AlertDialog.Builder(getContext())
+                            .setTitle("Error")
+                            .setMessage(R.string.errorPasswordShort)
+                            .setNeutralButton("OK", null)
+                            .show();
+                }
+                else
+                {
+                    SgnDAO dao = new SgnDAO();
+
+                    dao.updateUser(callback, bundle, getContext(),readUser,etNewPassword.getText().toString(),etPasswordConfirm.getText().toString());
+                }
             }
         });
 
@@ -89,50 +105,6 @@ public class ProfileEditFragment extends Fragment {
         return view;
     }
 
-    private void updateUser(final Context context, final User user, final String newPassword, final String passwordConfirm)
-    {
-        final String token = SharedPrefsManagement.getData(context, "token");
-        RequestQueue queue = Volley.newRequestQueue(context);
-        String URL = "http://www.arturviader.com/socialgamesnetwork/updateUser";
-        StringRequest request = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override public void onResponse(String response) {
 
-                        Gson gson = new Gson();
-                        Type typeToken = new TypeToken<Data>() {}.getType();
-                        Data apiResponse = gson.fromJson(response.toString(), typeToken);
-
-                        if(apiResponse.getErrorCode()!=0)
-                        {
-                            AlertDialog show = new AlertDialog.Builder(context)
-                                    .setTitle("Error")
-                                    .setMessage(R.string.errorUpdateUser)
-                                    .setNeutralButton("OK", null)
-                                    .show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override public void onErrorResponse(VolleyError error) {
-                AlertDialog show = new AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage(R.string.errorUpdateUser)
-                        .setNeutralButton("OK", null)
-                        .show();
-            }
-        }) {
-            @Override protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", user.getEmail());
-                params.put("name", user.getName());
-                params.put("surname", user.getSurname());
-                params.put("oldPassword", user.getPassword());
-                params.put("newPassword", newPassword);
-                params.put("confirmPassword", passwordConfirm);
-                params.put("token", token);
-                return params;
-            }
-        };
-        queue.add(request);
-    }
 
 }

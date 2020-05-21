@@ -1,7 +1,9 @@
 package com.stucom.socialgamesnetwork.DAO;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -14,9 +16,12 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import com.stucom.socialgamesnetwork.ProfileEditFragment;
+import com.stucom.socialgamesnetwork.ProfileFragment;
 import com.stucom.socialgamesnetwork.R;
 import com.stucom.socialgamesnetwork.RegisterActivity;
 import com.stucom.socialgamesnetwork.callbacks.CallbackUpdateUser;
+import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.model.User;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
@@ -102,11 +107,13 @@ public class SgnDAO {
         queue.add(request);
     }
 
-    private void updateUser(final Context context, final CallbackUpdateUser callbackUpdateUser, final User user, final String newPassword, final String passwordConfirm)
+    public void updateUser(final CustomCallback callback, final Bundle bundle, final Context context, final User user, final String newPassword, final String passwordConfirm)
     {
         final String token = SharedPrefsManagement.getData(context, "token");
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "http://www.arturviader.com/socialgamesnetwork/updateUser";
+        final int duration = Toast.LENGTH_SHORT;
+
         StringRequest request = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override public void onResponse(String response) {
@@ -115,14 +122,35 @@ public class SgnDAO {
                         Type typeToken = new TypeToken<Data>() {}.getType();
                         Data apiResponse = gson.fromJson(response.toString(), typeToken);
 
-                        if(apiResponse.getErrorCode()!=0)
+                        if(apiResponse.getErrorCode()==0)
                         {
-                            Log.d("SGN", "error");
+
+                            bundle.putSerializable("callback", callback);
+                            ProfileFragment profileFragment = new ProfileFragment();
+                            profileFragment.setArguments(bundle);
+                            callback.accessFragment(R.id.fragment_container, profileFragment);
+
+                        }
+                        else if(apiResponse.getErrorCode()==4)
+                        {
+                            Toast toast = Toast.makeText(context, R.string.errorConfirmPassword, duration);
+                            toast.show();
+                        }
+                        else if(apiResponse.getErrorCode()==5)
+                        {
+                            Toast toast = Toast.makeText(context, R.string.errorPasswordIncorrect, duration);
+                            toast.show();
+                        }
+                        else
+                        {
+                            Toast toast = Toast.makeText(context, R.string.errorUpdateUser, duration);
+                            toast.show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
-                Log.d("SGN", "error");
+                Toast toast = Toast.makeText(context, R.string.errorUpdateUser, duration);
+                toast.show();
             }
         }) {
             @Override protected Map<String, String> getParams() {

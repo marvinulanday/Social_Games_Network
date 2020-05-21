@@ -34,4 +34,7 @@
     <string name="errorUpdateScore">Error actualizando puntuación</string>
     <string name="errorUpdateUser">Error actualizando usuario</string>
     <string name="errorUpdateOpinion">Error updating opinion</string>
+    <string name="errorPasswordShort">El password debe tener 5 caracteres</string>
+    <string name="errorConfirmPassword">Error de confirmación de password</string>
+    <string name="errorPasswordIncorrect">Password antiguo incorrecto</string>
 </resources>
