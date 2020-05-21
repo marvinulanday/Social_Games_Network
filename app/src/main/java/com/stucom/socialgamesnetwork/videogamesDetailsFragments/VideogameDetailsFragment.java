@@ -1,4 +1,4 @@
-package com.stucom.socialgamesnetwork;
+package com.stucom.socialgamesnetwork.videogamesDetailsFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.stucom.socialgamesnetwork.CustomPageAdapter.VideogameDetailPageAdapter;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
+import com.stucom.socialgamesnetwork.R;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;

@@ -23,6 +23,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
 import com.stucom.socialgamesnetwork.DAO.SharedPrefsManagement;
 import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
+import com.stucom.socialgamesnetwork.profileFragments.ProfileFragment;
+import com.stucom.socialgamesnetwork.videogamesDetailsFragments.VideogameDetailsFragment;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

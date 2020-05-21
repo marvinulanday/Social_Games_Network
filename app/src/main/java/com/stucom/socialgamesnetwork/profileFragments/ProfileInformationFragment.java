@@ -1,4 +1,4 @@
-package com.stucom.socialgamesnetwork;
+package com.stucom.socialgamesnetwork.profileFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stucom.socialgamesnetwork.DAO.SgnDAO;
+import com.stucom.socialgamesnetwork.R;
 import com.stucom.socialgamesnetwork.model.User;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
 

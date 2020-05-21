@@ -1,4 +1,4 @@
-package com.stucom.socialgamesnetwork;
+package com.stucom.socialgamesnetwork.profileFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.stucom.socialgamesnetwork.CustomPageAdapter.ProfilePageAdapter;
+import com.stucom.socialgamesnetwork.R;
 
 public class ProfileFragment extends Fragment {
 

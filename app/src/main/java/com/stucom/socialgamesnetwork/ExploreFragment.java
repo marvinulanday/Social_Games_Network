@@ -28,6 +28,7 @@ import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;
+import com.stucom.socialgamesnetwork.videogamesDetailsFragments.VideogameDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;

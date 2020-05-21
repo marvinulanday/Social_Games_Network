@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.stucom.socialgamesnetwork.VideogameDetailsInfoFragment;
-import com.stucom.socialgamesnetwork.VideogameDetailsOpinionFragment;
+import com.stucom.socialgamesnetwork.videogamesDetailsFragments.VideogameDetailsInfoFragment;
+import com.stucom.socialgamesnetwork.videogamesDetailsFragments.VideogameDetailsOpinionFragment;
 
 public class VideogameDetailPageAdapter extends FragmentPagerAdapter {
     private int numTabs;

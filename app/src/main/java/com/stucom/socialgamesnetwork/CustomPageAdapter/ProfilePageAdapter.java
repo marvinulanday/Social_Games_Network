@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.stucom.socialgamesnetwork.ProfileInformationFragment;
-import com.stucom.socialgamesnetwork.ProfileVideogameListFragment;
+import com.stucom.socialgamesnetwork.profileFragments.ProfileInformationFragment;
+import com.stucom.socialgamesnetwork.profileFragments.ProfileVideogameListFragment;
 
 public class ProfilePageAdapter extends FragmentPagerAdapter {
     private int numTabs;

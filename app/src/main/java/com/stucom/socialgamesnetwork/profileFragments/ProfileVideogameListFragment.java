@@ -1,13 +1,13 @@
-package com.stucom.socialgamesnetwork;
+package com.stucom.socialgamesnetwork.profileFragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
+import com.stucom.socialgamesnetwork.R;
 
 
 public class ProfileVideogameListFragment extends Fragment {
