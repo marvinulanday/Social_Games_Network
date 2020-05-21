@@ -6,15 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.stucom.socialgamesnetwork.CustomPageAdapter.PageAdapter;
@@ -36,8 +33,8 @@ public class VideogameDetailsFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager viewPager;
     PageAdapter pageAdapter;
-    TabItem tabInfo;
-    TabItem tabOpinion;
+    TabLayout.Tab tabInfo;
+    TabLayout.Tab tabOpinion;
 
 
     @Override
@@ -45,22 +42,16 @@ public class VideogameDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_videogame_details, null);
         tabLayout = view.findViewById(R.id.tabLayout);
-        tabInfo = view.findViewById(R.id.tabInformation);
-        tabOpinion = view.findViewById(R.id.tabOpinion);
+        tabInfo = tabLayout.getTabAt(0);
+        tabOpinion = tabLayout.getTabAt(1);
         viewPager = view.findViewById(R.id.viewPager);
-        pageAdapter = new PageAdapter(getFragmentManager(), tabLayout.getTabCount());
-
+        FragmentManager x = getFragmentManager();
+        pageAdapter = new PageAdapter(x, tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapter);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 1) {
-                    tabInfo.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-                    tabOpinion.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                } else {
-                    tabInfo.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                    tabOpinion.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-                }
             }
 
             @Override
@@ -77,12 +68,10 @@ public class VideogameDetailsFragment extends Fragment {
         callback = new IgdbCallback() {
             @Override
             public void findGenres(Context context, List<Genre> genresAPI) {
-
             }
 
             @Override
             public void findGames(Context context, List<Videogame> videogamesAPI) {
-
             }
 
             @Override
