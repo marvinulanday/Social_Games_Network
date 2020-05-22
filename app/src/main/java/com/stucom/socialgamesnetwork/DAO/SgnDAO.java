@@ -129,6 +129,9 @@ public class SgnDAO {
                             case 5:
                                 Toast.makeText(context, R.string.errorPasswordIncorrect, Toast.LENGTH_SHORT).show();
                                 break;
+                            case 6:
+                                Toast.makeText(context, R.string.samePassword, Toast.LENGTH_SHORT).show();
+                                break;
                             default:
                                 Toast.makeText(context, R.string.errorUpdateUser, Toast.LENGTH_SHORT).show();
                         }
