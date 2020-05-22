@@ -46,4 +46,5 @@
     <string name="name">Nombre</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
+    <string name="load">Cargar más</string>
 </resources>

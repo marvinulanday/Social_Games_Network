@@ -46,7 +46,7 @@ public class VideogameDetailsFragment extends Fragment {
         tabInfo = view.findViewById(R.id.tabInformation);
         tabOpinion = view.findViewById(R.id.tabOpinion);
         viewPager = view.findViewById(R.id.viewPager);
-        pageAdapter = new VideogameDetailPageAdapter(getFragmentManager(), tabLayout.getTabCount());
+        pageAdapter = new VideogameDetailPageAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pageAdapter);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

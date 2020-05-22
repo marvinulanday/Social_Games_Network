@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -31,6 +32,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, null);
+
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
 
         ivAvatar = view.findViewById(R.id.ivAvatarProfile);
         ivAvatar.setImageResource(R.drawable.user);

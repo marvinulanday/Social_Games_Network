@@ -55,6 +55,10 @@ public class ExploreFragment extends Fragment {
     private List<Genre> genres;
     private List<String> groups;
 
+    VideogameAdapter adapter;
+
+    int offset = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +66,11 @@ public class ExploreFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new VideogameAdapter();
+        recyclerView.setAdapter(adapter);
 
         Bundle bundle = getArguments();
         customCallback = (CustomCallback) bundle.getSerializable("callback");
@@ -89,10 +98,8 @@ public class ExploreFragment extends Fragment {
 
             @Override
             public void findGames(Context context, List<Videogame> videogamesAPI) {
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(layoutManager);
-                VideogameAdapter adapter = new VideogameAdapter(videogamesAPI);
-                recyclerView.setAdapter(adapter);
+                adapter.add(videogamesAPI);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -109,24 +116,7 @@ public class ExploreFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, Set<Genre>> filterGames = new HashMap<>();
-                for (Map.Entry<String, Set<String>> entry : listAdapterExpandable.getItemsChecked().entrySet()) {
-                    HashSet<Genre> z = new HashSet<>();
-                    filterGames.put(entry.getKey(), z);
-                    HashSet<String> y = (HashSet<String>) entry.getValue();
-                    for (String genre : y) {
-                        for (Genre genre1 : genres) {
-                            if (genre1.getName().equals(genre)) {
-                                HashSet<Genre> c = (HashSet<Genre>) filterGames.get(entry.getKey());
-                                c.add(genre1);
-                                filterGames.put(entry.getKey(), c);
-                                break;
-                            }
-                        }
-                    }
-                }
-                Log.d("SGN", filterGames.toString());
-                filterGames(getContext(), igdbCallback, filterGames);
+                filterGames(getContext(), igdbCallback);
             }
         });
 
@@ -135,24 +125,41 @@ public class ExploreFragment extends Fragment {
 
         dao = new IgdbDAO();
         Set<Genre> x = new HashSet<>();
-        dao.getGamesByGenre(getContext(), igdbCallback, x);
+        dao.getGamesByGenre(getContext(), igdbCallback, x, offset);
 
         return view;
     }
 
-    private void filterGames(Context context, IgdbCallback callback, HashMap<String, Set<Genre>> itemsChecked) {
+    private void filterGames(Context context, IgdbCallback callback) {
+        HashMap<String, Set<Genre>> filterGames = new HashMap<>();
+        for (Map.Entry<String, Set<String>> entry : listAdapterExpandable.getItemsChecked().entrySet()) {
+            HashSet<Genre> z = new HashSet<>();
+            filterGames.put(entry.getKey(), z);
+            HashSet<String> y = (HashSet<String>) entry.getValue();
+            for (String genre : y) {
+                for (Genre genre1 : genres) {
+                    if (genre1.getName().equals(genre)) {
+                        HashSet<Genre> c = (HashSet<Genre>) filterGames.get(entry.getKey());
+                        c.add(genre1);
+                        filterGames.put(entry.getKey(), c);
+                        break;
+                    }
+                }
+            }
+        }
+        Log.d("SGN", filterGames.toString());
         IgdbDAO dao = new IgdbDAO();
-        dao.getGamesByGenre(context, callback, itemsChecked.get("Genre"));
+        dao.getGamesByGenre(context, callback, filterGames.get("Genre"), offset);
     }
 
     class VideogameAdapter extends RecyclerView.Adapter<VideogameAdapter.ViewHolder> {
-
         class ViewHolder extends RecyclerView.ViewHolder {
             ImageView ivVideogameImage;
             ProgressBar pbVideogameRating;
             TextView tvVideogameTitle;
             TextView tvVideogameGenre;
             TextView tvVideogameRating;
+            Button btnLoad;
 
             ViewHolder(View view) {
                 super(view);
@@ -161,7 +168,6 @@ public class ExploreFragment extends Fragment {
                 tvVideogameTitle = view.findViewById(R.id.tvVideogameTitle);
                 tvVideogameGenre = view.findViewById(R.id.tvVideogameGenre);
                 tvVideogameRating = view.findViewById(R.id.tvVideogameRating);
-
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -175,21 +181,31 @@ public class ExploreFragment extends Fragment {
 
                     }
                 });
+                btnLoad = view.findViewById(R.id.btnLoad);
             }
         }
 
         private List<Videogame> videogames;
 
-        VideogameAdapter(List<Videogame> videogames) {
+        VideogameAdapter() {
             super();
-            this.videogames = videogames;
+            this.videogames = new ArrayList<>();
+        }
+
+        public void add(List<Videogame> videogames) {
+            this.videogames.addAll(videogames);
         }
 
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             Log.d("SGN", "onCreateViewHolder()");
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_videogame_card, parent, false);
+            View view;
+            if (viewType == R.layout.item_videogame_card) {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_videogame_card, parent, false);
+            } else {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_button_load_more, parent, false);
+            }
 
             return new ViewHolder(view);
         }
@@ -197,19 +213,33 @@ public class ExploreFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Log.d("SGN", "onBindViewHolder(): " + position);
-
+            if (position == videogames.size()) {
+                holder.btnLoad.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        offset += 15;
+                        filterGames(getContext(), igdbCallback);
+                    }
+                });
+            } else {
             Videogame videogame = videogames.get(position);
             holder.tvVideogameTitle.setText(videogame.getName());
             StringBuilder stringBuilder = new StringBuilder();
             int i = 0;
-            for (Genre genre : videogame.getGenres()) {
-                stringBuilder.append(genre.getName());
-                if (i < videogame.getGenres().size() - 1) {
-                    stringBuilder.append(", ");
-                }
-                i++;
+                if (videogame.getGenres() != null) {
+                    for (Genre genre : videogame.getGenres()) {
+                        stringBuilder.append(genre.getName());
+                        if (i < videogame.getGenres().size() - 1) {
+                            stringBuilder.append(", ");
+                        }
+                        i++;
+                    }
             }
             holder.tvVideogameGenre.setText(stringBuilder.toString());
+                if (videogame.getCover() == null) {
+                    Log.d("SGN", "null");
+                }
+
             String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
             Picasso.get().load(img).into(holder.ivVideogameImage);
             int rating = Integer.valueOf((int) videogame.getRating());
@@ -220,13 +250,18 @@ public class ExploreFragment extends Fragment {
             } else {
                 holder.tvVideogameRating.setText(String.valueOf(rating));
             }
-
+            }
 
         }
 
         @Override
+        public int getItemViewType(int position) {
+            return (position == videogames.size()) ? R.layout.custom_button_load_more : R.layout.item_videogame_card;
+        }
+
+        @Override
         public int getItemCount() {
-            return videogames.size();
+            return videogames.size() + 1;
         }
 
     }

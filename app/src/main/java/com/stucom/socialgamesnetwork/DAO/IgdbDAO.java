@@ -102,15 +102,15 @@ public class IgdbDAO {
         queue.add(request);
     }
 
-    public void getGamesByGenre(final Context context, final IgdbCallback callback, final Set<Genre> genres) {
+    public void getGamesByGenre(final Context context, final IgdbCallback callback, final Set<Genre> genres, int offset) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "https://api-v3.igdb.com/games";
         Log.d("SGN", URL);
         StringBuilder stringBuilder = new StringBuilder();
         if (genres.isEmpty()) {
-            stringBuilder.append("fields *, genres.*, cover.*; limit 5; sort popularity desc;");
+            stringBuilder.append("fields *, genres.*, cover.*; limit 15; offset " + offset + "; where rating >= 75; sort popularity desc;");
         } else {
-            stringBuilder.append("fields *, genres.*, cover.*;  limit 5; sort popularity desc; where genres = [");
+            stringBuilder.append("fields *, genres.*, cover.*;  limit 15; offset " + offset + "; where rating >= 75; sort popularity desc; where genres = [");
             int i = 0;
             for (Genre genre : genres) {
                 stringBuilder.append(genre.getId());
@@ -163,7 +163,7 @@ public class IgdbDAO {
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "https://api-v3.igdb.com/games";
         Log.d("SGN", URL);
-        final String requestBody = "fields *, genres.*, cover.*; where id =" + videogame.getIdGame() + "; sort popularity desc;";
+        final String requestBody = "fields *, genres.*, cover.*; where id =" + videogame.getIdGame() + ";";
         StringRequest request = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
