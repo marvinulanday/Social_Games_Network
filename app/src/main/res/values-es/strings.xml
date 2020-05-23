@@ -47,5 +47,5 @@
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="load">Cargar más</string>
-    <string name="samePassword">Error password antiguo y nuevo iguales</string>
+    <string name="samePassword">La contraseña actual y la nueva son idénticas</string>
 </resources>

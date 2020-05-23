@@ -25,6 +25,7 @@ import java.util.List;
 
 public class VideogameDetailsFragment extends Fragment {
 
+    int videogameId;
     Videogame videogame;
     IgdbDAO dao;
     IgdbCallback callback;
@@ -42,12 +43,14 @@ public class VideogameDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_videogame_details, null);
+
+        Bundle bundle = getArguments();
+        videogameId = bundle.getInt("videogame");
+
         tabLayout = view.findViewById(R.id.tabLayout);
         tabInfo = view.findViewById(R.id.tabInformation);
         tabOpinion = view.findViewById(R.id.tabOpinion);
         viewPager = view.findViewById(R.id.viewPager);
-        pageAdapter = new VideogameDetailPageAdapter(getChildFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pageAdapter);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -64,9 +67,6 @@ public class VideogameDetailsFragment extends Fragment {
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        Bundle bundle = getArguments();
-        videogame = (Videogame) bundle.getSerializable("videogame");
-
         dao = new IgdbDAO();
         callback = new IgdbCallback() {
             @Override
@@ -82,6 +82,8 @@ public class VideogameDetailsFragment extends Fragment {
             @Override
             public void getGame(Context context, Videogame videogameAPI) {
                 videogame = videogameAPI;
+                pageAdapter = new VideogameDetailPageAdapter(getChildFragmentManager(), tabLayout.getTabCount(), videogame);
+                viewPager.setAdapter(pageAdapter);
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(videogame.getName());
                 String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
                 Picasso.get().load(img).into(ivVideogameImage);
@@ -90,7 +92,7 @@ public class VideogameDetailsFragment extends Fragment {
 
         ivVideogameImage = view.findViewById(R.id.ivGameImage);
 
-        dao.getGameById(getContext(), callback, videogame);
+        dao.getGameById(getContext(), callback, videogameId);
 
         return view;
     }

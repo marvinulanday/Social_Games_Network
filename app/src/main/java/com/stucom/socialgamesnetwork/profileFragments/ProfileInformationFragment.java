@@ -52,7 +52,7 @@ public class ProfileInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_information, container, false);
 
-        tableLayoutInfo = view.findViewById(R.id.tableLayoutInfo);
+        tableLayoutInfo = view.findViewById(R.id.tableLayoutInfoUser);
         tableLayoutEdit = view.findViewById(R.id.tableLayoutEdit);
 
         tvEmail = view.findViewById(R.id.tvEmail);

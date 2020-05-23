@@ -4,62 +4,112 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.model.GameMode;
+import com.stucom.socialgamesnetwork.model.Genre;
+import com.stucom.socialgamesnetwork.model.Platform;
+import com.stucom.socialgamesnetwork.model.Videogame;
+
+import java.lang.reflect.Field;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link VideogameDetailsInfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class VideogameDetailsInfoFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public VideogameDetailsInfoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment VideogameDetailsInfoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static VideogameDetailsInfoFragment newInstance(String param1, String param2) {
-        VideogameDetailsInfoFragment fragment = new VideogameDetailsInfoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    Videogame videogame;
+    TableLayout tableLayoutInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_videogame_details_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_videogame_details_info, container, false);
+        Bundle bundle = getArguments();
+        videogame = (Videogame) bundle.getSerializable("videogame");
+        tableLayoutInfo = view.findViewById(R.id.tableLayoutInfoVideogame);
+        if (videogame.getParentVideogame() != null) {
+
+        }
+        TableRow[] x = new TableRow[8];
+        Field[] fields = videogame.getClass().getDeclaredFields();
+        for (Field f : fields) {
+
+            TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.custom_table_row, tableLayoutInfo, false);
+
+            TextView textViewTitle = tableRow.findViewById(R.id.tableRowTxtViewTitle);
+            LinearLayout linearLayout = tableRow.findViewById(R.id.tableRowLinearLayout);
+
+            String type = f.getName();
+
+            switch (type) {
+                case "name":
+                    textViewTitle.setText(type.toUpperCase());
+                    TextView name = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                    name.setText(videogame.getName());
+                    linearLayout.addView(name);
+                    x[0] = tableRow;
+                    break;
+                case "summary":
+                    textViewTitle.setText(type.toUpperCase());
+                    TextView summary = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                    summary.setText(videogame.getName());
+                    linearLayout.addView(summary);
+                    x[3] = tableRow;
+                    break;
+                case "genres":
+                    textViewTitle.setText(type.toUpperCase());
+                    for (Genre g : videogame.getGenres()) {
+                        TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        genres.setText(g.getName());
+                        linearLayout.addView(genres);
+                    }
+                    x[2] = tableRow;
+                    break;
+                case "platforms":
+                    textViewTitle.setText(type.toUpperCase());
+                    for (Platform platform : videogame.getPlatforms()) {
+                        TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        genres.setText(platform.getName());
+                        linearLayout.addView(genres);
+                    }
+                    x[5] = tableRow;
+                    break;
+                case "companies":
+                    break;
+                case "gameModes":
+                    textViewTitle.setText("GAME MODES");
+                    for (GameMode g : videogame.getGameModes()) {
+                        TextView textViewValue2 = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        textViewValue2.setText(g.getName());
+                        linearLayout.addView(textViewValue2);
+                    }
+                    x[1] = tableRow;
+                    break;
+                case "releaseDate":
+                    textViewTitle.setText("RELEASE DATE");
+                    TextView releaseDate = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                    releaseDate.setText(videogame.getReleaseDate());
+                    linearLayout.addView(releaseDate);
+                    x[4] = tableRow;
+                    break;
+                case "parentVideogame":
+                    break;
+                default:
+            }
+        }
+        for (TableRow tableRow : x) {
+            if (tableRow != null) tableLayoutInfo.addView(tableRow);
+        }
+        return view;
     }
 }

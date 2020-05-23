@@ -174,7 +174,7 @@ public class ExploreFragment extends Fragment {
                         int position = getAdapterPosition();
                         Videogame videogame = videogames.get(position);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("videogame", videogame);
+                        bundle.putInt("videogame", videogame.getIdGame());
                         VideogameDetailsFragment detail = new VideogameDetailsFragment();
                         detail.setArguments(bundle);
                         customCallback.accessFragment(R.id.fragment_container, detail);

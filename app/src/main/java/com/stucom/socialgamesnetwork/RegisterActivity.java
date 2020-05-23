@@ -280,7 +280,7 @@ public class RegisterActivity extends AppCompatActivity {
         }) {
             @Override protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("idGame", game.getIdGame());
+                params.put("idGame", String.valueOf(game.getIdGame()));
                 params.put("name", game.getName());
                 params.put("token", token);
                 return params;
@@ -351,7 +351,7 @@ public class RegisterActivity extends AppCompatActivity {
         }) {
             @Override protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("idGame", game.getIdGame());
+                params.put("idGame", String.valueOf(game.getIdGame()));
                 params.put("token", token);
                 return params;
             }
@@ -385,7 +385,7 @@ public class RegisterActivity extends AppCompatActivity {
         }) {
             @Override protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("idGame", game.getIdGame());
+                params.put("idGame", String.valueOf(game.getIdGame()));
                 params.put("token", token);
                 return params;
             }
