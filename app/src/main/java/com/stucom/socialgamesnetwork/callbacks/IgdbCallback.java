@@ -10,7 +10,7 @@ import java.util.List;
 public interface IgdbCallback {
     void findGenres(Context context, List<Genre> genresAPI);
 
-    void findGames(Context context, List<Videogame> videogamesAPI);
+    void findGames(Context context, List<Videogame> videogamesAPI, boolean add);
 
     void getGame(Context context, Videogame videogame);
 

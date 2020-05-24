@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +53,7 @@ public class ExploreFragment extends Fragment {
     private ExpandableListAdapter listAdapterExpandable;
     private LinearLayout lnrLytFilterGames;
     private Button searchBtn;
+    private EditText etFilterSearch;
 
     private HashMap<String, List<String>> data;
     private List<Genre> genres;
@@ -100,9 +103,18 @@ public class ExploreFragment extends Fragment {
             }
 
             @Override
-            public void findGames(Context context, List<Videogame> videogamesAPI) {
-                adapter.add(videogamesAPI);
-                adapter.notifyDataSetChanged();
+            public void findGames(Context context, List<Videogame> videogamesAPI, boolean add) {
+                if (videogamesAPI.isEmpty()) {
+                    Toast.makeText(context, getResources().getText(R.string.noMoreGames), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (add) {
+                        adapter.add(videogamesAPI);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        adapter.set(videogamesAPI);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
             }
 
             @Override
@@ -119,21 +131,22 @@ public class ExploreFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                filterGames(getContext(), igdbCallback);
+                filterGames(getContext(), igdbCallback, false);
             }
         });
+        etFilterSearch = this.getActivity().findViewById(R.id.etFilterSearch);
 
         expListView = this.getActivity().findViewById(R.id.expandable_list);
         lnrLytFilterGames = this.getActivity().findViewById(R.id.lnrLytFilterGames);
 
         dao = new IgdbDAO();
         Set<Genre> x = new HashSet<>();
-        dao.getGamesByGenre(getContext(), igdbCallback, x, offset);
+        dao.getGamesByGenre(getContext(), igdbCallback, x, etFilterSearch.getText().toString(), offset, false);
 
         return view;
     }
 
-    private void filterGames(Context context, IgdbCallback callback) {
+    private void filterGames(Context context, IgdbCallback callback, boolean add) {
         HashMap<String, Set<Genre>> filterGames = new HashMap<>();
         for (Map.Entry<String, Set<String>> entry : listAdapterExpandable.getItemsChecked().entrySet()) {
             HashSet<Genre> z = new HashSet<>();
@@ -152,7 +165,7 @@ public class ExploreFragment extends Fragment {
         }
         Log.d("SGN", filterGames.toString());
         IgdbDAO dao = new IgdbDAO();
-        dao.getGamesByGenre(context, callback, filterGames.get("Genre"), offset);
+        dao.getGamesByGenre(context, callback, filterGames.get("Genre"), etFilterSearch.getText().toString(), offset, add);
     }
 
     class VideogameAdapter extends RecyclerView.Adapter<VideogameAdapter.ViewHolder> {
@@ -199,6 +212,10 @@ public class ExploreFragment extends Fragment {
             this.videogames.addAll(videogames);
         }
 
+        public void set(List<Videogame> videogames) {
+            this.videogames = videogames;
+        }
+
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -221,7 +238,7 @@ public class ExploreFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         offset += 15;
-                        filterGames(getContext(), igdbCallback);
+                        filterGames(getContext(), igdbCallback, true);
                     }
                 });
             } else {

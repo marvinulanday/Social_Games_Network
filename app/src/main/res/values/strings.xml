@@ -55,4 +55,5 @@
     <string name="password">Password</string>
     <string name="load">Load more</string>
     <string name="samePassword">Current and new password are identical</string>
+    <string name="noMoreGames">No games found</string>
 </resources>

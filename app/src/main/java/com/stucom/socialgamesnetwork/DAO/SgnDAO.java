@@ -194,7 +194,7 @@ public class SgnDAO {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
                 params.put("token", token);
-                params.put("videogame", String.valueOf(videogame));
+                params.put("idGame", String.valueOf(videogame));
                 return params;
             }
         };
@@ -220,7 +220,8 @@ public class SgnDAO {
 
                         switch (apiResponse.getErrorCode()) {
                             case 0:
-                                callback.isGameFavourite(context, (Boolean) apiResponse.getData());
+                                if ((Boolean) apiResponse.getData())
+                                    callback.isGameFavourite(context, false);
                                 break;
                             case 2:
                                 break;
@@ -237,7 +238,7 @@ public class SgnDAO {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
                 params.put("token", token);
-                params.put("videogame", String.valueOf(videogame));
+                params.put("idGame", String.valueOf(videogame));
                 return params;
             }
         };
@@ -246,21 +247,21 @@ public class SgnDAO {
 
     public void isVideogameFavourite(final Context context, final SgnCallback callback, final int videogame) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        String URL = "http://www.arturviader.com/socialgamesnetwork/videogameIsFavourite";
 
         final String token = SharedPrefsManagement.getData(context, "token");
         final String email = SharedPrefsManagement.getData(context, "email");
+        String URL = "http://www.arturviader.com/socialgamesnetwork/videogameIsFavourite?token=" + token + "&email=" + email + "&idGame=" + videogame;
+
 
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("SGN", response);
                         Gson gson = new Gson();
                         Type typeToken = new TypeToken<Data>() {
                         }.getType();
                         Data apiResponse = gson.fromJson(response, typeToken);
-
+                        Log.d("SGN", String.valueOf(apiResponse));
                         switch (apiResponse.getErrorCode()) {
                             case 0:
                                 callback.isGameFavourite(context, (Boolean) apiResponse.getData());
@@ -274,16 +275,7 @@ public class SgnDAO {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("token", token);
-                params.put("videogame", String.valueOf(videogame));
-                return params;
-            }
-        };
+        });
         queue.add(request);
     }
 

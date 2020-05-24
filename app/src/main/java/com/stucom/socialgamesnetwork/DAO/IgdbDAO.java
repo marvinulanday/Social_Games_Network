@@ -58,15 +58,15 @@ public class IgdbDAO {
     }
 
 
-    public void getGamesByGenre(final Context context, final IgdbCallback callback, final Set<Genre> genres, int offset) {
+    public void getGamesByGenre(final Context context, final IgdbCallback callback, final Set<Genre> genres, final String search, int offset, final boolean add) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "https://api-v3.igdb.com/games";
         Log.d("SGN", URL);
         StringBuilder stringBuilder = new StringBuilder();
-        if (genres.isEmpty()) {
-            stringBuilder.append("fields id, name, parent_game.name, summary, total_rating, first_release_date,  genres.*, cover.*, platforms.*, game_modes.*, involved_companies.*; limit 15; offset " + offset + "; where rating >= 75; sort popularity desc;");
-        } else {
-            stringBuilder.append("fields id, name, parent_game.name, summary, total_rating, first_release_date,  genres.*, cover.*, platforms.*, game_modes.*, involved_companies.*;  limit 15; offset " + offset + "; where rating >= 75; sort popularity desc; where genres = [");
+        stringBuilder.append("fields id, name, parent_game.name, summary, total_rating, first_release_date, genres.*, cover.*, platforms.*, game_modes.*, involved_companies.*; limit 15; offset " + offset + "; where rating >= 75;");
+
+        if (!genres.isEmpty()) {
+            stringBuilder.append("where genres = [");
             int i = 0;
             for (Genre genre : genres) {
                 stringBuilder.append(genre.getId());
@@ -76,6 +76,11 @@ public class IgdbDAO {
                 i++;
             }
             stringBuilder.append("];");
+        }
+        if (!search.isEmpty()) {
+            stringBuilder.append("search \"" + search + "\";");
+        } else {
+            stringBuilder.append("sort popularity desc;");
         }
         final String requestBody = stringBuilder.toString();
         StringRequest request = new StringRequest(Request.Method.POST, URL,
@@ -89,7 +94,7 @@ public class IgdbDAO {
 
                         Log.d("SGN", videogamesAPI.toString());
 
-                        callback.findGames(context, videogamesAPI);
+                        callback.findGames(context, videogamesAPI, add);
 
                     }
 

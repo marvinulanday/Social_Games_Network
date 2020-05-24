@@ -87,7 +87,7 @@ public class VideogameDetailsFragment extends Fragment {
             }
 
             @Override
-            public void findGames(Context context, List<Videogame> videogamesAPI) {
+            public void findGames(Context context, List<Videogame> videogamesAPI, boolean add) {
 
             }
 
@@ -105,18 +105,18 @@ public class VideogameDetailsFragment extends Fragment {
             @Override
             public void isGameFavourite(final Context context, boolean isFavourite) {
                 if (isFavourite) {
-                    //ivfavouriteVideogame.setImageResource();
-                    ivfavouriteVideogame.setOnClickListener(new View.OnClickListener() {
+                    tbtnFavorite.setChecked(true);
+                    tbtnFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
-                        public void onClick(View v) {
-                            sgnDAO.addFavouriteVideogame(context, sgnCallback, videogameId);
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            sgnDAO.deleteFavouriteVideogame(context, sgnCallback, videogameId);
                         }
                     });
                 } else {
-                    //ivfavouriteVideogame.setImageResource();
-                    ivfavouriteVideogame.setOnClickListener(new View.OnClickListener() {
+                    tbtnFavorite.setChecked(false);
+                    tbtnFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             sgnDAO.addFavouriteVideogame(context, sgnCallback, videogameId);
                         }
                     });
@@ -124,8 +124,9 @@ public class VideogameDetailsFragment extends Fragment {
             }
         };
         ivVideogameImage = view.findViewById(R.id.ivGameImage);
-
+        // sgnDAO.deleteFavouriteVideogame(getContext(),sgnCallback,videogameId);
         sgnDAO.isVideogameFavourite(getContext(), sgnCallback, videogameId);
+
         dao.getGameById(getContext(), callback, videogameId);
 
         return view;
