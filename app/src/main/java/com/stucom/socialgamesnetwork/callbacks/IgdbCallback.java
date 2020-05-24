@@ -1,6 +1,9 @@
 package com.stucom.socialgamesnetwork.callbacks;
 
 import android.content.Context;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;
@@ -14,6 +17,6 @@ public interface IgdbCallback {
 
     void getGame(Context context, Videogame videogame);
 
-
+    void getFavouriteGame(Context context, Videogame videogame, TextView txtViewTitle, ImageView imgView, ProgressBar pbRating, TextView tvRating, TextView tvGenres);
 
 }

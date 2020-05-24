@@ -60,7 +60,6 @@ public class Videogame implements Serializable {
     public int getIdGame() {
         return idGame;
     }
-
     public void setIdGame(int idGame) {
         this.idGame = idGame;
     }

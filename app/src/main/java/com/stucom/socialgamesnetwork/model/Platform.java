@@ -22,7 +22,6 @@ public class Platform {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -30,7 +29,6 @@ public class Platform {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -38,7 +36,6 @@ public class Platform {
     public int getIdLogo() {
         return idLogo;
     }
-
     public void setIdLogo(int idLogo) {
         this.idLogo = idLogo;
     }

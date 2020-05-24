@@ -121,6 +121,12 @@ public class ExploreFragment extends Fragment {
             public void getGame(Context context, Videogame videogame) {
 
             }
+
+            @Override
+            public void getFavouriteGame(Context context, Videogame videogame, TextView txtViewTitle, ImageView imgView, ProgressBar pbRating, TextView tvRating, TextView tvGenres) {
+
+            }
+
         };
 
         dao = new IgdbDAO();
@@ -139,7 +145,6 @@ public class ExploreFragment extends Fragment {
         expListView = this.getActivity().findViewById(R.id.expandable_list);
         lnrLytFilterGames = this.getActivity().findViewById(R.id.lnrLytFilterGames);
 
-        dao = new IgdbDAO();
         Set<Genre> x = new HashSet<>();
         dao.getGamesByGenre(getContext(), igdbCallback, x, etFilterSearch.getText().toString(), offset, false);
 
@@ -242,10 +247,10 @@ public class ExploreFragment extends Fragment {
                     }
                 });
             } else {
-            Videogame videogame = videogames.get(position);
-            holder.tvVideogameTitle.setText(videogame.getName());
-            StringBuilder stringBuilder = new StringBuilder();
-            int i = 0;
+                Videogame videogame = videogames.get(position);
+                holder.tvVideogameTitle.setText(videogame.getName());
+                StringBuilder stringBuilder = new StringBuilder();
+                int i = 0;
                 if (videogame.getGenres() != null) {
                     for (Genre genre : videogame.getGenres()) {
                         stringBuilder.append(genre.getName());
@@ -254,22 +259,22 @@ public class ExploreFragment extends Fragment {
                         }
                         i++;
                     }
-            }
-            holder.tvVideogameGenre.setText(stringBuilder.toString());
+                }
+                holder.tvVideogameGenre.setText(stringBuilder.toString());
                 if (videogame.getCover() == null) {
                     Log.d("SGN", "null");
                 }
 
-            String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
-            Picasso.get().load(img).into(holder.ivVideogameImage);
-            int rating = Integer.valueOf((int) videogame.getRating());
-            Log.d("SGN", videogame.getName() + " " + rating);
-            holder.pbVideogameRating.setProgress(rating);
-            if (rating == 0) {
-                holder.tvVideogameRating.setText("N/A");
-            } else {
-                holder.tvVideogameRating.setText(String.valueOf(rating));
-            }
+                String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
+                Picasso.get().load(img).into(holder.ivVideogameImage);
+                int rating = Integer.valueOf((int) videogame.getRating());
+                Log.d("SGN", videogame.getName() + " " + rating);
+                holder.pbVideogameRating.setProgress(rating);
+                if (rating == 0) {
+                    holder.tvVideogameRating.setText("N/A");
+                } else {
+                    holder.tvVideogameRating.setText(String.valueOf(rating));
+                }
             }
 
         }

@@ -1,4 +1,4 @@
-package com.stucom.socialgamesnetwork.profileFragments;
+package com.stucom.socialgamesnetwork;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,15 +10,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
 import com.stucom.socialgamesnetwork.DAO.SgnDAO;
-import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.callbacks.SgnCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
@@ -26,67 +27,55 @@ import com.stucom.socialgamesnetwork.model.Videogame;
 
 import java.util.List;
 
-
-public class ProfileVideogameListFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
     SgnDAO sgnDAO;
     IgdbDAO igdbDAO;
 
+    RecyclerView recyclerView;
+
     IgdbCallback igdbCallback;
     SgnCallback sgnCallback;
+    CustomCallback customCallback;
 
-    List<Videogame> favourites;
 
-    FavouriteAdapter adapter;
-    RecyclerView recyclerView;
-    int positionDelete;
+    HistoryAdapter adapter;
 
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallback;
+    int offset = 0;
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_profile_videogame_list, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        recyclerView = view.findViewById(R.id.recyclerViewFav);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Explore");
+
+        recyclerView = view.findViewById(R.id.recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
+        Bundle bundle = getArguments();
+        customCallback = (CustomCallback) bundle.getSerializable("callback");
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                positionDelete = viewHolder.getAdapterPosition();
-                sgnDAO.deleteFavouriteVideogame(getContext(), sgnCallback, favourites.get(positionDelete).getIdGame());
-
-            }
-        };
-
-        igdbDAO = new IgdbDAO();
-        sgnDAO = new SgnDAO();
         igdbCallback = new IgdbCallback() {
             @Override
             public void findGenres(Context context, List<Genre> genresAPI) {
-
             }
 
             @Override
             public void findGames(Context context, List<Videogame> videogamesAPI, boolean add) {
-
             }
 
             @Override
             public void getGame(Context context, Videogame videogame) {
+
             }
 
             @Override
-            public void getFavouriteGame(Context context, Videogame videogame, TextView tvTitle, ImageView ivImg, ProgressBar pbRating, TextView tvRating, TextView tvGenres) {
-                tvTitle.setText(videogame.getName());
+            public void getFavouriteGame(Context context, Videogame videogame, TextView txtViewTitle, ImageView imgView, ProgressBar pbRating, TextView tvRating, TextView tvGenres) {
+                txtViewTitle.setText(videogame.getName());
                 StringBuilder stringBuilder = new StringBuilder();
                 int i = 0;
                 if (videogame.getGenres() != null) {
@@ -100,7 +89,7 @@ public class ProfileVideogameListFragment extends Fragment {
                 }
                 tvGenres.setText(stringBuilder.toString());
                 String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
-                Picasso.get().load(img).into(ivImg);
+                Picasso.get().load(img).into(imgView);
                 int rating = Integer.valueOf((int) videogame.getRating());
                 pbRating.setProgress(rating);
                 if (rating == 0) {
@@ -110,30 +99,26 @@ public class ProfileVideogameListFragment extends Fragment {
                 }
             }
         };
+
         sgnCallback = new SgnCallback() {
             @Override
             public void isGameFavourite(Context context, boolean isFavourite) {
-                if (!isFavourite) {
-                    favourites.remove(positionDelete);
-                    adapter.notifyDataSetChanged();
-                }
             }
 
             @Override
             public void setListGames(Context context, List<Videogame> videogameList) {
-                favourites = videogameList;
-                adapter = new FavouriteAdapter(favourites);
-                new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+                adapter = new HistoryAdapter(videogameList);
                 recyclerView.setAdapter(adapter);
             }
         };
 
-        sgnDAO.selectFavourites(getContext(), sgnCallback);
+        sgnDAO = new SgnDAO();
+        sgnDAO.getHistoryByUser(getContext(), sgnCallback);
 
         return view;
     }
 
-    class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.ViewHolder> {
+    class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
         class ViewHolder extends RecyclerView.ViewHolder {
             ImageView ivVideogameImage;
             ProgressBar pbVideogameRating;
@@ -153,7 +138,7 @@ public class ProfileVideogameListFragment extends Fragment {
 
         private List<Videogame> favourites;
 
-        FavouriteAdapter(List<Videogame> favourites) {
+        HistoryAdapter(List<Videogame> favourites) {
             super();
             this.favourites = favourites;
         }
@@ -178,4 +163,3 @@ public class ProfileVideogameListFragment extends Fragment {
     }
 
 }
-

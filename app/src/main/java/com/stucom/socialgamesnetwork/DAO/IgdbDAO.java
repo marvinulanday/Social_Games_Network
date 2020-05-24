@@ -2,6 +2,9 @@ package com.stucom.socialgamesnetwork.DAO;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -162,5 +165,46 @@ public class IgdbDAO {
         queue.add(request);
     }
 
+    public void getGameById(final Context context, final IgdbCallback callback, final int videogame, final TextView tvTitle, final ImageView ivImg, final ProgressBar pbRating, final TextView tvRating, final TextView tvGenres) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "https://api-v3.igdb.com/games";
+        Log.d("SGN", URL);
+        final String requestBody = "fields id, name, parent_game.name, summary, total_rating, first_release_date,  genres.*, cover.*, platforms.*, game_modes.*, involved_companies.*; where id =" + videogame + ";";
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        Type listVideogame = new TypeToken<List<Videogame>>() {
+                        }.getType();
+                        List<Videogame> videogamesAPI = gson.fromJson(response, listVideogame);
+
+                        Log.d("SGN", String.valueOf(videogamesAPI.get(0)));
+
+                        callback.getFavouriteGame(context, videogamesAPI.get(0), tvTitle, ivImg, pbRating, tvRating, tvGenres);
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("SGN", String.valueOf(error));
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user-key", "d191590b7da257537341f8ca039f5d2f");
+                return params;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return requestBody.getBytes();
+            }
+
+        };
+        queue.add(request);
+    }
 
 }

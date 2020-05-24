@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -100,6 +102,11 @@ public class VideogameDetailsFragment extends Fragment {
                 String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
                 Picasso.get().load(img).into(ivVideogameImage);
             }
+
+            @Override
+            public void getFavouriteGame(Context context, Videogame videogame, TextView txtViewTitle, ImageView imgView, ProgressBar pbRating, TextView tvRating, TextView tvGenres) {
+
+            }
         };
         sgnCallback = new SgnCallback() {
             @Override
@@ -121,6 +128,11 @@ public class VideogameDetailsFragment extends Fragment {
                         }
                     });
                 }
+            }
+
+            @Override
+            public void setListGames(Context context, List<Videogame> videogameList) {
+
             }
         };
         ivVideogameImage = view.findViewById(R.id.ivGameImage);

@@ -84,8 +84,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String username = SharedPrefsManagement.getData(this, "email");
         drawerUsername = v.findViewById(R.id.drawerUsername);
         drawerUsername.setText(username);
-
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(false);
@@ -96,12 +94,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 drawer.openDrawer(navigationView);
             }
         });
+
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
         if (savedInstanceState == null) {
-
             Bundle bundle = new Bundle();
             bundle.putSerializable("callback", customCallback);
             ExploreFragment exploreFragment = new ExploreFragment();

@@ -17,10 +17,12 @@ import com.stucom.socialgamesnetwork.R;
 import com.stucom.socialgamesnetwork.callbacks.SgnCallback;
 import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.model.User;
+import com.stucom.socialgamesnetwork.model.Videogame;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SgnDAO {
@@ -34,7 +36,6 @@ public class SgnDAO {
      * @param password Password escrita por el usuario
      */
     public void getUser(final Context context, final MyCallback callback, final String email, final String password) {
-
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "http://www.arturviader.com/socialgamesnetwork/login?email=" + email + "&password=" + password + "";
         Log.d("SGN", URL);
@@ -51,7 +52,7 @@ public class SgnDAO {
                             String token = apiResponse.getData().toString();
                             SharedPrefsManagement.saveData(context, "token", token);
                             SharedPrefsManagement.saveData(context, "email", email);
-                            User user = new User(email, password);
+                            User user = new User(email);
                             callback.login(user);
                         } else {
                             callback.login(null);
@@ -279,5 +280,65 @@ public class SgnDAO {
         queue.add(request);
     }
 
-}
+    public void selectFavourites(final Context context, final SgnCallback callback) {
+        final String token = SharedPrefsManagement.getData(context, "token");
+        final String email = SharedPrefsManagement.getData(context, "email");
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/selectFavourites?email=" + email + "&token=" + token;
+        StringRequest request = new StringRequest(Request.Method.GET, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        Type type1 = new TypeToken<Data>() {
+                        }.getType();
+                        Data apiResponse = gson.fromJson(response, type1);
+                        JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
+                        Type type2 = new TypeToken<List<Videogame>>() {
+                        }.getType();
+                        List<Videogame> favourites = gson.fromJson(jsonElement, type2);
+                        callback.setListGames(context, favourites);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("SGN", String.valueOf(error));
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        queue.add(request);
+    }
 
+    public void getHistoryByUser(final Context context, final SgnCallback sgnCallback) {
+        final String token = SharedPrefsManagement.getData(context, "token");
+        final String email = SharedPrefsManagement.getData(context, "email");
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/selecthistory?email=" + email + "&token=" + token;
+        StringRequest request = new StringRequest(Request.Method.GET, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        Type type1 = new TypeToken<Data>() {
+                        }.getType();
+                        Data apiResponse = gson.fromJson(response, type1);
+                        JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
+                        Type type2 = new TypeToken<List<Videogame>>() {
+                        }.getType();
+                        List<Videogame> videogameList = gson.fromJson(jsonElement, type2);
+                        sgnCallback.setListGames(context, videogameList);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("SGN", String.valueOf(error));
+            }
+        });
+        queue.add(request);
+    }
+}
