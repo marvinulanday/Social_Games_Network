@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -36,8 +38,7 @@ public class VideogameDetailsFragment extends Fragment {
     IgdbCallback callback;
     SgnCallback sgnCallback;
     ImageView ivVideogameImage;
-    ImageView ivfavouriteVideogame;
-
+    ToggleButton tbtnFavorite;
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -53,7 +54,7 @@ public class VideogameDetailsFragment extends Fragment {
 
         Bundle bundle = getArguments();
         videogameId = bundle.getInt("videogame");
-
+        tbtnFavorite = view.findViewById(R.id.tbtnFavorite);
         tabLayout = view.findViewById(R.id.tabLayout);
         tabInfo = view.findViewById(R.id.tabInformation);
         tabOpinion = view.findViewById(R.id.tabOpinion);
