@@ -5,11 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".videogamesDetailsFragments.VideogameDetailsOpinionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Opinion fragment ay lmao" />
+        android:text="There aren't any opinions yet. Be the first" />
 
 </FrameLayout>

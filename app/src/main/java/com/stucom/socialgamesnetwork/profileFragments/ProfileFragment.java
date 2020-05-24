@@ -33,7 +33,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, null);
 
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
 
         ivAvatar = view.findViewById(R.id.ivAvatarProfile);

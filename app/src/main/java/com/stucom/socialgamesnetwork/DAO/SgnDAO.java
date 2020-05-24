@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.callbacks.SgnCallback;
 import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.model.User;
 import com.stucom.socialgamesnetwork.ui.login.MyCallback;
@@ -152,6 +153,134 @@ public class SgnDAO {
                 params.put("newPassword", newPassword);
                 params.put("confirmPassword", passwordConfirm);
                 params.put("token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    public void addFavouriteVideogame(final Context context, final SgnCallback callback, final int videogame) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/insertFavourite";
+
+        final String token = SharedPrefsManagement.getData(context, "token");
+        final String email = SharedPrefsManagement.getData(context, "email");
+
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("SGN", response);
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {
+                        }.getType();
+                        Data apiResponse = gson.fromJson(response, typeToken);
+                        switch (apiResponse.getErrorCode()) {
+                            case 0:
+                                callback.isGameFavourite(context, (Boolean) apiResponse.getData());
+                                break;
+                            case 2:
+                                break;
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("token", token);
+                params.put("videogame", String.valueOf(videogame));
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    public void deleteFavouriteVideogame(final Context context, final SgnCallback callback, final int videogame) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/deleteFavourite";
+
+        final String token = SharedPrefsManagement.getData(context, "token");
+        final String email = SharedPrefsManagement.getData(context, "email");
+
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("SGN", response);
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {
+                        }.getType();
+                        Data apiResponse = gson.fromJson(response, typeToken);
+
+                        switch (apiResponse.getErrorCode()) {
+                            case 0:
+                                callback.isGameFavourite(context, (Boolean) apiResponse.getData());
+                                break;
+                            case 2:
+                                break;
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("token", token);
+                params.put("videogame", String.valueOf(videogame));
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+    public void isVideogameFavourite(final Context context, final SgnCallback callback, final int videogame) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/videogameIsFavourite";
+
+        final String token = SharedPrefsManagement.getData(context, "token");
+        final String email = SharedPrefsManagement.getData(context, "email");
+
+        StringRequest request = new StringRequest(Request.Method.GET, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("SGN", response);
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {
+                        }.getType();
+                        Data apiResponse = gson.fromJson(response, typeToken);
+
+                        switch (apiResponse.getErrorCode()) {
+                            case 0:
+                                callback.isGameFavourite(context, (Boolean) apiResponse.getData());
+                                break;
+                            case 2:
+                                break;
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("token", token);
+                params.put("videogame", String.valueOf(videogame));
                 return params;
             }
         };

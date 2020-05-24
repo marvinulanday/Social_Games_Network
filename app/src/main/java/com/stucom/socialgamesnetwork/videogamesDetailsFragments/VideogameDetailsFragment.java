@@ -16,8 +16,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.stucom.socialgamesnetwork.CustomPageAdapter.VideogameDetailPageAdapter;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
+import com.stucom.socialgamesnetwork.DAO.SgnDAO;
 import com.stucom.socialgamesnetwork.R;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
+import com.stucom.socialgamesnetwork.callbacks.SgnCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;
 
@@ -27,9 +29,14 @@ public class VideogameDetailsFragment extends Fragment {
 
     int videogameId;
     Videogame videogame;
+
     IgdbDAO dao;
+    SgnDAO sgnDAO;
+
     IgdbCallback callback;
+    SgnCallback sgnCallback;
     ImageView ivVideogameImage;
+    ImageView ivfavouriteVideogame;
 
 
     TabLayout tabLayout;
@@ -51,6 +58,8 @@ public class VideogameDetailsFragment extends Fragment {
         tabInfo = view.findViewById(R.id.tabInformation);
         tabOpinion = view.findViewById(R.id.tabOpinion);
         viewPager = view.findViewById(R.id.viewPager);
+
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -68,6 +77,8 @@ public class VideogameDetailsFragment extends Fragment {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         dao = new IgdbDAO();
+        sgnDAO = new SgnDAO();
+
         callback = new IgdbCallback() {
             @Override
             public void findGenres(Context context, List<Genre> genresAPI) {
@@ -89,9 +100,31 @@ public class VideogameDetailsFragment extends Fragment {
                 Picasso.get().load(img).into(ivVideogameImage);
             }
         };
-
+        sgnCallback = new SgnCallback() {
+            @Override
+            public void isGameFavourite(final Context context, boolean isFavourite) {
+                if (isFavourite) {
+                    //ivfavouriteVideogame.setImageResource();
+                    ivfavouriteVideogame.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sgnDAO.addFavouriteVideogame(context, sgnCallback, videogameId);
+                        }
+                    });
+                } else {
+                    //ivfavouriteVideogame.setImageResource();
+                    ivfavouriteVideogame.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sgnDAO.addFavouriteVideogame(context, sgnCallback, videogameId);
+                        }
+                    });
+                }
+            }
+        };
         ivVideogameImage = view.findViewById(R.id.ivGameImage);
 
+        sgnDAO.isVideogameFavourite(getContext(), sgnCallback, videogameId);
         dao.getGameById(getContext(), callback, videogameId);
 
         return view;

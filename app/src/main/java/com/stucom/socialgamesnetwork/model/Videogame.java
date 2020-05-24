@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -103,7 +104,6 @@ public class Videogame implements Serializable {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         return formatter.format(new Date((long) this.releaseDate * 1000));
     }
-
     public void setReleaseDate(int releaseDate) {
         this.releaseDate = releaseDate;
     }
@@ -111,7 +111,6 @@ public class Videogame implements Serializable {
     public List<Platform> getPlatforms() {
         return platforms;
     }
-
     public void setPlatforms(List<Platform> platforms) {
         this.platforms = platforms;
     }
@@ -119,7 +118,6 @@ public class Videogame implements Serializable {
     public List<GameMode> getGameModes() {
         return gameModes;
     }
-
     public void setGameModes(List<GameMode> gameModes) {
         this.gameModes = gameModes;
     }
@@ -127,10 +125,36 @@ public class Videogame implements Serializable {
     public List<Company> getCompanies() {
         return companies;
     }
-
     public void setCompanies(List<Company> companies) {
         this.companies = companies;
     }
+
+    public List<Company> getDevelopers() {
+        List<Company> developers = new ArrayList<>();
+        if (getCompanies().isEmpty()) {
+            return developers;
+        }
+        for (Company company : companies) {
+            if (company.isDeveloper()) {
+                developers.add(company);
+            }
+        }
+        return developers;
+    }
+
+    public List<Company> getPublishers() {
+        List<Company> publishers = new ArrayList<>();
+        if (publishers.isEmpty()) {
+            return publishers;
+        }
+        for (Company company : companies) {
+            if (company.isPublisher()) {
+                publishers.add(company);
+            }
+        }
+        return publishers;
+    }
+
 
     public Videogame getParentVideogame() {
         return parentVideogame;

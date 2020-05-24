@@ -7,7 +7,7 @@ public class Company {
     @SerializedName("company")
     private String id;
 
-    @SerializedName("abbreviation")
+    @SerializedName("name")
     private String name;
 
     @SerializedName("developer")

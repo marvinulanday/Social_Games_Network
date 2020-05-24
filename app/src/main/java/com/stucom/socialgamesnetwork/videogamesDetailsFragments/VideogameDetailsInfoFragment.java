@@ -24,6 +24,7 @@ public class VideogameDetailsInfoFragment extends Fragment {
 
     Videogame videogame;
     TableLayout tableLayoutInfo;
+    TableRow[] x;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,11 +37,22 @@ public class VideogameDetailsInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_videogame_details_info, container, false);
         Bundle bundle = getArguments();
         videogame = (Videogame) bundle.getSerializable("videogame");
+
+        x = new TableRow[8];
+
         tableLayoutInfo = view.findViewById(R.id.tableLayoutInfoVideogame);
         if (videogame.getParentVideogame() != null) {
+            TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.custom_table_row, tableLayoutInfo, false);
+            TextView textViewTitle = tableRow.findViewById(R.id.tableRowTxtViewTitle);
+            LinearLayout linearLayout = tableRow.findViewById(R.id.tableRowLinearLayout);
+            TextView parentGame = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
 
+            textViewTitle.setText("GAME BELONGS TO");
+
+            parentGame.setText(videogame.getParentVideogame().getName());
+            linearLayout.addView(parentGame);
+            tableLayoutInfo.addView(tableRow);
         }
-        TableRow[] x = new TableRow[8];
         Field[] fields = videogame.getClass().getDeclaredFields();
         for (Field f : fields) {
 
@@ -50,7 +62,6 @@ public class VideogameDetailsInfoFragment extends Fragment {
             LinearLayout linearLayout = tableRow.findViewById(R.id.tableRowLinearLayout);
 
             String type = f.getName();
-
             switch (type) {
                 case "name":
                     textViewTitle.setText(type.toUpperCase());
@@ -58,33 +69,6 @@ public class VideogameDetailsInfoFragment extends Fragment {
                     name.setText(videogame.getName());
                     linearLayout.addView(name);
                     x[0] = tableRow;
-                    break;
-                case "summary":
-                    textViewTitle.setText(type.toUpperCase());
-                    TextView summary = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
-                    summary.setText(videogame.getName());
-                    linearLayout.addView(summary);
-                    x[3] = tableRow;
-                    break;
-                case "genres":
-                    textViewTitle.setText(type.toUpperCase());
-                    for (Genre g : videogame.getGenres()) {
-                        TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
-                        genres.setText(g.getName());
-                        linearLayout.addView(genres);
-                    }
-                    x[2] = tableRow;
-                    break;
-                case "platforms":
-                    textViewTitle.setText(type.toUpperCase());
-                    for (Platform platform : videogame.getPlatforms()) {
-                        TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
-                        genres.setText(platform.getName());
-                        linearLayout.addView(genres);
-                    }
-                    x[5] = tableRow;
-                    break;
-                case "companies":
                     break;
                 case "gameModes":
                     textViewTitle.setText("GAME MODES");
@@ -100,11 +84,63 @@ public class VideogameDetailsInfoFragment extends Fragment {
                     TextView releaseDate = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
                     releaseDate.setText(videogame.getReleaseDate());
                     linearLayout.addView(releaseDate);
+                    x[2] = tableRow;
+                    break;
+                case "genres":
+                    textViewTitle.setText(type.toUpperCase());
+                    for (Genre g : videogame.getGenres()) {
+                        TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        genres.setText(g.getName());
+                        linearLayout.addView(genres);
+                    }
+                    x[3] = tableRow;
+                    break;
+                case "platforms":
+                    textViewTitle.setText(type.toUpperCase());
+                    for (Platform platform : videogame.getPlatforms()) {
+                        TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        genres.setText(platform.getName());
+                        linearLayout.addView(genres);
+                    }
                     x[4] = tableRow;
                     break;
-                case "parentVideogame":
+                case "summary":
+                    textViewTitle.setText(type.toUpperCase());
+                    TextView summary = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                    summary.setText(videogame.getName());
+                    linearLayout.addView(summary);
+                    x[5] = tableRow;
                     break;
-                default:
+                case "companies":
+                    /*
+                    List<Company> developers = videogame.getDevelopers();
+                    if (!developers.isEmpty()) {
+                        TableRow tableRow1 = (TableRow) getLayoutInflater().inflate(R.layout.custom_table_row, tableLayoutInfo, false);
+                        TextView devTitle = tableRow1.findViewById(R.id.tableRowTxtViewTitle);
+                        LinearLayout linearLayout1 = tableRow1.findViewById(R.id.tableRowLinearLayout);
+                        devTitle.setText("DEVELOPERS");
+                        for (Company developer : developers) {
+                            TextView dev = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                            dev.setText(developer.getName());
+                            linearLayout1.addView(dev);
+                        }
+                        x[6] = tableRow1;
+                    }
+
+                    List<Company> publishers = videogame.getPublishers();
+                    if (!publishers.isEmpty()) {
+                        TableRow tableRow2 = (TableRow) getLayoutInflater().inflate(R.layout.custom_table_row, tableLayoutInfo, false);
+                        TextView pubTitle = tableRow2.findViewById(R.id.tableRowTxtViewTitle);
+                        LinearLayout linearLayout2 = tableRow2.findViewById(R.id.tableRowLinearLayout);
+                        pubTitle.setText("PUBLISHERS");
+                        for (Company publisher : publishers) {
+                            TextView pub = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                            pub.setText(publisher.getName());
+                            linearLayout2.addView(pub);
+                        }
+                        x[7] = tableRow2;
+                    }*/
+                    break;
             }
         }
         for (TableRow tableRow : x) {
