@@ -41,11 +41,21 @@ public class LoginActivity extends AppCompatActivity {
     MyCallback myCallback;
     private static final int RC_SIGN_IN = 20;
     private GoogleSignInClient mGoogleSignInClient;
+    private Button btnRegister;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        btnRegister = findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -65,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.btnLogin);
-        final Button registerButton = findViewById(R.id.btnMissAccount);
+        final Button registerButton = findViewById(R.id.btnRegister);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         myCallback = new MyCallback() {

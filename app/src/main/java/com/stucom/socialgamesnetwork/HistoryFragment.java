@@ -36,10 +36,7 @@ public class HistoryFragment extends Fragment {
     IgdbCallback igdbCallback;
     SgnCallback sgnCallback;
 
-
     HistoryAdapter adapter;
-
-    int offset = 0;
 
     @Nullable
     @Override
@@ -110,7 +107,6 @@ public class HistoryFragment extends Fragment {
         igdbDAO = new IgdbDAO();
         sgnDAO = new SgnDAO();
         sgnDAO.getHistoryByUser(getContext(), sgnCallback);
-
         return view;
     }
 

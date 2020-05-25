@@ -3,8 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".RegisterActivity">
+
+    <TextView
+        android:id="@+id/tvTitleRegister"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:fontFamily="casual"
+        android:gravity="bottom|center"
+        android:text="Register Account"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="#655454" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/email"
+        app:layout_constraintEnd_toStartOf="@+id/tEmail"
+        app:layout_constraintHorizontal_bias="0.795"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleRegister" />
 
     <EditText
         android:id="@+id/tEmail"
@@ -16,19 +44,6 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleRegister" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="36dp"
-        android:text="Email"
-        app:layout_constraintEnd_toStartOf="@+id/tEmail"
-        app:layout_constraintHorizontal_bias="0.795"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitleRegister" />
 
     <TextView
@@ -111,7 +126,7 @@
         android:layout_marginStart="34dp"
         android:layout_marginLeft="34dp"
         android:layout_marginTop="52dp"
-        android:text="Name"
+        android:text="@string/name"
         app:layout_constraintEnd_toStartOf="@+id/tName"
         app:layout_constraintHorizontal_bias="0.776"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +139,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="52dp"
-        android:text="Surname"
+        android:text="@string/surname"
         app:layout_constraintEnd_toStartOf="@+id/tSurname"
         app:layout_constraintHorizontal_bias="0.716"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +152,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="52dp"
-        android:text="Password"
+        android:text="@string/password"
         app:layout_constraintEnd_toStartOf="@+id/tPassword"
         app:layout_constraintHorizontal_bias="0.686"
         app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +165,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="52dp"
-        android:text="Confirm pass"
+        android:text="@string/verified_password"
         app:layout_constraintEnd_toStartOf="@+id/tConfirm"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,24 +177,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/btn_rounded"
-        android:text="Register"
+        android:text="@string/action_sign_in"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tConfirm" />
 
-    <TextView
-        android:id="@+id/tvTitleRegister"
-        android:layout_width="0dp"
-        android:layout_height="160dp"
-        android:fontFamily="casual"
-        android:gravity="bottom|center"
-        android:text="Register Account"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="#655454" />
 </androidx.constraintlayout.widget.ConstraintLayout>
