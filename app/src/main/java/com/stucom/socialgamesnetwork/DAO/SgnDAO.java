@@ -318,7 +318,7 @@ public class SgnDAO {
         final String token = SharedPrefsManagement.getData(context, "token");
         final String email = SharedPrefsManagement.getData(context, "email");
         RequestQueue queue = Volley.newRequestQueue(context);
-        String URL = "http://www.arturviader.com/socialgamesnetwork/selecthistory?email=" + email + "&token=" + token;
+        String URL = "http://www.arturviader.com/socialgamesnetwork/selectHistory?email=" + email + "&token=" + token;
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -326,12 +326,20 @@ public class SgnDAO {
                         Gson gson = new Gson();
                         Type type1 = new TypeToken<Data>() {
                         }.getType();
+                        Log.d("SGN", response);
                         Data apiResponse = gson.fromJson(response, type1);
-                        JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
-                        Type type2 = new TypeToken<List<Videogame>>() {
-                        }.getType();
-                        List<Videogame> videogameList = gson.fromJson(jsonElement, type2);
-                        sgnCallback.setListGames(context, videogameList);
+                        switch (apiResponse.getErrorCode()) {
+                            case 0:
+                                JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
+                                Type type2 = new TypeToken<List<Videogame>>() {
+                                }.getType();
+                                List<Videogame> videogameList = gson.fromJson(jsonElement, type2);
+                                sgnCallback.setListGames(context, videogameList);
+                                break;
+                            case 3:
+                                //No history
+                                break;
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -339,6 +347,46 @@ public class SgnDAO {
                 Log.d("SGN", String.valueOf(error));
             }
         });
+        queue.add(request);
+    }
+
+    public void addHistory(final Context context, final int videogame) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String URL = "http://www.arturviader.com/socialgamesnetwork/insertHistory";
+
+        final String token = SharedPrefsManagement.getData(context, "token");
+        final String email = SharedPrefsManagement.getData(context, "email");
+
+        StringRequest request = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        Type typeToken = new TypeToken<Data>() {
+                        }.getType();
+                        Data apiResponse = gson.fromJson(response, typeToken);
+                        switch (apiResponse.getErrorCode()) {
+                            case 0:
+                                break;
+                            case 2:
+                                break;
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("token", token);
+                params.put("idGame", String.valueOf(videogame));
+                return params;
+            }
+        };
         queue.add(request);
     }
 }
