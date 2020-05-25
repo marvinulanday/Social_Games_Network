@@ -23,8 +23,6 @@
     <string name="insertcode2">Insert the code you received by email</string>
     <string name="networkerror">Network error</string>
     <string name="cancel">Cancel</string>
-    <string name="userregistrered1">User registrered</string>
-    <string name="userregistrered2">All ok, your user was registrered</string>
     <string name="errorInsertGame">Error inserting game</string>
     <string name="incorrectConfirmation">Incorrect confirmation code</string>
     <string name="emptyFields">There are empty fields</string>
@@ -62,4 +60,5 @@
     <string name="explore">Explore</string>
     <string name="logout">Logout</string>
     <string name="features">Features</string>
+    <string name="user_registered">User registered!</string>
 </resources>

@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private FirebaseAuth mAuth;
-    MyCallback myCallback;
+    private MyCallback myCallback;
     private static final int RC_SIGN_IN = 20;
     private GoogleSignInClient mGoogleSignInClient;
     private Button btnRegister;

@@ -87,8 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     .setView(etCode)
                                     .setPositiveButton(R.string.register, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            int codi = Integer.parseInt(etCode.getText().toString());
-                                            verifyCode(codi);
+                                            int code = Integer.parseInt(etCode.getText().toString());
+                                            verifyCode(code);
                                         }
                                     })
                                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -134,6 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Data apiResponse = gson.fromJson(response, typeToken);
                         if (apiResponse.getErrorCode() == 0) {
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            Toast.makeText(RegisterActivity.this, R.string.user_registered, Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                         } else {
                             Toast.makeText(RegisterActivity.this, apiResponse.getErrorMsg(), Toast.LENGTH_SHORT).show();
