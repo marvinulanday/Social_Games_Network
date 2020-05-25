@@ -15,17 +15,13 @@
                     android:title="Explore" />
                 <item
                     android:id="@+id/nav_ranking"
-                    android:icon="@drawable/trophy"
+                    android:icon="@drawable/historial"
                     android:title="Ranking" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@android:drawable/ic_lock_power_off"
                     android:title="Logout" />
-
             </group>
         </menu>
     </item>
-
-
-
 </menu>
