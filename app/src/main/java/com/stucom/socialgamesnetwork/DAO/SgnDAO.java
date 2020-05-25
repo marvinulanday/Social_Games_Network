@@ -293,11 +293,16 @@ public class SgnDAO {
                         Type type1 = new TypeToken<Data>() {
                         }.getType();
                         Data apiResponse = gson.fromJson(response, type1);
-                        JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
-                        Type type2 = new TypeToken<List<Videogame>>() {
-                        }.getType();
-                        List<Videogame> favourites = gson.fromJson(jsonElement, type2);
-                        callback.setListGames(context, favourites);
+                        Boolean data;
+                        try {
+                            data = (Boolean) apiResponse.getData();
+                        } catch (ClassCastException ex) {
+                            JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
+                            Type type2 = new TypeToken<List<Videogame>>() {
+                            }.getType();
+                            List<Videogame> favourites = gson.fromJson(jsonElement, type2);
+                            callback.setListGames(context, favourites);
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
