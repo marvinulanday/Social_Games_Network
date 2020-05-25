@@ -42,10 +42,10 @@ import java.util.Set;
 
 public class ExploreFragment extends Fragment {
 
-    IgdbDAO dao;
-    RecyclerView recyclerView;
-    IgdbCallback igdbCallback;
-    CustomCallback customCallback;
+    private IgdbDAO dao;
+    private RecyclerView recyclerView;
+    private IgdbCallback igdbCallback;
+    private CustomCallback customCallback;
 
     private DrawerLayout drawer;
     private ExpandableListView expListView;
@@ -59,7 +59,7 @@ public class ExploreFragment extends Fragment {
     private List<Genre> genres;
     private List<String> groups;
 
-    VideogameAdapter adapter;
+    private VideogameAdapter adapter;
 
     int offset = 0;
 

@@ -14,9 +14,9 @@
                     android:icon="@android:drawable/ic_menu_search"
                     android:title="Explore" />
                 <item
-                    android:id="@+id/nav_ranking"
-                    android:icon="@drawable/historial"
-                    android:title="Ranking" />
+                    android:id="@+id/nav_history"
+                    android:icon="@drawable/history"
+                    android:title="History" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@android:drawable/ic_lock_power_off"

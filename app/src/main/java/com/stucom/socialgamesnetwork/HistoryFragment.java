@@ -29,17 +29,17 @@ import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
-    SgnDAO sgnDAO;
-    IgdbDAO igdbDAO;
+    private SgnDAO sgnDAO;
+    private IgdbDAO igdbDAO;
 
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
-    IgdbCallback igdbCallback;
-    SgnCallback sgnCallback;
-    CustomCallback customCallback;
+    private IgdbCallback igdbCallback;
+    private SgnCallback sgnCallback;
+    private CustomCallback customCallback;
 
 
-    HistoryAdapter adapter;
+    private HistoryAdapter adapter;
 
     int offset = 0;
 

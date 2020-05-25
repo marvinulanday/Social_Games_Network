@@ -49,4 +49,5 @@
     <string name="load">Cargar más</string>
     <string name="samePassword">La contraseña actual y la nueva son idénticas</string>
     <string name="noMoreGames">No hay juegos encontrados</string>
+    <string name="search_by_name">Buscar por nombre...</string>
 </resources>

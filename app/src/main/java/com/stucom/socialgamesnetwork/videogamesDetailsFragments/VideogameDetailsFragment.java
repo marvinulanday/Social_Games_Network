@@ -31,23 +31,24 @@ import java.util.List;
 
 public class VideogameDetailsFragment extends Fragment {
 
-    int videogameId;
-    Videogame videogame;
+    private int videogameId;
+    private Videogame videogame;
 
-    IgdbDAO dao;
-    SgnDAO sgnDAO;
+    private IgdbDAO dao;
+    private SgnDAO sgnDAO;
 
-    IgdbCallback callback;
-    SgnCallback sgnCallback;
-    ImageView ivVideogameImage;
-    ToggleButton tbtnFavorite;
+    private IgdbCallback callback;
+    private SgnCallback sgnCallback;
+    private ImageView ivVideogameImage;
+    private ToggleButton tbtnFavorite;
 
-    TabLayout tabLayout;
-    ViewPager viewPager;
-    VideogameDetailPageAdapter pageAdapter;
-    TabItem tabInfo;
-    TabItem tabOpinion;
-
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private VideogameDetailPageAdapter pageAdapter;
+    private TabItem tabInfo;
+    private TabItem tabOpinion;
+    private TextView tvRating;
+    private ProgressBar pbRating;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +62,8 @@ public class VideogameDetailsFragment extends Fragment {
         tabInfo = view.findViewById(R.id.tabInformation);
         tabOpinion = view.findViewById(R.id.tabOpinion);
         viewPager = view.findViewById(R.id.viewPager);
-
+        tvRating = view.findViewById(R.id.tvScore);
+        pbRating = view.findViewById(R.id.pbVideogameRating);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -98,6 +100,14 @@ public class VideogameDetailsFragment extends Fragment {
                 videogame = videogameAPI;
                 pageAdapter = new VideogameDetailPageAdapter(getChildFragmentManager(), tabLayout.getTabCount(), videogame);
                 viewPager.setAdapter(pageAdapter);
+                int rating = Integer.valueOf((int) videogame.getRating());
+                pbRating.setProgress(rating);
+                if (rating == 0) {
+                    tvRating.setText("N/A");
+                } else {
+                    tvRating.setText(String.valueOf(rating));
+                }
+                pbRating.setProgress(rating);
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(videogame.getName());
                 String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
                 Picasso.get().load(img).into(ivVideogameImage);

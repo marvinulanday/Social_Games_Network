@@ -22,9 +22,9 @@ import java.lang.reflect.Field;
 
 public class VideogameDetailsInfoFragment extends Fragment {
 
-    Videogame videogame;
-    TableLayout tableLayoutInfo;
-    TableRow[] x;
+    private Videogame videogame;
+    private TableLayout tableLayoutInfo;
+    private  TableRow[] x;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

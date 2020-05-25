@@ -173,13 +173,15 @@
         android:id="@+id/tvTitleRegister"
         android:layout_width="0dp"
         android:layout_height="160dp"
-        android:fontFamily="casual"
+        android:background="#655454"
         android:gravity="bottom|center"
         android:text="Register Account"
-        android:textColor="#FFFFFF"
+        android:textColor="#D8D4D4"
+        android:textColorHint="#F40000"
         android:textSize="36sp"
+        app:fontFamily="casual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="#655454" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

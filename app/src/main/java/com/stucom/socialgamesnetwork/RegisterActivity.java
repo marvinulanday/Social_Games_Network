@@ -24,17 +24,19 @@ import com.stucom.socialgamesnetwork.model.Data;
 import com.stucom.socialgamesnetwork.ui.login.LoginActivity;
 
 import java.lang.reflect.Type;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-    TextView tEmail;
-    TextView tUsername;
-    TextView tName;
-    TextView tSurname;
-    TextView tPassword;
-    TextView tConfirm;
-    Button btnSignIn;
+    private TextView tTitle;
+    private TextView tEmail;
+    private TextView tUsername;
+    private TextView tName;
+    private TextView tSurname;
+    private TextView tPassword;
+    private TextView tConfirm;
+    private Button btnSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
         tPassword = findViewById(R.id.tPassword);
         tConfirm = findViewById(R.id.tConfirm);
         btnSignIn = findViewById(R.id.bRegister);
+        tTitle = findViewById(R.id.tvTitleRegister);
+        tTitle.setEnabled(true);
+        tTitle.setVisibility(View.VISIBLE);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

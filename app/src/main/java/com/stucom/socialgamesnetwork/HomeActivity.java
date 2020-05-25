@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, exploreFragment).commit();
 
                 break;
-            case R.id.nav_ranking:
+            case R.id.nav_history:
                 if (frameLayout.indexOfChild(btnFilter) == -1)
                     frameLayout.addView(btnFilter);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
