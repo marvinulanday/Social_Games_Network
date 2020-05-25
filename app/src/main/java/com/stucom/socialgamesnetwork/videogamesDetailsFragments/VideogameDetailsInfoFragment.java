@@ -24,7 +24,7 @@ public class VideogameDetailsInfoFragment extends Fragment {
 
     private Videogame videogame;
     private TableLayout tableLayoutInfo;
-    private  TableRow[] x;
+    private TableRow[] x;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

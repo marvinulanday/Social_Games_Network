@@ -160,6 +160,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         SharedPrefsManagement.deleteData(this);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }
