@@ -57,4 +57,9 @@
     <string name="samePassword">Current and new password are identical</string>
     <string name="noMoreGames">No games found</string>
     <string name="search_by_name">Search by name...</string>
+    <string name="profile">Profile</string>
+    <string name="history">History</string>
+    <string name="explore">Explore</string>
+    <string name="logout">Logout</string>
+    <string name="features">Features</string>
 </resources>

@@ -2,7 +2,9 @@ package com.stucom.socialgamesnetwork.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Platform {
+import java.io.Serializable;
+
+public class Platform implements Serializable {
 
     @SerializedName("id")
     private String id;

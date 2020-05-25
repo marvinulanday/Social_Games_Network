@@ -84,6 +84,8 @@ public class VideogameDetailsFragment extends Fragment {
         dao = new IgdbDAO();
         sgnDAO = new SgnDAO();
 
+        sgnDAO.addHistory(getContext(), videogameId);
+
         callback = new IgdbCallback() {
             @Override
             public void findGenres(Context context, List<Genre> genresAPI) {

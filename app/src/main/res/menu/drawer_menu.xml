@@ -2,25 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <item android:title="Features">
+    <item android:title="@string/features">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_profile"
                     android:icon="@android:drawable/ic_menu_myplaces"
-                    android:title="Profile" />
+                    android:title="@string/profile" />
                 <item
                     android:id="@+id/nav_explore"
                     android:icon="@android:drawable/ic_menu_search"
-                    android:title="Explore" />
+                    android:title="@string/explore" />
                 <item
+                    android:id="@+id/nav_history"
+                    android:icon="@drawable/history"
+                    android:title="@string/history" />
                     android:id="@+id/nav_history"
                     android:icon="@drawable/history"
                     android:title="History" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@android:drawable/ic_lock_power_off"
-                    android:title="Logout" />
+                    android:title="@string/logout" />
+
             </group>
         </menu>
     </item>

@@ -49,15 +49,12 @@ public class HistoryFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Explore");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("History");
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-
-        Bundle bundle = getArguments();
-        customCallback = (CustomCallback) bundle.getSerializable("callback");
 
         igdbCallback = new IgdbCallback() {
             @Override
@@ -112,6 +109,7 @@ public class HistoryFragment extends Fragment {
             }
         };
 
+        igdbDAO = new IgdbDAO();
         sgnDAO = new SgnDAO();
         sgnDAO.getHistoryByUser(getContext(), sgnCallback);
 
@@ -136,11 +134,11 @@ public class HistoryFragment extends Fragment {
             }
         }
 
-        private List<Videogame> favourites;
+        private List<Videogame> history;
 
-        HistoryAdapter(List<Videogame> favourites) {
+        HistoryAdapter(List<Videogame> history) {
             super();
-            this.favourites = favourites;
+            this.history = history;
         }
 
         @NonNull
@@ -152,13 +150,13 @@ public class HistoryFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Videogame videogame = favourites.get(position);
+            Videogame videogame = history.get(position);
             igdbDAO.getGameById(getContext(), igdbCallback, videogame.getIdGame(), holder.tvVideogameTitle, holder.ivVideogameImage, holder.pbVideogameRating, holder.tvVideogameRating, holder.tvVideogameGenre);
         }
 
         @Override
         public int getItemCount() {
-            return favourites.size();
+            return history.size();
         }
     }
 

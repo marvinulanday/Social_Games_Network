@@ -132,9 +132,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
             case R.id.nav_history:
-                if (frameLayout.indexOfChild(btnFilter) == -1)
-                    frameLayout.addView(btnFilter);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RankingFragment()).commit();
+                frameLayout.removeView(btnFilter);
+                drawer.removeView(lnrLytFilterGames);
+                HistoryFragment historyFragment = new HistoryFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, historyFragment).commit();
                 break;
             case R.id.nav_logout:
                 logOut();
