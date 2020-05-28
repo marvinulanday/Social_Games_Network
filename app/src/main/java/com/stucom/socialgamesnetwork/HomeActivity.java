@@ -134,7 +134,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_history:
                 frameLayout.removeView(btnFilter);
                 drawer.removeView(lnrLytFilterGames);
+                bundle.putSerializable("callback", customCallback);
                 HistoryFragment historyFragment = new HistoryFragment();
+                historyFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, historyFragment).commit();
                 break;
             case R.id.nav_logout:

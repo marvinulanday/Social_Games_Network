@@ -9,7 +9,7 @@
     <string name="invalid_email">Correo electrónico inválido</string>
     <string name="invalid_password">La contraseña debe contener como mínimo 5 carácteres</string>
     <string name="login_failed">Correo electrónico o contraseña inválida</string>
-    <string name="networkerror">Error de red</string>
+    <string name="networkerror">Error de red. Comprueba tu Internet</string>
     <string name="insertcode1">Introduce el código de confirmación</string>
     <string name="insertcode2">Introduce el código que has recibido por email</string>
     <string name="cancel">Cancelar</string>
@@ -46,7 +46,7 @@
     <string name="password">Contraseña</string>
     <string name="load">Cargar más</string>
     <string name="samePassword">La contraseña actual y la nueva son idénticas</string>
-    <string name="noMoreGames">No hay juegos encontrados</string>
+    <string name="noMoreGames">No se encontraron juegos</string>
     <string name="search_by_name">Buscar por nombre...</string>
     <string name="profile">Perfil</string>
     <string name="history">Historial</string>
@@ -54,4 +54,6 @@
     <string name="logout">Cerrar sesión</string>
     <string name="features">Funcionalidades</string>
     <string name="user_registered">Usuario registrado!</string>
+    <string name="noFavouritesFound">Aún no has agregagado ningún videojuego en tu lista!</string>
+    <string name="noHistoryFound">Aún no has accedido a ningún videojuego!</string>
 </resources>

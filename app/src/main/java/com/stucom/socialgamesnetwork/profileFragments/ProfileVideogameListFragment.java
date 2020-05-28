@@ -19,29 +19,34 @@ import com.squareup.picasso.Picasso;
 import com.stucom.socialgamesnetwork.DAO.IgdbDAO;
 import com.stucom.socialgamesnetwork.DAO.SgnDAO;
 import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.callbacks.SgnCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;
+import com.stucom.socialgamesnetwork.videogamesDetailsFragments.VideogameDetailsFragment;
 
 import java.util.List;
 
 
 public class ProfileVideogameListFragment extends Fragment {
 
-    SgnDAO sgnDAO;
-    IgdbDAO igdbDAO;
+    private SgnDAO sgnDAO;
+    private IgdbDAO igdbDAO;
 
-    IgdbCallback igdbCallback;
-    SgnCallback sgnCallback;
+    private IgdbCallback igdbCallback;
+    private SgnCallback sgnCallback;
+    private CustomCallback customCallback;
 
-    List<Videogame> favourites;
+    private List<Videogame> favourites;
 
-    FavouriteAdapter adapter;
-    RecyclerView recyclerView;
-    int positionDelete;
+    private FavouriteAdapter adapter;
+    private RecyclerView recyclerView;
+    private int positionDelete;
 
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallback;
+    private TextView txtNotFound;
+
+    private ItemTouchHelper.SimpleCallback itemTouchHelperCallback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +54,11 @@ public class ProfileVideogameListFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_profile_videogame_list, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerViewFav);
+        txtNotFound = view.findViewById(R.id.txtView);
+
+
+        Bundle bundle = getArguments();
+        customCallback = (CustomCallback) bundle.getSerializable("callback");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -116,15 +126,28 @@ public class ProfileVideogameListFragment extends Fragment {
                 if (!isFavourite) {
                     favourites.remove(positionDelete);
                     adapter.notifyDataSetChanged();
+                    if (favourites.isEmpty()) {
+                        txtNotFound.setVisibility(View.VISIBLE);
+                        txtNotFound.setEnabled(true);
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        recyclerView.setEnabled(false);
+                    }
                 }
             }
 
             @Override
             public void setListGames(Context context, List<Videogame> videogameList) {
-                favourites = videogameList;
-                adapter = new FavouriteAdapter(favourites);
-                new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
-                recyclerView.setAdapter(adapter);
+                if (videogameList == null) {
+                    txtNotFound.setVisibility(View.VISIBLE);
+                    txtNotFound.setEnabled(true);
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    recyclerView.setEnabled(false);
+                } else {
+                    favourites = videogameList;
+                    adapter = new FavouriteAdapter(favourites);
+                    new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+                    recyclerView.setAdapter(adapter);
+                }
             }
         };
 
@@ -148,6 +171,18 @@ public class ProfileVideogameListFragment extends Fragment {
                 tvVideogameTitle = view.findViewById(R.id.tvVideogameTitle);
                 tvVideogameGenre = view.findViewById(R.id.tvVideogameGenre);
                 tvVideogameRating = view.findViewById(R.id.tvVideogameRating);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = getAdapterPosition();
+                        Videogame videogame = favourites.get(position);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("videogame", videogame.getIdGame());
+                        VideogameDetailsFragment detail = new VideogameDetailsFragment();
+                        detail.setArguments(bundle);
+                        customCallback.accessFragment(R.id.fragment_container, detail);
+                    }
+                });
             }
         }
 

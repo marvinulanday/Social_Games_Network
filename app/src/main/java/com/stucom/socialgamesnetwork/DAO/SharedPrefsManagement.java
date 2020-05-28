@@ -6,11 +6,11 @@ import android.content.SharedPreferences;
 public class SharedPrefsManagement {
 
     /**
-     * Saves the data given to the SharedPreferences
+     * Guarda el dato establecido por clave-valor en el SharedPreferences
      *
      * @param context
-     * @param key
-     * @param value
+     * @param key     clave del valor
+     * @param value   valor a guardar
      */
     public static void saveData(Context context, String key, String value) {
         SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
@@ -20,10 +20,10 @@ public class SharedPrefsManagement {
     }
 
     /**
-     * Gets the data from to the SharedPreferences
+     * Recoge el dato por clave en el SharedPreferences
      *
      * @param context
-     * @param key
+     * @param key     clave a buscar
      */
     public static String getData(Context context, String key) {
         SharedPreferences sharedPref = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
@@ -32,7 +32,7 @@ public class SharedPrefsManagement {
     }
 
     /**
-     * Deletes all the data from the SharedPreferences
+     * Elimina todos los datos del SharedPreferences
      *
      * @param context
      */

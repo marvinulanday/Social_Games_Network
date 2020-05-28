@@ -24,6 +24,7 @@ import com.stucom.socialgamesnetwork.callbacks.IgdbCallback;
 import com.stucom.socialgamesnetwork.callbacks.SgnCallback;
 import com.stucom.socialgamesnetwork.model.Genre;
 import com.stucom.socialgamesnetwork.model.Videogame;
+import com.stucom.socialgamesnetwork.videogamesDetailsFragments.VideogameDetailsFragment;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class HistoryFragment extends Fragment {
     private SgnCallback sgnCallback;
     private CustomCallback customCallback;
 
+    private TextView txtViewNotFound;
 
     private HistoryAdapter adapter;
 
@@ -52,6 +54,10 @@ public class HistoryFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("History");
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        txtViewNotFound = view.findViewById(R.id.txtView);
+
+        Bundle bundle = getArguments();
+        customCallback = (CustomCallback) bundle.getSerializable("callback");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -104,8 +110,15 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void setListGames(Context context, List<Videogame> videogameList) {
-                adapter = new HistoryAdapter(videogameList);
-                recyclerView.setAdapter(adapter);
+                if (videogameList == null) {
+                    txtViewNotFound.setVisibility(View.VISIBLE);
+                    txtViewNotFound.setEnabled(true);
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    recyclerView.setEnabled(false);
+                } else {
+                    adapter = new HistoryAdapter(videogameList);
+                    recyclerView.setAdapter(adapter);
+                }
             }
         };
 
@@ -131,6 +144,18 @@ public class HistoryFragment extends Fragment {
                 tvVideogameTitle = view.findViewById(R.id.tvVideogameTitle);
                 tvVideogameGenre = view.findViewById(R.id.tvVideogameGenre);
                 tvVideogameRating = view.findViewById(R.id.tvVideogameRating);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = getAdapterPosition();
+                        Videogame videogame = history.get(position);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("videogame", videogame.getIdGame());
+                        VideogameDetailsFragment detail = new VideogameDetailsFragment();
+                        detail.setArguments(bundle);
+                        customCallback.accessFragment(R.id.fragment_container, detail);
+                    }
+                });
             }
         }
 

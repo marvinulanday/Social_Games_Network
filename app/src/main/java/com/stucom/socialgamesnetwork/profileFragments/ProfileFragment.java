@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.stucom.socialgamesnetwork.CustomPageAdapter.ProfilePageAdapter;
 import com.stucom.socialgamesnetwork.R;
+import com.stucom.socialgamesnetwork.callbacks.CustomCallback;
 
 public class ProfileFragment extends Fragment {
 
@@ -26,6 +27,10 @@ public class ProfileFragment extends Fragment {
     private ProfilePageAdapter pageAdapter;
     private TabItem tabProfileInformation;
     private TabItem tabVideogameList;
+
+    private CustomCallback customCallback;
+
+
 
 
     @Nullable
@@ -43,6 +48,9 @@ public class ProfileFragment extends Fragment {
         tabVideogameList = view.findViewById(R.id.tabVideogameList);
         viewPager = view.findViewById(R.id.viewPager);
 
+        Bundle bundle = getArguments();
+        customCallback = (CustomCallback) bundle.getSerializable("callback");
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -58,7 +66,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        pageAdapter = new ProfilePageAdapter(getChildFragmentManager(), tabLayout.getTabCount());
+        pageAdapter = new ProfilePageAdapter(getChildFragmentManager(), tabLayout.getTabCount(), customCallback);
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

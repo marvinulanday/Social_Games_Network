@@ -1,7 +1,6 @@
 package com.stucom.socialgamesnetwork.DAO;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,13 +36,13 @@ public class SgnDAO {
      */
     public void getUser(final Context context, final MyCallback callback, final String email, final String password) {
         RequestQueue queue = Volley.newRequestQueue(context);
+
         String URL = "http://www.arturviader.com/socialgamesnetwork/login?email=" + email + "&password=" + password + "";
-        Log.d("SGN", URL);
+
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("SGN", response);
                         Gson gson = new Gson();
                         Type typeToken = new TypeToken<Data>() {
                         }.getType();
@@ -61,24 +60,29 @@ public class SgnDAO {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("SGN", String.valueOf(error));
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(request);
     }
 
+    /**
+     * Recoge los datos de un usuario
+     *
+     * @param context  Activity donde se realiza la petición
+     * @param callback Se utilizará para almacenar los datos del usuario
+     */
     public void selectUserByEmail(final Context context, final MyCallback callback) {
         final String token = SharedPrefsManagement.getData(context, "token");
         final String email = SharedPrefsManagement.getData(context, "email");
         RequestQueue queue = Volley.newRequestQueue(context);
 
         String URL = "http://www.arturviader.com/socialgamesnetwork/selectUserByEmail?email=" + email + "&token=" + token;
-        int score;
+
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         Gson gson = new Gson();
                         Type typeToken = new TypeToken<Data>() {
                         }.getType();
@@ -91,7 +95,7 @@ public class SgnDAO {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("SGN", String.valueOf(error));
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -104,17 +108,25 @@ public class SgnDAO {
         queue.add(request);
     }
 
+    /**
+     * Actualiza los datos del usuario
+     *
+     * @param context         Activity donde se realiza la petición
+     * @param callback        Se utilizará para actualizar los datos del usuario
+     * @param user            Usuario logueado con sus datos
+     * @param newPassword     Nueva contraseña a modificar
+     * @param passwordConfirm Comprobación de la nueva contraseña a modificar
+     */
     public void updateUser(final Context context, final MyCallback callback, final User user, final String newPassword, final String passwordConfirm) {
         final String token = SharedPrefsManagement.getData(context, "token");
         RequestQueue queue = Volley.newRequestQueue(context);
-        String URL = "http://www.arturviader.com/socialgamesnetwork/updateUser";
 
+        String URL = "http://www.arturviader.com/socialgamesnetwork/updateUser";
 
         StringRequest request = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("SGN", response);
                         Gson gson = new Gson();
                         Type typeToken = new TypeToken<Data>() {
                         }.getType();
@@ -141,7 +153,7 @@ public class SgnDAO {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, R.string.errorUpdateUser, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -160,8 +172,16 @@ public class SgnDAO {
         queue.add(request);
     }
 
+    /**
+     * Inserta un videojuego favorito del usuario
+     *
+     * @param context   Activity donde se realiza la petición
+     * @param callback  Actualizará la lista que muestra por pantalla
+     * @param videogame videojuego a insertar
+     */
     public void addFavouriteVideogame(final Context context, final SgnCallback callback, final int videogame) {
         RequestQueue queue = Volley.newRequestQueue(context);
+
         String URL = "http://www.arturviader.com/socialgamesnetwork/insertFavourite";
 
         final String token = SharedPrefsManagement.getData(context, "token");
@@ -171,7 +191,6 @@ public class SgnDAO {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("SGN", response);
                         Gson gson = new Gson();
                         Type typeToken = new TypeToken<Data>() {
                         }.getType();
@@ -187,7 +206,7 @@ public class SgnDAO {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -202,6 +221,13 @@ public class SgnDAO {
         queue.add(request);
     }
 
+    /**
+     * Elimina un videojuego favorito del usuario
+     *
+     * @param context   Activity donde se realiza la petición
+     * @param callback  Actualiza la lista que muestra por pantalla
+     * @param videogame videojuega a eliminar
+     */
     public void deleteFavouriteVideogame(final Context context, final SgnCallback callback, final int videogame) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String URL = "http://www.arturviader.com/socialgamesnetwork/deleteFavourite";
@@ -213,7 +239,6 @@ public class SgnDAO {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("SGN", response);
                         Gson gson = new Gson();
                         Type typeToken = new TypeToken<Data>() {
                         }.getType();
@@ -231,7 +256,7 @@ public class SgnDAO {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -246,13 +271,20 @@ public class SgnDAO {
         queue.add(request);
     }
 
+    /**
+     * Comprueba si un videojuego es favorito o no
+     *
+     * @param context   Activity donde se realiza la petición
+     * @param callback  Actualizará la pantalla para mostrar si es favorito o no
+     * @param videogame videojuego a comprobar
+     */
     public void isVideogameFavourite(final Context context, final SgnCallback callback, final int videogame) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         final String token = SharedPrefsManagement.getData(context, "token");
         final String email = SharedPrefsManagement.getData(context, "email");
-        String URL = "http://www.arturviader.com/socialgamesnetwork/videogameIsFavourite?token=" + token + "&email=" + email + "&idGame=" + videogame;
 
+        String URL = "http://www.arturviader.com/socialgamesnetwork/videogameIsFavourite?token=" + token + "&email=" + email + "&idGame=" + videogame;
 
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
@@ -262,7 +294,6 @@ public class SgnDAO {
                         Type typeToken = new TypeToken<Data>() {
                         }.getType();
                         Data apiResponse = gson.fromJson(response, typeToken);
-                        Log.d("SGN", String.valueOf(apiResponse));
                         switch (apiResponse.getErrorCode()) {
                             case 0:
                                 callback.isGameFavourite(context, (Boolean) apiResponse.getData());
@@ -274,17 +305,25 @@ public class SgnDAO {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(request);
     }
 
+    /**
+     * Recoge la lista de videojuegos favoritos de un usuario
+     *
+     * @param context  Activity donde se realiza la petición
+     * @param callback Actualizará la lista actual recogida
+     */
     public void selectFavourites(final Context context, final SgnCallback callback) {
         final String token = SharedPrefsManagement.getData(context, "token");
         final String email = SharedPrefsManagement.getData(context, "email");
         RequestQueue queue = Volley.newRequestQueue(context);
+
         String URL = "http://www.arturviader.com/socialgamesnetwork/selectFavourites?email=" + email + "&token=" + token;
+
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -296,6 +335,7 @@ public class SgnDAO {
                         Boolean data;
                         try {
                             data = (Boolean) apiResponse.getData();
+                            callback.setListGames(context, null);
                         } catch (ClassCastException ex) {
                             JsonElement jsonElement = gson.toJsonTree(apiResponse.getData());
                             Type type2 = new TypeToken<List<Videogame>>() {
@@ -307,7 +347,7 @@ public class SgnDAO {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("SGN", String.valueOf(error));
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -319,11 +359,20 @@ public class SgnDAO {
         queue.add(request);
     }
 
+    /**
+     * Recoge la lista de videojuegos accedidos por un usuario
+     *
+     * @param context     Activity donde se realiza la petición
+     * @param sgnCallback Actualizará la lista de videojuegos accedidos
+     */
     public void getHistoryByUser(final Context context, final SgnCallback sgnCallback) {
         final String token = SharedPrefsManagement.getData(context, "token");
         final String email = SharedPrefsManagement.getData(context, "email");
+
         RequestQueue queue = Volley.newRequestQueue(context);
+
         String URL = "http://www.arturviader.com/socialgamesnetwork/selectHistory?email=" + email + "&token=" + token;
+
         StringRequest request = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -331,7 +380,6 @@ public class SgnDAO {
                         Gson gson = new Gson();
                         Type type1 = new TypeToken<Data>() {
                         }.getType();
-                        Log.d("SGN", response);
                         Data apiResponse = gson.fromJson(response, type1);
                         switch (apiResponse.getErrorCode()) {
                             case 0:
@@ -342,21 +390,27 @@ public class SgnDAO {
                                 sgnCallback.setListGames(context, videogameList);
                                 break;
                             case 3:
-                                //No history
+                                sgnCallback.setListGames(context, null);
                                 break;
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("SGN", String.valueOf(error));
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(request);
     }
 
+    /**
+     * Inserta en la lista de videojuegos accedidos de un usuario
+     * @param context Activity donde se realiza la petición
+     * @param videogame videojuego a insertar
+     */
     public void addHistory(final Context context, final int videogame) {
         RequestQueue queue = Volley.newRequestQueue(context);
+
         String URL = "http://www.arturviader.com/socialgamesnetwork/insertHistory";
 
         final String token = SharedPrefsManagement.getData(context, "token");
@@ -380,7 +434,7 @@ public class SgnDAO {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.networkerror, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

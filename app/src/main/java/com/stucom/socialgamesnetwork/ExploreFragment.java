@@ -2,7 +2,6 @@ package com.stucom.socialgamesnetwork;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,7 +145,7 @@ public class ExploreFragment extends Fragment {
         lnrLytFilterGames = this.getActivity().findViewById(R.id.lnrLytFilterGames);
 
         Set<Genre> x = new HashSet<>();
-        dao.getGamesByGenre(getContext(), igdbCallback, x, etFilterSearch.getText().toString(), offset, false);
+        dao.getGamesByGenreAndText(getContext(), igdbCallback, x, etFilterSearch.getText().toString(), offset, false);
 
         return view;
     }
@@ -168,9 +167,8 @@ public class ExploreFragment extends Fragment {
                 }
             }
         }
-        Log.d("SGN", filterGames.toString());
         IgdbDAO dao = new IgdbDAO();
-        dao.getGamesByGenre(context, callback, filterGames.get("Genre"), etFilterSearch.getText().toString(), offset, add);
+        dao.getGamesByGenreAndText(context, callback, filterGames.get("Genre"), etFilterSearch.getText().toString(), offset, add);
     }
 
     class VideogameAdapter extends RecyclerView.Adapter<VideogameAdapter.ViewHolder> {
@@ -224,7 +222,6 @@ public class ExploreFragment extends Fragment {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            Log.d("SGN", "onCreateViewHolder()");
             View view;
             if (viewType == R.layout.item_videogame_card) {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_videogame_card, parent, false);
@@ -237,7 +234,6 @@ public class ExploreFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Log.d("SGN", "onBindViewHolder(): " + position);
             if (position == videogames.size()) {
                 holder.btnLoad.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -261,14 +257,9 @@ public class ExploreFragment extends Fragment {
                     }
                 }
                 holder.tvVideogameGenre.setText(stringBuilder.toString());
-                if (videogame.getCover() == null) {
-                    Log.d("SGN", "null");
-                }
-
                 String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
                 Picasso.get().load(img).into(holder.ivVideogameImage);
                 int rating = Integer.valueOf((int) videogame.getRating());
-                Log.d("SGN", videogame.getName() + " " + rating);
                 holder.pbVideogameRating.setProgress(rating);
                 if (rating == 0) {
                     holder.tvVideogameRating.setText("N/A");

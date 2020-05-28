@@ -21,7 +21,7 @@
     <string name="register">Sign in</string>
     <string name="insertcode1">Insert confirmation code</string>
     <string name="insertcode2">Insert the code you received by email</string>
-    <string name="networkerror">Network error</string>
+    <string name="networkerror">Network error. Check your Internet</string>
     <string name="cancel">Cancel</string>
     <string name="errorInsertGame">Error inserting game</string>
     <string name="incorrectConfirmation">Incorrect confirmation code</string>
@@ -43,7 +43,7 @@
     <string name="errorUpdateUser">Error updating user</string>
     <string name="errorPasswordShort">Password must have 5 characters</string>
     <string name="errorConfirmPassword">Error confirm password</string>
-    <string name="errorPasswordIncorrect">Error old password incorrect</string>
+    <string name="errorPasswordIncorrect">Current password incorrect</string>
     <string name="current_password">Current password</string>
     <string name="new_password">New password</string>
     <string name="verified_password">Verified password</string>
@@ -61,4 +61,6 @@
     <string name="logout">Logout</string>
     <string name="features">Features</string>
     <string name="user_registered">User registered!</string>
+    <string name="noFavouritesFound">You have not added any favourites videogames in your list yet!</string>
+    <string name="noHistoryFound">You have not accessed any videogame yet!</string>
 </resources>
