@@ -69,56 +69,62 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void signIn() {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String URL = "http://www.arturviader.com/socialgamesnetwork/insertUser";
-        StringRequest request = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new Gson();
-                        Type typeToken = new TypeToken<Data>() {
-                        }.getType();
-                        Data apiResponse = gson.fromJson(response, typeToken);
-                        if (apiResponse.getErrorCode() == 0) {
-                            final EditText etCode = new EditText(RegisterActivity.this);
-                            new AlertDialog.Builder(RegisterActivity.this)
-                                    .setTitle(R.string.insertcode1)
-                                    .setMessage(R.string.insertcode2)
-                                    .setView(etCode)
-                                    .setPositiveButton(R.string.register, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            int code = Integer.parseInt(etCode.getText().toString());
-                                            verifyCode(code);
-                                        }
-                                    })
-                                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
+        if (tPassword.getText().length()<5)
+        {
+            Toast.makeText(RegisterActivity.this, R.string.errorPasswordShort, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            RequestQueue queue = Volley.newRequestQueue(this);
+            String URL = "http://www.arturviader.com/socialgamesnetwork/insertUser";
+            StringRequest request = new StringRequest(Request.Method.POST, URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Gson gson = new Gson();
+                            Type typeToken = new TypeToken<Data>() {
+                            }.getType();
+                            Data apiResponse = gson.fromJson(response, typeToken);
+                            if (apiResponse.getErrorCode() == 0) {
+                                final EditText etCode = new EditText(RegisterActivity.this);
+                                new AlertDialog.Builder(RegisterActivity.this)
+                                        .setTitle(R.string.insertcode1)
+                                        .setMessage(R.string.insertcode2)
+                                        .setView(etCode)
+                                        .setPositiveButton(R.string.register, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                int code = Integer.parseInt(etCode.getText().toString());
+                                                verifyCode(code);
+                                            }
+                                        })
+                                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
 
-                                        }
-                                    })
-                                    .show();
-                        } else {
-                            Toast.makeText(RegisterActivity.this, apiResponse.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .show();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, apiResponse.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, R.string.networkerror, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", tEmail.getText().toString());
-                params.put("password", tPassword.getText().toString());
-                params.put("username", tUsername.getText().toString());
-                params.put("name", tName.getText().toString());
-                params.put("surname", tSurname.getText().toString());
-                return params;
-            }
-        };
-        queue.add(request);
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(RegisterActivity.this, R.string.networkerror, Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("email", tEmail.getText().toString());
+                    params.put("password", tPassword.getText().toString());
+                    params.put("username", tUsername.getText().toString());
+                    params.put("name", tName.getText().toString());
+                    params.put("surname", tSurname.getText().toString());
+                    return params;
+                }
+            };
+            queue.add(request);
+        }
     }
 
     private void verifyCode(final int code) {
