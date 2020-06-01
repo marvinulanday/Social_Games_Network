@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -111,6 +112,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Bundle bundle = new Bundle();
+        EditText filterSearch = lnrLytFilterGames.findViewById(R.id.etFilterSearch);
+        filterSearch.setText("");
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
                 frameLayout.removeView(btnFilter);

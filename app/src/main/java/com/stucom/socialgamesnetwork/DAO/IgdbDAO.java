@@ -80,7 +80,7 @@ public class IgdbDAO {
         String URL = "https://api-v3.igdb.com/games";
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("fields id, name, parent_game.name, summary, total_rating, first_release_date, genres.*, cover.*, platforms.*, game_modes.*, involved_companies.*; limit 15; offset " + offset + "; where rating >= 75;");
+        stringBuilder.append("fields id, name, parent_game.name, summary, total_rating, first_release_date, genres.*, cover.*, platforms.*, game_modes.*, involved_companies.*; limit 5; offset " + offset + "; where rating >= 75;");
         if (!genres.isEmpty()) {
             stringBuilder.append("where genres = [");
             int i = 0;

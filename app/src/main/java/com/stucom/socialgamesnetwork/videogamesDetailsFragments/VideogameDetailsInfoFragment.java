@@ -72,43 +72,73 @@ public class VideogameDetailsInfoFragment extends Fragment {
                     break;
                 case "gameModes":
                     textViewTitle.setText("GAME MODES");
-                    for (GameMode g : videogame.getGameModes()) {
+                    if (videogame.getGameModes() == null) {
                         TextView textViewValue2 = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
-                        textViewValue2.setText(g.getName());
+                        textViewValue2.setText("");
                         linearLayout.addView(textViewValue2);
+                    } else {
+                        for (GameMode g : videogame.getGameModes()) {
+                            TextView textViewValue2 = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                            textViewValue2.setText(g.getName());
+                            linearLayout.addView(textViewValue2);
+                        }
                     }
                     x[1] = tableRow;
                     break;
                 case "releaseDate":
                     textViewTitle.setText("RELEASE DATE");
-                    TextView releaseDate = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
-                    releaseDate.setText(videogame.getReleaseDate());
-                    linearLayout.addView(releaseDate);
-                    x[2] = tableRow;
+                    if (videogame.getReleaseDate() == null) {
+                        TextView textViewValue2 = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        textViewValue2.setText("");
+                        linearLayout.addView(textViewValue2);
+                    } else {
+                        TextView releaseDate = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        releaseDate.setText(videogame.getReleaseDate());
+                        linearLayout.addView(releaseDate);
+                        x[2] = tableRow;
+                    }
                     break;
                 case "genres":
                     textViewTitle.setText(type.toUpperCase());
-                    for (Genre g : videogame.getGenres()) {
-                        TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
-                        genres.setText(g.getName());
-                        linearLayout.addView(genres);
+                    if (videogame.getGenres() == null) {
+                        TextView textViewValue2 = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        textViewValue2.setText("");
+                        linearLayout.addView(textViewValue2);
+                    } else {
+                        for (Genre g : videogame.getGenres()) {
+                            TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                            genres.setText(g.getName());
+                            linearLayout.addView(genres);
+                        }
                     }
                     x[3] = tableRow;
                     break;
                 case "platforms":
                     textViewTitle.setText(type.toUpperCase());
-                    for (Platform platform : videogame.getPlatforms()) {
-                        TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
-                        genres.setText(platform.getName());
-                        linearLayout.addView(genres);
+                    if (videogame.getPlatforms() == null) {
+                        TextView textViewValue2 = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        textViewValue2.setText("");
+                        linearLayout.addView(textViewValue2);
+                    } else {
+                        for (Platform platform : videogame.getPlatforms()) {
+                            TextView genres = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                            genres.setText(platform.getName());
+                            linearLayout.addView(genres);
+                        }
                     }
                     x[4] = tableRow;
                     break;
                 case "summary":
                     textViewTitle.setText(type.toUpperCase());
-                    TextView summary = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
-                    summary.setText(videogame.getName());
-                    linearLayout.addView(summary);
+                    if (videogame.getSummary() == null) {
+                        TextView textViewValue2 = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        textViewValue2.setText("");
+                        linearLayout.addView(textViewValue2);
+                    } else {
+                        TextView summary = (TextView) getLayoutInflater().inflate(R.layout.custom_text_view, tableLayoutInfo, false);
+                        summary.setText(videogame.getName());
+                        linearLayout.addView(summary);
+                    }
                     x[5] = tableRow;
                     break;
                 case "companies":

@@ -101,7 +101,12 @@ public class Videogame implements Serializable {
 
     public String getReleaseDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        return formatter.format(new Date((long) this.releaseDate * 1000));
+        try {
+            String x = formatter.format(new Date((long) this.releaseDate * 1000));
+            return x;
+        } catch (Exception ex) {
+            return null;
+        }
     }
     public void setReleaseDate(int releaseDate) {
         this.releaseDate = releaseDate;

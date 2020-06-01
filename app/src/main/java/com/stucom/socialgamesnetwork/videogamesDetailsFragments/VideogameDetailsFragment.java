@@ -111,8 +111,12 @@ public class VideogameDetailsFragment extends Fragment {
                 }
                 pbRating.setProgress(rating);
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(videogame.getName());
-                String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
-                Picasso.get().load(img).into(ivVideogameImage);
+                if (videogame.getCover() == null) {
+                    ivVideogameImage.setImageResource(R.drawable.image_not_found);
+                } else {
+                    String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
+                    Picasso.get().load(img).into(ivVideogameImage);
+                }
             }
 
             @Override

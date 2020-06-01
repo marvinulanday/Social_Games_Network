@@ -91,8 +91,12 @@ public class HistoryFragment extends Fragment {
                     }
                 }
                 tvGenres.setText(stringBuilder.toString());
-                String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
-                Picasso.get().load(img).into(imgView);
+                if (videogame.getCover() == null) {
+                    imgView.setImageResource(R.drawable.image_not_found);
+                } else {
+                    String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
+                    Picasso.get().load(img).into(imgView);
+                }
                 int rating = Integer.valueOf((int) videogame.getRating());
                 pbRating.setProgress(rating);
                 if (rating == 0) {

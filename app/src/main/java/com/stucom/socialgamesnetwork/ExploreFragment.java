@@ -257,8 +257,12 @@ public class ExploreFragment extends Fragment {
                     }
                 }
                 holder.tvVideogameGenre.setText(stringBuilder.toString());
-                String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
-                Picasso.get().load(img).into(holder.ivVideogameImage);
+                if (videogame.getCover() == null) {
+                    holder.ivVideogameImage.setImageResource(R.drawable.image_not_found);
+                } else {
+                    String img = "https://images.igdb.com/igdb/image/upload/t_cover_small_2x/" + videogame.getCover().getImageId() + ".jpg";
+                    Picasso.get().load(img).into(holder.ivVideogameImage);
+                }
                 int rating = Integer.valueOf((int) videogame.getRating());
                 holder.pbVideogameRating.setProgress(rating);
                 if (rating == 0) {

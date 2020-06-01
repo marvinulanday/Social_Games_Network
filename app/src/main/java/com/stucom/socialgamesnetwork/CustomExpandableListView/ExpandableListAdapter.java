@@ -55,6 +55,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
         CheckBox checkBoxItem = (CheckBox) convertView.findViewById(R.id.cbListItem);
         checkBoxItem.setText(childText);
+        if (itemsChecked.get(getGroup(groupPosition)).contains(childText)) {
+            checkBoxItem.setChecked(true);
+        } else {
+            checkBoxItem.setChecked(false);
+        }
         checkBoxItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
